@@ -8,7 +8,7 @@ import { LinkPreset } from './types/config'
 
 export const siteConfig: SiteConfig = {
   title: 'Angor Blog',
-  subtitle: 'Decentralize everything',
+  subtitle: 'Decentralized Crowdfunding Platform',
   lang: 'en', // 'en', 'zh_CN', 'zh_TW', 'ja'
   themeColor: {
     hue: 175, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
@@ -44,7 +44,7 @@ export const navBarConfig: NavBarConfig = {
 export const profileConfig: ProfileConfig = {
   avatar: 'assets/images/avatar.png', // Relative to the /src directory. Relative to the /public directory if it starts with '/'
   name: 'Angor',
-  bio: 'Decentralize everything is our vision.',
+  bio: 'Decentralized Crowdfunding Platform',
   links: [
     {
       name: 'Twitter',
@@ -56,12 +56,12 @@ export const profileConfig: ProfileConfig = {
     {
       name: 'Discord',
       icon: 'fa6-brands:discord',
-      url: 'https://www.angor.io/discord',
+      url: 'https://www.blockcore.net/discord',
     },
     {
       name: 'GitHub',
       icon: 'fa6-brands:github',
-      url: 'https://github.com/block-core',
+      url: 'https://github.com/block-core/angor',
     },
   ],
 }
