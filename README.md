@@ -1,1 +1,2 @@
-# angor-blog
+# blog
+Angor Blog
