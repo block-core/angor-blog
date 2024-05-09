@@ -5,7 +5,7 @@ description: "How to Contribute to the Angor Blog: Utilizing Our Posting Guide"
 image: "./cover.jpg"
 tags: ["Angor", "Blogging"]
 category: Guides
-draft: false
+draft: true
 ---
 
 > Cover image source: [Source](./cover.jpg)
