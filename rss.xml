@@ -1,4 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Angor Blog</title><description>Decentralized Crowdfunding Platform</description><link>https://blog.angor.io/</link><language>en</language><item><title>Draft Example</title><link>https://blog.angor.io/posts/draft/</link><guid isPermaLink="true">https://blog.angor.io/posts/draft/</guid><pubDate>Fri, 01 Jul 2022 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;This Article is a Draft&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Angor Blog</title><description>Decentralized Crowdfunding Platform</description><link>https://blog.angor.io/</link><language>en</language><item><title>Welcome to the Angor Blog!</title><link>https://blog.angor.io/posts/angor/</link><guid isPermaLink="true">https://blog.angor.io/posts/angor/</guid><description>Discover the new Angor Blog, your ultimate resource for Bitcoin investment insights and updates on the Angor platform.</description><pubDate>Thu, 09 May 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Welcome to the inaugural post of the &lt;strong&gt;Angor Blog&lt;/strong&gt;—your new go-to resource for everything related to Bitcoin investments and our platform. We&apos;re thrilled to launch this blog as a part of our commitment to not only providing exceptional investment opportunities but also educating and updating our community.&lt;/p&gt;
+&lt;h2&gt;Why Follow the Angor Blog?&lt;/h2&gt;
+&lt;p&gt;Our blog will feature a rich mix of educational content, latest news, and in-depth articles that cater to both seasoned investors and newcomers in the cryptocurrency world. Here’s what you can expect:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Educational Articles&lt;/strong&gt;: Learn about Bitcoin, investing strategies, and how to maximize your use of the Angor platform.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Platform Updates&lt;/strong&gt;: Stay informed about the latest enhancements and features of Angor, ensuring you make the most out of every investment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Investment Tips&lt;/strong&gt;: Get advice from top experts in the field, helping you to make informed decisions.&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded></item><item><title>Draft Example</title><link>https://blog.angor.io/posts/draft/</link><guid isPermaLink="true">https://blog.angor.io/posts/draft/</guid><pubDate>Wed, 01 May 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;This Article is a Draft&lt;/h1&gt;
 &lt;p&gt;This article is currently in a draft state and is not published. Therefore, it will not be visible to the general audience. The content is still a work in progress and may require further editing and review.&lt;/p&gt;
 &lt;p&gt;When the article is ready for publication, you can update the &quot;draft&quot; field to &quot;false&quot; in the Frontmatter:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;---
@@ -9,18 +17,17 @@ category: Examples
 draft: false
 ---
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Simple Guides for Angor</title><link>https://blog.angor.io/posts/guide/</link><guid isPermaLink="true">https://blog.angor.io/posts/guide/</guid><description>How to use this blog template.</description><pubDate>Mon, 01 Apr 2024 00:00:00 GMT</pubDate><content:encoded>&lt;blockquote&gt;
-&lt;p&gt;Cover image source: &lt;a href=&quot;https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/208fc754-890d-4adb-9753-2c963332675d/width=2048/01651-1456859105-(colour_1.5),girl,_Blue,yellow,green,cyan,purple,red,pink,_best,8k,UHD,masterpiece,male%20focus,%201boy,gloves,%20ponytail,%20long%20hair,.jpeg&quot;&gt;Source&lt;/a&gt;&lt;/p&gt;
+</content:encoded></item><item><title>Simple Guides for Blog Post</title><link>https://blog.angor.io/posts/guide/</link><guid isPermaLink="true">https://blog.angor.io/posts/guide/</guid><description>How to Contribute to the Angor Blog: Utilizing Our Posting Guide</description><pubDate>Wed, 01 May 2024 00:00:00 GMT</pubDate><content:encoded>&lt;blockquote&gt;
+&lt;p&gt;Cover image source: &lt;a href=&quot;./cover.jpg&quot;&gt;Source&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;This blog template is built with &lt;a href=&quot;https://astro.build/&quot;&gt;Astro&lt;/a&gt;. For the things that are not mentioned in this guide, you may find the answers in the &lt;a href=&quot;https://docs.astro.build/&quot;&gt;Astro Docs&lt;/a&gt;.&lt;/p&gt;
 &lt;h2&gt;Front-matter of Posts&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;---
-title: My First Blog Post
-published: 2023-09-09
-description: This is the first post of my new Astro blog.
+title: Simple Guides for Blog Post
+published: 2024-05-01
+description: &quot;How to Contribute to the Angor Blog: Utilizing Our Posting Guide&quot;
 image: ./cover.jpg
-tags: [Foo, Bar]
-category: Front-end
+tags: [Angor, Blogging]
+category: Guides
 draft: false
 ---
 &lt;/code&gt;&lt;/pre&gt;
@@ -70,11 +77,11 @@ draft: false
     ├── cover.png
     └── index.md
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Markdown Extended Features</title><link>https://blog.angor.io/posts/markdown-extended/</link><guid isPermaLink="true">https://blog.angor.io/posts/markdown-extended/</guid><description>Read more about Markdown features in Angor</description><pubDate>Wed, 01 May 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;GitHub repository cards&lt;/h2&gt;
+</content:encoded></item><item><title>Markdown Extended Features</title><link>https://blog.angor.io/posts/markdown-extended/</link><guid isPermaLink="true">https://blog.angor.io/posts/markdown-extended/</guid><description>Check out our blog to learn more about the features of Markdown</description><pubDate>Wed, 01 May 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;GitHub repository cards&lt;/h2&gt;
 &lt;p&gt;You can add dynamic cards that link to GitHub repositories, on page load, the repository information is pulled from the GitHub API.&lt;/p&gt;
-&lt;p&gt;::github{repo=&quot;Fabrizz/MMM-OnSpotify&quot;}&lt;/p&gt;
+&lt;p&gt;::github{repo=&quot;block-core/angor&quot;}&lt;/p&gt;
 &lt;p&gt;Create a GitHub repository card with the code &lt;code&gt;::github{repo=&quot;&amp;lt;owner&amp;gt;/&amp;lt;repo&amp;gt;&quot;}&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;::github{repo=&quot;saicaca/Angor&quot;}
+&lt;pre&gt;&lt;code&gt;::github{repo=&quot;block-core/Angor&quot;}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;Admonitions&lt;/h2&gt;
 &lt;p&gt;Following types of admonitions are supported: &lt;code&gt;note&lt;/code&gt; &lt;code&gt;tip&lt;/code&gt; &lt;code&gt;important&lt;/code&gt; &lt;code&gt;warning&lt;/code&gt; &lt;code&gt;caution&lt;/code&gt;&lt;/p&gt;
@@ -109,7 +116,7 @@ This is a note with a custom title.
 This is a note with a custom title.
 :::
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Markdown Example</title><link>https://blog.angor.io/posts/markdown/</link><guid isPermaLink="true">https://blog.angor.io/posts/markdown/</guid><description>A simple example of a Markdown blog post.</description><pubDate>Sun, 01 Oct 2023 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;An h1 header&lt;/h1&gt;
+</content:encoded></item><item><title>Markdown Example</title><link>https://blog.angor.io/posts/markdown/</link><guid isPermaLink="true">https://blog.angor.io/posts/markdown/</guid><description>A simple example of a Markdown blog post.</description><pubDate>Wed, 01 May 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;An h1 header&lt;/h1&gt;
 &lt;p&gt;Paragraphs are separated by a blank line.&lt;/p&gt;
 &lt;p&gt;2nd paragraph. &lt;em&gt;Italic&lt;/em&gt;, &lt;strong&gt;bold&lt;/strong&gt;, and &lt;code&gt;monospace&lt;/code&gt;. Itemized lists
 look like:&lt;/p&gt;
@@ -230,10 +237,10 @@ math should get its own line and be put in in double-dollarsigns:&lt;/p&gt;
 &lt;p&gt;$$I = \int \rho R^{2} dV$$&lt;/p&gt;
 &lt;p&gt;And note that you can backslash-escape any punctuation characters
 which you wish to be displayed literally, ex.: `foo`, *bar*, etc.&lt;/p&gt;
-</content:encoded></item><item><title>Include Video in the Posts</title><link>https://blog.angor.io/posts/video/</link><guid isPermaLink="true">https://blog.angor.io/posts/video/</guid><description>This post demonstrates how to include embedded video in a blog post.</description><pubDate>Tue, 01 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Just copy the embed code from YouTube or other platforms, and paste it in the markdown file.&lt;/p&gt;
+</content:encoded></item><item><title>Include Video in the Posts</title><link>https://blog.angor.io/posts/video/</link><guid isPermaLink="true">https://blog.angor.io/posts/video/</guid><description>This post demonstrates how to include embedded video in a blog post.</description><pubDate>Wed, 01 May 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Just copy the embed code from YouTube or other platforms, and paste it in the markdown file.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;---
 title: Include Video in the Post
-published: 2023-10-19
+published: 2024-05-01
 // ...
 ---
 
