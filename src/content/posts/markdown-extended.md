@@ -1,9 +1,9 @@
 ---
 title: Markdown Extended Features
 published: 2024-05-01
-description: 'Read more about Markdown features in Angor'
+description: 'Check out our blog to learn more about the features of Markdown'
 image: ''
-tags: [Demo, Example, Markdown, Angor]
+tags: [Example, Markdown, Angor]
 category: 'Examples'
 draft: false 
 ---
@@ -11,12 +11,12 @@ draft: false
 ## GitHub repository cards
 You can add dynamic cards that link to GitHub repositories, on page load, the repository information is pulled from the GitHub API. 
 
-::github{repo="Fabrizz/MMM-OnSpotify"}
+::github{repo="block-core/angor"}
 
 Create a GitHub repository card with the code `::github{repo="<owner>/<repo>"}`.
 
 ```markdown
-::github{repo="saicaca/Angor"}
+::github{repo="block-core/Angor"}
 ```
 
 ## Admonitions

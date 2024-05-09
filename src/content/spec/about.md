@@ -5,7 +5,7 @@ Angor is a decentralized crowdfunding platform built on the robust foundations o
 </p>
  
 
-::github{repo="block-core"}
+::github{repo="block-core/angor"}
 
 > ### Connect us:
 > - [Website](https://angor.io)

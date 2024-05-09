@@ -1,27 +1,25 @@
 ---
-title: Simple Guides for Angor
-published: 2024-04-01
-description: "How to use this blog template."
+title: Simple Guides for Blog Post
+published: 2024-05-01
+description: "How to Contribute to the Angor Blog: Utilizing Our Posting Guide"
 image: "./cover.jpg"
-tags: ["Angor", "Blogging", "Customization"]
+tags: ["Angor", "Blogging"]
 category: Guides
 draft: false
 ---
 
-> Cover image source: [Source](https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/208fc754-890d-4adb-9753-2c963332675d/width=2048/01651-1456859105-(colour_1.5),girl,_Blue,yellow,green,cyan,purple,red,pink,_best,8k,UHD,masterpiece,male%20focus,%201boy,gloves,%20ponytail,%20long%20hair,.jpeg)
-
-This blog template is built with [Astro](https://astro.build/). For the things that are not mentioned in this guide, you may find the answers in the [Astro Docs](https://docs.astro.build/).
+> Cover image source: [Source](./cover.jpg)
 
 ## Front-matter of Posts
 
 ```yaml
 ---
-title: My First Blog Post
-published: 2023-09-09
-description: This is the first post of my new Astro blog.
+title: Simple Guides for Blog Post
+published: 2024-05-01
+description: "How to Contribute to the Angor Blog: Utilizing Our Posting Guide"
 image: ./cover.jpg
-tags: [Foo, Bar]
-category: Front-end
+tags: [Angor, Blogging]
+category: Guides
 draft: false
 ---
 ```

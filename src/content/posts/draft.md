@@ -1,7 +1,7 @@
 ---
 title: Draft Example
-published: 2022-07-01
-tags: [Markdown, Blogging, Demo]
+published: 2024-05-01
+tags: [Markdown, Blogging]
 category: Examples
 draft: true
 ---
