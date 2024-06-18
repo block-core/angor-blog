@@ -11,7 +11,7 @@ draft: false
 
 Angor is a decentralized crowdfunding platform built on Bitcoin and uses Nostr for enhanced security and transparency. It allows investors to maintain control over their funds and supports direct communication between investors and founders. Here’s a step-by-step guide on how to invest using Angor.
 
-![How to invest using Angor](./assets//how-to-invest.gif)
+![How to invest using Angor](./assets/how-to-invest.gif)
 
 ### How to invest using Angor: A Step-by-step guide to follow along:
 
