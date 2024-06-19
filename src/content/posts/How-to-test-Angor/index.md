@@ -3,16 +3,8 @@ title: "How to Test Angor: A Step-by-Step Guide"
 published: 2024-05-18
 description: "Angor is a decentralized crowdfunding project leveraging the security of Bitcoin and the transparency of Nostr."
 image: './test-angor.svg'
-tags: 
-  - Decentralized Crowdfunding
-  - Bitcoin
-  - Nostr
-  - Angor
-category: 
-  - Cryptocurrency
-  - Crowdfunding
-  - Bitcoin
-  - Technology
+tags: ['Decentralized Crowdfunding', 'Bitcoin' ,'Nostr','Angor']
+category: ['Cryptocurrency', 'Crowdfunding' ,'Bitcoin','Technology']
 draft: false
 ---
 
