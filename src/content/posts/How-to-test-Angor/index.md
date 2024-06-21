@@ -9,7 +9,7 @@ draft: false
 ---
 
 ## Introduction to Angor Testing
-
+ 
 Angor is a decentralized crowdfunding project leveraging the security of Bitcoin and the transparency of Nostr. Investors' funds are released in stages through time-lock contracts, and unspent funds can be recovered at any point (recovered funds may incur a penalty). Testing Angor involves verifying these processes and ensuring the platform works as intended.
 
 ## Step-by-Step Guide to Testing Angor
@@ -17,7 +17,7 @@ Angor is a decentralized crowdfunding project leveraging the security of Bitcoin
 ### Step 1: Initial Setup
 
 #### 1. Create a Wallet on Angor
-Steps:
+Steps: 
 - Sign up on the Angor platform.
 - Navigate to the wallet creation section.
 - Click on "Create Wallet."
@@ -56,12 +56,14 @@ Steps:
 - Navigate to the "Create Project" section on Angor.
 - Enter the project name, description, and goals.
 - Define the project milestones and the corresponding time-lock contracts.
+- Upload a banner image to make the project page more appealing.
 - Click "Submit" to create the project.
 
-#### Manage Project Milestones
+#### Post Project Updates on Nostr
 Steps:
-- Regularly update the project’s progress on Angor.
-- Report milestone completion status as each milestone is reached.
+- Export the private key from Angor.
+- Import the private key into a Nostr client.
+- Post updates on project progress and milestone completion on Nostr.
 - Ensure updates are clear and informative for investors.
 
 #### Spend Funds for Milestones
