@@ -8,7 +8,7 @@ category: ['Finance and Investment', 'Crowdfunding' ,'Blockchain and Decentraliz
 draft: false
 ---
 
-Crowdfunding has revolutionized the way individuals and businesses raise capital. Traditional platforms like Kickstarter, Indiegogo, GoFundMe and CrowedCube have paved the way for countless projects, from innovative gadgets to humanitarian causes. However, as technology evolves, so do the methods of crowdfunding. Enter Angor, a decentralized crowdfunding platform leveraging Bitcoin and Nostr for enhanced security and transparency.
+Crowdfunding has revolutionized the way individuals and businesses raise capital, offering new investment opportunities for individuals to access private equities and diversify their portfolios. Traditional platforms like Kickstarter, Indiegogo, GoFundMe, Seedrs and Crowdcube have paved the way for countless projects, from innovative gadgets to humanitarian causes. However, as technology evolves, so do the methods of crowdfunding. Enter Angor, a decentralized crowdfunding platform leveraging Bitcoin and Nostr for enhanced security and transparency. In this article, we compare Angor to traditional crowdfunding services, highlighting the key differences, advantages, and potential challenges.
 
 In this article, we compare Angor to traditional crowdfunding services, highlighting the key differences, advantages, and potential challenges.
 
