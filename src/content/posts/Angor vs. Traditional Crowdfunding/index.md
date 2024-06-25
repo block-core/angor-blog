@@ -8,7 +8,7 @@ category: ['Finance and Investment', 'Crowdfunding' ,'Blockchain and Decentraliz
 draft: false
 ---
 
-Crowdfunding has revolutionized the way individuals and businesses raise capital. Traditional platforms like Kickstarter, Indiegogo, and GoFundMe have paved the way for countless projects, from innovative gadgets to humanitarian causes. However, as technology evolves, so do the methods of crowdfunding. Enter Angor, a decentralized crowdfunding platform leveraging Bitcoin and Nostr for enhanced security and transparency.
+Crowdfunding has revolutionized the way individuals and businesses raise capital. Traditional platforms like Kickstarter, Indiegogo, GoFundMe and CrowedCube have paved the way for countless projects, from innovative gadgets to humanitarian causes. However, as technology evolves, so do the methods of crowdfunding. Enter Angor, a decentralized crowdfunding platform leveraging Bitcoin and Nostr for enhanced security and transparency.
 
 In this article, we compare Angor to traditional crowdfunding services, highlighting the key differences, advantages, and potential challenges.
 
@@ -22,7 +22,7 @@ Centralized: Platforms like Kickstarter and Indiegogo operate as centralized ent
 Middleman Dependency: These platforms act as intermediaries, which means they have control over the fund distribution and project approval processes.
 
 #### Angor:
-Decentralized: Angor operates on a decentralized model using Bitcoin for financial transactions and Nostr for communication. This removes the need for a central authority, giving more control to users.
+Decentralized: Angor operates on a decentralized model using Bitcoin for financial transactions and Nostr for communication. This removes the need for a central authority, giving more control to investors.
 
 Peer-to-Peer: The decentralized nature allows direct interactions between project founders and investors without relying on a middleman.
 
@@ -53,12 +53,12 @@ Direct Communication: Project founders can post updates directly, maintaining ac
 ### 4. Costs and Fees
 
 #### Traditional Crowdfunding Platforms:
-Platform Fees: Traditional platforms charge a percentage of the funds raised, typically ranging from 5% to 10%, in addition to payment processing fees.
+Platform Fees: Traditional platforms charge a percentage of the funds raised, typically ranging from 5% to 15%, in addition to payment processing fees.
 
 Hidden Costs: Additional costs may include promotional fees or charges for premium features
 
 #### Angor:
-Lower Fees: As a decentralized platform, Angor can offer lower fees by eliminating the need for a central authority and reducing operational costs.
+Lower Fees: Angor charges a minimal fee of just 1%, significantly lower than traditional platforms. This is made possible by its decentralized nature, reducing operational costs.
 
 Transparency in Costs: Any fees associated with Bitcoin transactions or Nostr usage are typically lower and more transparent.
 
@@ -72,7 +72,7 @@ Currency Limitations: Transactions are usually conducted in specific currencies,
 #### Angor:
 Borderless Transactions: Utilizing Bitcoin allows for seamless global transactions, enabling anyone with internet access to participate.
 
-Cryptocurrency Advantage: The use of cryptocurrency bypasses traditional banking systems, offering a more inclusive and accessible platform for global users.
+Cryptocurrency Advantage: The use of Bitcoin bypasses traditional banking systems, offering a more inclusive and accessible platform for global users.
 
 ### 6. Community and Support
 
