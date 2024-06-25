@@ -72,7 +72,7 @@ Currency Limitations: Transactions are usually conducted in specific currencies,
 #### Angor:
 Borderless Transactions: Utilizing Bitcoin allows for seamless global transactions, enabling anyone with internet access to participate.
 
-Cryptocurrency Advantage: The use of Bitcoin bypasses traditional banking systems, offering a more inclusive and accessible platform for global users.
+Cryptocurrency Advantage: The use of Bitcoin bypasses traditional banking systems, offers a more inclusive and accessible platform for global users.
 
 ### 6. Community and Support
 
