@@ -1,10 +1,10 @@
 ---
-title: "Angor vs. Traditional Crowdfunding: A Comparative Analysis"
-published: 2024-05-25
+title: "Angor vs. Traditional Crowdfunding"
+published: 2024-06-27
 description: "This article compares Angor to traditional crowdfunding services, outlining key differences, advantages, and potential challenges."
-image: "./Angor Vs. Traditional Crowdfunding.svg"
+image: "./angor-vs-traditional-crowdfunding.svg"
 tags: ['Decentralized Crowdfunding', 'Bitcoin Crowdfunding' ,'Nostr','Fundraising']
-category: Cryptocurrency
+category: 'Angor'
 draft: false
 ---
 
