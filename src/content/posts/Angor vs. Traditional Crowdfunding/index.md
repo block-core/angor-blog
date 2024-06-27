@@ -4,7 +4,7 @@ published: 2024-05-25
 description: "This article compares Angor to traditional crowdfunding services, outlining key differences, advantages, and potential challenges."
 image: "./Angor Vs. Traditional Crowdfunding.svg"
 tags: ['Decentralized Crowdfunding', 'Bitcoin Crowdfunding' ,'Nostr','Fundraising']
-category: ['Finance and Investment', 'Crowdfunding' ,'Blockchain and Decentralization','Technology']
+category: Cryptocurrency
 draft: false
 ---
 
