@@ -55,12 +55,14 @@ Direct Communication: Project founders can post updates directly, maintaining ac
 #### Traditional Crowdfunding Platforms:
 Platform Fees: Traditional platforms charge a percentage of the funds raised, typically ranging from 5% to 15%, in addition to payment processing fees.
 
-Hidden Costs: Additional costs may include promotional fees or charges for premium features
+Hidden Costs: Additional costs may include setup fees, transfer fees, promotional fees, or charges for premium features.
+
+Complex Fee Structures: The combination of various fees can make the cost structure complicated and less transparent.
 
 #### Angor:
-Lower Fees: Angor charges a minimal fee of just 1%, significantly lower than traditional platforms. This is made possible by its decentralized nature, reducing operational costs.
+Lower Fees: Angor charges a minimal fee of just 2-3%, significantly lower than traditional platforms. This is made possible by its decentralized nature, reducing operational costs.
 
-Transparency in Costs: Any fees associated with Bitcoin transactions or Nostr usage are typically lower and more transparent.
+Simple Fee Structure: Angor offers a straightforward fee structure without hidden costs, making it easier for users to understand the total expenses involved.
 
 ### 5. Global Accessibility
 
