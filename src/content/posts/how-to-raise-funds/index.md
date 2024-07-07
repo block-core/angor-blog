@@ -13,23 +13,15 @@ Angor is a decentralized crowdfunding platform built on Bitcoin and uses Nostr f
 
 ### Create a Wallet
 
-Before you can start raising funds, you need to set up a digital wallet on Angor. If you don’t have a wallet yet, create a wallet to use Angor.
+Before you can start raising funds, you need to set up a digital wallet on Angor. If you don’t have a wallet yet, create a wallet to use Angor. Follow the on-screen instructions to create your wallet.
+- Navigate to the wallet creation section.
+- Click on "Create Wallet."
+- Angor will automatically set up the wallet for you.
+- Set a strong password to protect your wallet.
 
-- **Navigate to the Wallet Section**: Once logged in, find and click on the 'Wallet' section from your dashboard.
-
-- **Create Your Wallet**: Follow the on-screen instructions to create your digital wallet. This typically involves:
-
-    - Sign up on the Angor platform.
-    - Navigate to the wallet creation section.
-    - Click on "Create Wallet."
-    - Angor will automatically set up the wallet for you.
-    - Set a strong password to protect your wallet.
-
-        ![Wallet after creation](./assets/wallet-after-creation.svg)
+  ![Wallet after creation](./assets/wallet-after-creation.svg)
 
 - **Back Up Recovery Phrases**: You’ll be given a set of recovery phrases. Store these securely, as they are essential for accessing your wallet if you forget your password.
-
-Taking the time to thoroughly explore the projects will help you make an informed decision about where to invest and how to raise your funds.
 
 ### Create a Project
 
@@ -44,7 +36,7 @@ Once your wallet is set up, you can create a project to start raising funds. Her
   - **About**: Provide detailed information about your project, including its objectives and vision.
   - **Project Website**: Enter the URL of your project’s website, if available.
   - **Banner**: Enter the URL of your project’s banner image to make your project page visually appealing.
-  - **Nip 05 and Nip 57 (zaps)**: Fill these fields with the relevant information if applicable.
+  - **Nip 05 and Nip 57 (zaps)**: Fill these fields with the relevant information if applicable. Zaps are small, voluntary donations that supporters can give to your project. [Learn more about zaps](https://bitcoiner.guide/zap/)
   - **Image**: Enter the URL of your project’s reference image.
 
     ![Project Metadata](./assets/project-metadata.svg)
@@ -92,8 +84,7 @@ After filling out all the required information in the Project Info section, clic
   ![Founder stage funds claim](./assets/founder-stage-claim.svg)
 
 ### Claiming Funds 
-
-As a founder on Angor involves reaching and verifying milestones, providing updates, and then releasing the funds tied to those milestones through time-lock contracts. This ensures that the project progresses in a structured and accountable manner, protecting both the founder and the investors.
+Easily monitor project progress, release milestone funds, and handle penalties directly from your Angor dashboard.
 
 #### 1. Monitor Project Progress
 
