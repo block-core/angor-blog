@@ -97,30 +97,12 @@ Easily monitor project progress, release milestone funds, and handle penalties d
 - Find the milestone that has been achieved and click on the "Claim Funds" button.
 - Sign the transaction to release the funds for that milestone.
 
-#### 3. Handling Penalties: 
-In some cases, you may need to claim funds that are subject to a penalty. Here’s how to handle that situation.
-  
-  ![Portfolio Image](./assets/invested-portfolio.svg)
-
-#### a. Claim Funds with Penalty
-
-- Navigate to your project dashboard.
-- Locate the "Penalty" section.
-- Click on the "Initiate Fund Recovery" button to start the recovery process for funds under penalty.
-- Confirm the recovery transaction.
-
-  **Wait for Penalty Period to Expire**:
-  - Your funds will be locked for the defined penalty period.
-  - Monitor the penalty period countdown on your dashboard.
-
-  **Receive Funds Out of Penalty**:
-  - Once the penalty period expires, you can move the funds out of the penalty to your wallet.
-  - Click on the "Move Funds" button to complete the transaction.
-
-#### b. Regular Fund Claim Process
+#### 3. Regular Fund Claim Process:
 
 - Navigate to the "Funds" section in your project dashboard.
 - Click on the "Claim Funds" button for the available milestone funds.
 - Sign the transaction to transfer the funds to your wallet.
+  
+  ![Portfolio Image](./assets/invested-portfolio.svg)
 
 By following these steps, you can effectively use Angor to raise funds for your project, ensuring a smooth and transparent process from start to finish.
