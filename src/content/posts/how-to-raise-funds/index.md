@@ -76,6 +76,16 @@ After filling out all the required information in the Project Info section, clic
 - Post updates on project progress and milestone completion on Nostr.
 - Ensure updates are clear and informative for investors.
 
+### Approving Investment Requests
+- Once your project is live on Angor, you may start receiving investment requests from potential investors.
+- Review Requests: Navigate to the "Actions" section in your project dashboard to view all pending signatures.
+
+  ![Approve signature tab](./assets/approve-signature-tab.svg)
+
+- Approve Signatures: Approve the request through Angor. This action confirms acceptance of the investor’s contribution to your project.
+
+  ![Approving investment by founder](./assets/approving-investment.svg)
+
 ### Spend Funds for Milestones
 
 - As a founder, once a milestone is reached, sign the transaction to spend the funds for that milestone.
