@@ -14,14 +14,31 @@ Angor is a decentralized crowdfunding platform built on Bitcoin and uses Nostr f
 ### Create a Wallet
 
 Before you can start raising funds, you need to set up a digital wallet on Angor. If you don’t have a wallet yet, create a wallet to use Angor. Follow the on-screen instructions to create your wallet.
+
 - Navigate to the wallet creation section.
 - Click on "Create Wallet."
 - Angor will automatically set up the wallet for you.
 - Set a strong password to protect your wallet.
 
-  ![Wallet after creation](./assets/wallet-after-creation.svg)
-
 - **Back Up Recovery Phrases**: You’ll be given a set of recovery phrases. Store these securely, as they are essential for accessing your wallet if you forget your password.
+
+  ![Wallet after creation](./assets/wallet-intro.svg)
+
+### Recovering a Wallet
+
+If you already have a wallet and need to recover it, follow these steps:
+
+- Navigate to the Wallet Section.
+- Click on "Recover Wallet."
+- Enter Recovery Details: Paste your wallet words in the provided field.
+  Optionally, enter an extra word if you used one during the creation of your wallet.
+- Set a strong password for your recovered wallet.
+- Confirm Backup: Ensure you have backed up your wallet words and passphrase securely.
+  Check the box confirming you have backed up your wallet words and passphrase.
+- Complete Recovery:
+  Click on "Create Wallet" to complete the recovery process. Your wallet will be restored with the funds and transaction history intact.
+
+  ![Wallet after creation](./assets/wallet-after-creation.svg)
 
 ### Create a Project
 
@@ -101,6 +118,8 @@ Easily monitor project progress, release milestone funds, and handle penalties d
 - Regularly check the project updates on Angor.
 - Ensure that the milestones are being met as planned.
 
+  ![Project stats](./assets/project-stats.svg)
+
 #### 2. Initiate Fund Release for Milestones
 
 - Once a milestone is reached, navigate to your project dashboard.
@@ -112,7 +131,5 @@ Easily monitor project progress, release milestone funds, and handle penalties d
 - Navigate to the "Funds" section in your project dashboard.
 - Click on the "Claim Funds" button for the available milestone funds.
 - Sign the transaction to transfer the funds to your wallet.
-  
-  ![Portfolio Image](./assets/invested-portfolio.svg)
 
 By following these steps, you can effectively use Angor to raise funds for your project, ensuring a smooth and transparent process from start to finish.
