@@ -15,6 +15,9 @@ export async function GET(context: APIContext) {
     title: siteConfig.title,
     description: siteConfig.subtitle || 'No description',
     site: siteUrl,
+    xmlns: {
+      media: 'http://search.yahoo.com/mrss/', 
+    },
     items: blog.map((post) => {
       const imageUrl = post.data.image
         ? new URL(post.data.image.startsWith('/') ? post.data.image.slice(1) : post.data.image, siteUrl).toString()
@@ -33,9 +36,6 @@ export async function GET(context: APIContext) {
           : '',
       };
     }),
-    customData: `
-      <language>${siteConfig.lang}</language>
-      <xmlns:media="http://search.yahoo.com/mrss/">
-    `,
+    customData: `<language>${siteConfig.lang}</language>`,
   });
 }
