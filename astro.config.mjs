@@ -20,7 +20,7 @@ import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 
 export default defineConfig({
-  site: "https://blog.angor.app/",
+  site: "https://blog.angor.io/",
   base: "/",
   trailingSlash: "always",
   integrations: [
