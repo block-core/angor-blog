@@ -33,6 +33,9 @@ export async function GET(context: APIContext) {
           : '',
       };
     }),
-    customData: `<language>${siteConfig.lang}</language>`,
+    customData: `
+      <language>${siteConfig.lang}</language>
+      <xmlns:media="http://search.yahoo.com/mrss/">
+    `,
   });
 }
