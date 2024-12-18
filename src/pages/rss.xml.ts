@@ -32,7 +32,7 @@ export async function GET(context: APIContext) {
           allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
         }),
         customData: imageUrl
-          ? `<media:content url="${imageUrl}" medium="image" />`
+          ? `<image>${imageUrl}</image>`
           : '',
       };
     }),
