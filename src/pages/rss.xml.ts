@@ -16,11 +16,11 @@ export async function GET(context: APIContext) {
     description: siteConfig.subtitle || 'No description',
     site: siteUrl,
     xmlns: {
-      media: 'http://search.yahoo.com/mrss/', 
+      media: 'http://search.yahoo.com/mrss/',
     },
     items: blog.map((post) => {
       const imageUrl = post.data.image
-        ? new URL(post.data.image.startsWith('/') ? post.data.image.slice(1) : post.data.image, siteUrl).toString()
+        ? new URL(post.data.image.startsWith('/') ? post.data.image : `/images/${post.data.image}`, siteUrl).toString()
         : '';
 
       return {
@@ -36,6 +36,6 @@ export async function GET(context: APIContext) {
           : '',
       };
     }),
-    customData: `<language>${siteConfig.lang}</language>`,
+    customData: `<language>${siteConfig.lang}</language>`
   });
 }

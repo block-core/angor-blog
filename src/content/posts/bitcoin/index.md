@@ -2,7 +2,7 @@
 title: Bitcoin, A Digital Revolution
 published: 2024-05-12
 description: Explore the transformative journey of Bitcoin from its inception to its current status as a pivotal player in the financial world.
-image: './bitcoin.svg'
+image: '/images/bitcoin.svg'
 tags: [Bitcoin, Cryptocurrency]
 category: Cryptocurrency
 draft: false

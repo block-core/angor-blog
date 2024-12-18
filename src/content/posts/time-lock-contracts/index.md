@@ -2,7 +2,7 @@
 title: Innovative Time-Lock Contracts
 published: 2024-05-20
 description: Discover how Angor's innovative time-lock contracts enhance accountability and trust in crowdfunding by releasing funds at predetermined intervals based on milestone achievements.
-image: './time-lock-contracts.svg'
+image: '/images/time-lock-contracts.svg'
 tags: [Time-Lock Contracts, Smart Contracts]
 category: 'Technology'
 draft: false

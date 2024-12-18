@@ -2,7 +2,7 @@
 title: How to Invest Using Angor
 published: 2024-06-17
 description: 'Angor allows you to browse various projects and invest securely using Bitcoin. Create a wallet, select a project, submit your investment for approval, and manage your funds with ease.'
-image: './invest.svg'
+image: '/images/invest.svg'
 tags:  [Bitcoin, Technology, Education]
 category: 'Angor'
 draft: false 

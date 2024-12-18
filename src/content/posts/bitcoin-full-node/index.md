@@ -2,7 +2,7 @@
 title: Setting up a Bitcoin Full Node on Different Operating Systems
 published: 2024-05-15
 description: Learn how to set up a Bitcoin full node on Windows, macOS, and Linux to contribute to the Bitcoin network.
-image: './bitcoin-full-node.svg'
+image: '/images/bitcoin-full-node.svg'
 tags: [Bitcoin, Cryptocurrency]
 category: Cryptocurrency
 draft: false

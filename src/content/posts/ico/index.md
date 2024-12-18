@@ -2,7 +2,7 @@
 title: What is an Initial Coin Offering (ICO)?
 published: 2024-05-13
 description: Dive deep into the world of Initial Coin Offerings (ICO), exploring how this innovative crowdfunding mechanism leverages cryptocurrency to fund new projects and the nuances that differentiate it from traditional IPOs.
-image: './ico.svg'
+image: '/images/ico.svg'
 tags: [ICO, Cryptocurrency, Blockchain]
 category: Cryptocurrency
 draft: false
