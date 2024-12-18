@@ -28,12 +28,11 @@ export async function GET(context: APIContext) {
         pubDate: post.data.published,
         description: post.data.description || '',
         link: `/posts/${post.slug}/`,
+        customData: imageUrl ? `<image>${imageUrl}</image>` : '',
         content: sanitizeHtml(parser.render(post.body), {
           allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
-        }),
-        customData: imageUrl
-          ? `<image>${imageUrl}</image>`
-          : '',
+        })
+
       };
     }),
     customData: `<language>${siteConfig.lang}</language>`
