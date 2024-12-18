@@ -18,6 +18,5 @@
     "quickfix.biome": "always",
     "source.organizeImports.biome": "always"
   },
-  "frontMatter.dashboard.openOnStart": false,
-  "liveServer.settings.port": 5502
+  "frontMatter.dashboard.openOnStart": false
 }
