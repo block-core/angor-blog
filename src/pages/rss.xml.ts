@@ -9,15 +9,20 @@ const parser = new MarkdownIt()
 
 export async function GET(context: APIContext) {
   const blog = await getSortedPosts()
+  const siteUrl = context.site ?? 'https://blog.angor.io'
 
   return rss({
     title: siteConfig.title,
     description: siteConfig.subtitle || 'No description',
-    site: context.site ?? 'https://fuwari.vercel.app',
+    site: siteUrl,
     items: blog.map(post => {
+      const imageUrl = post.data.image 
+        ? new URL(post.data.image.startsWith('/') ? post.data.image.slice(1) : post.data.image, siteUrl).toString()
+        : ''
+
       return {
         title: post.data.title,
-        image: post.data.image || '',
+        image: imageUrl,
         pubDate: post.data.published,
         description: post.data.description || '',
         link: `/posts/${post.slug}/`,
