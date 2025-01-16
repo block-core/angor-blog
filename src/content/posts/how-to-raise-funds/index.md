@@ -2,7 +2,7 @@
 title: How to Raise Funds Using Angor
 published: 2024-06-17
 description: 'Angor is a decentralized crowdfunding platform on Bitcoin, offering secure fund management and direct investor engagement for transparent project funding.'
-image: '/images/raise.svg'
+image: '/images/raise.webp'
 tags:  [Bitcoin, Technology, Education]
 category: 'Angor'
 draft: false 
