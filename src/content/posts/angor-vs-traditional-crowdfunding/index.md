@@ -60,7 +60,7 @@ Hidden Costs: Additional costs may include setup fees, transfer fees, promotiona
 Complex Fee Structures: The combination of various fees can make the cost structure complicated and less transparent.
 
 #### Angor:
-Lower Fees: Angor charges a minimal fee of just 2-3%, significantly lower than traditional platforms. This is made possible by its decentralized nature, reducing operational costs.
+Lower Fees: Angor charges a minimal fee of just 1%, significantly lower than traditional platforms. This is made possible by its decentralized nature, reducing operational costs.
 
 Simple Fee Structure: Angor offers a straightforward fee structure without hidden costs, making it easier for users to understand the total expenses involved.
 
