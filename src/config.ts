@@ -11,8 +11,8 @@ export const siteConfig: SiteConfig = {
   subtitle: 'A decentralized crowdfunding protocol built on Bitcoin and Nostr',
   lang: 'en',         // 'en', 'zh_CN', 'zh_TW', 'ja', 'ko'
   themeColor: {
-    hue: 250,         // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
-    fixed: false,     // Hide the theme color picker for visitors
+    hue: 185,         // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
+    fixed: true,     // Hide the theme color picker for visitors
   },
   banner: {
     enable: true,
@@ -44,32 +44,30 @@ export const navBarConfig: NavBarConfig = {
     LinkPreset.About,
     {
       name: 'GitHub',
-      url: 'https://github.com/block-core/angor',     // Internal links should not include the base path, as it is automatically added
-      external: true,                               // Show an external link icon and will open in a new tab
+      url: 'https://github.com/block-core/angor',     
+      external: true,                               
     },
   ],
 }
 
 export const profileConfig: ProfileConfig = {
-  avatar: 'assets/images/angor.svg',  // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+  avatar: 'assets/images/angor.svg',  
   name: 'Angor',
   bio: 'P2P Funding Protocol',
   links: [
     {
       name: 'Angor',
-      icon: 'fa6-brands:github',       // Visit https://icones.js.org/ for icon codes
-                                        // You will need to install the corresponding icon set if it's not already included
-                                        // `pnpm add @iconify-json/<icon-set-name>`
+      icon: 'fa6-brands:bitcoin',
       url: 'https://angor.io',
     },
     {
       name: 'Hub',
-      icon: 'fa6-brands:github',
+      icon: 'fa6-brands:github',  
       url: 'https://hub.angor.io',
     },
     {
       name: 'Docs',
-      icon: 'fa6-brands:github',
+      icon: 'fa6-solid:book',    
       url: 'https://docs.angor.io',
     },
   ],
