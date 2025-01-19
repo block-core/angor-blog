@@ -10,6 +10,6 @@ Angor is a decentralized crowdfunding protocol that transforms the way projects 
 > ### Connect us:
 > - [Website](https://angor.io)
 > - [Github](https://github.com/block-core/angor)
-> - [Discord](https://www.blockcore.net/discord)
+> - [Discord](https://discord.gg/eQaVFqfesn)
 > - [Twitter](https://x.com/blockcoredev)  
 > - [Telegram](https://t.me/angor_io)  
