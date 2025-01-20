@@ -20,21 +20,19 @@ Usage: npm run new-post -- <filename>`)
   process.exit(1) // Terminate the script and return error code 1
 }
 
-let fileName = args[0]
-
-// Add .md extension if not present
-const fileExtensionRegex = /\.(md|mdx)$/i
-if (!fileExtensionRegex.test(fileName)) {
-  fileName += ".md"
-}
+// Convert filename to lowercase and replace spaces with hyphens
+let folderName = args[0].toLowerCase().replace(/\s+/g, '-')
 
 const targetDir = "./src/content/posts/"
-const fullPath = path.join(targetDir, fileName)
+const postDir = path.join(targetDir, folderName)
 
-if (fs.existsSync(fullPath)) {
-  console.error(`Error：File ${fullPath} already exists `)
+// Create the directory if it doesn't exist
+if (fs.existsSync(postDir)) {
+  console.error(`Error: Folder ${postDir} already exists`)
   process.exit(1)
 }
+
+fs.mkdirSync(postDir, { recursive: true })
 
 const content = `---
 title: ${args[0]}
@@ -48,6 +46,7 @@ lang: ''
 ---
 `
 
-fs.writeFileSync(path.join(targetDir, fileName), content)
+const indexPath = path.join(postDir, 'index.md')
+fs.writeFileSync(indexPath, content)
 
-console.log(`Post ${fullPath} created`)
+console.log(`Post created at ${indexPath}`)
