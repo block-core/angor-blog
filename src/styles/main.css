@@ -126,6 +126,59 @@
     .copy-btn.success .success-icon {
         @apply opacity-100
     }
+
+    .app-launcher {
+        @apply relative cursor-pointer;
+    }
+    
+    .app-menu {
+        @apply absolute top-full left-0 rounded-lg shadow-lg
+        w-80 opacity-0 invisible transition-all duration-200 z-[1000] mt-2
+        bg-white dark:bg-[#1a1a1a] 
+        border border-gray-100 dark:border-gray-800;
+        backdrop-filter: blur(16px);
+    }
+    
+    .app-menu.show {
+        @apply opacity-100 visible;
+    }
+    
+    .app-menu-content {
+        @apply p-2 flex flex-col gap-1;
+    }
+    
+    .app-item {
+        @apply flex items-center p-3 rounded-md transition-all
+        text-gray-700 dark:text-gray-200
+        hover:bg-gray-50 dark:hover:bg-gray-800/50;
+    }
+    
+    .app-item i {
+        @apply text-2xl mr-4 w-6 text-center text-[var(--text)] opacity-70 transition-all;
+    }
+    
+    .app-item:hover i {
+        @apply text-[var(--primary)] opacity-100;
+    }
+    
+    .app-item svg {
+        @apply text-xl mr-4 w-6 h-6 text-gray-400 dark:text-gray-500
+        transition-colors group-hover:text-[var(--primary)];
+    }
+
+    .app-name {
+        @apply font-medium text-gray-900 dark:text-gray-100;
+    }
+    
+    .app-desc {
+        @apply text-sm text-gray-500 dark:text-gray-400;
+    }
+
+    @screen lg {
+        .app-launcher:hover .app-menu {
+            @apply opacity-100 visible;
+        }
+    }
 }
 
 .custom-md img, #post-cover img {
