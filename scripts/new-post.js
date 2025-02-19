@@ -15,29 +15,28 @@ function getDate() {
 const args = process.argv.slice(2)
 
 if (args.length === 0) {
-  console.error(`Error: No filename argument provided
-Usage: npm run new-post -- <filename>`)
-  process.exit(1) // Terminate the script and return error code 1
-}
-
-let fileName = args[0]
-
-// Add .md extension if not present
-const fileExtensionRegex = /\.(md|mdx)$/i
-if (!fileExtensionRegex.test(fileName)) {
-  fileName += ".md"
-}
-
-const targetDir = "./src/content/posts/"
-const fullPath = path.join(targetDir, fileName)
-
-if (fs.existsSync(fullPath)) {
-  console.error(`Error：File ${fullPath} already exists `)
+  console.error(`Error: No folder name argument provided
+Usage: npm run new-post -- <foldername>`)
   process.exit(1)
 }
 
+const folderName = args[0]
+const targetDir = "./src/content/posts/"
+const postDir = path.join(targetDir, folderName)
+const imagesDir = path.join(postDir, "images")
+
+// Check if folder already exists
+if (fs.existsSync(postDir)) {
+  console.error(`Error: Folder ${postDir} already exists`)
+  process.exit(1)
+}
+
+// Create post folder and images subfolder
+fs.mkdirSync(postDir, { recursive: true })
+fs.mkdirSync(imagesDir)
+
 const content = `---
-title: ${args[0]}
+title: ${folderName}
 published: ${getDate()}
 description: ''
 image: ''
@@ -48,6 +47,9 @@ lang: ''
 ---
 `
 
-fs.writeFileSync(path.join(targetDir, fileName), content)
+// Create index.md file
+fs.writeFileSync(path.join(postDir, "index.md"), content)
 
-console.log(`Post ${fullPath} created`)
+console.log(`Post folder created at ${postDir}`)
+console.log(`Images folder created at ${imagesDir}`)
+console.log(`Index file created at ${path.join(postDir, "index.md")}`)

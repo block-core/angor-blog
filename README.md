@@ -3,19 +3,25 @@
 ## 🚀 Getting Started
 
 ### 1. Clone the Repository
+
 To begin, clone the repository and navigate into the project directory:
+
 ```bash
 git clone https://github.com/your-repo/angor-blog.git
 cd angor-blog
 ```
 
 ### 2. Install Dependencies
+
 Next, install the necessary dependencies:
+
 ```bash
 pnpm install
 pnpm add sharp
 ```
+
 If `pnpm` is not already installed, you can install it globally using:
+
 ```bash
 npm install -g pnpm
 ```
@@ -36,27 +42,105 @@ All commands should be executed from the root directory of the project using a t
 
 ## ✍️ Creating a New Post
 
-Follow these steps to create a new post using the provided script:
+### 1. Create Post Structure
 
-### 1. Open Terminal or Command Prompt
-Navigate to the root directory of the project.
+Run the following command to create a new post:
 
-### 2. Run the Script
-Execute the following command, replacing `<foldername>` with the desired name for your post folder:
 ```bash
-pnpm new-post <foldername>
+pnpm new-post my-awesome-post
 ```
-For example, to name your post folder "what-is-angor", use:
-```bash
-pnpm new-post what-is-angor
-```
-This command will:
-- Format the folder name to lowercase with hyphens.
-- Create a directory with this name in `src/content/posts/`.
-- Generate an `index.md` file within that directory containing initial post metadata.
 
-### 3. Edit the `index.md` File
-Open the newly created `index.md` file and start writing your post. Customize the frontmatter and add your content as needed.
+This will create:
+
+```
+src/content/posts/
+└── my-awesome-post/
+    ├── index.md
+    └── images/
+```
+
+### 2. Configure Post Metadata
+
+Edit the frontmatter in `index.md`:
+
+```yaml
+---
+title: "My Awesome Post"     # The title that appears at the top of your post
+published: 2024-02-19       # Publication date (auto-filled)
+description: "A detailed introduction to blockchain technology"  # Brief description
+image: "./images/cover.jpg" # Post cover image (relative path)
+tags: ["Blockchain", "Technology", "Crypto"]  # Related topics
+category: "Technology"      # Main category
+draft: false               # Set to true to hide from production
+lang: "en"                # Language code (en, fa, etc)
+---
+```
+
+### 3. Add Images
+
+1. Place your post images in the `images` folder
+2. Reference them in your markdown using relative paths:
+
+```markdown
+![Image description](./images/example.jpg)
+```
+
+### 4. Write Content
+
+Below the frontmatter, write your post content using Markdown:
+
+```markdown
+## Introduction
+
+This is a paragraph with **bold** and *italic* text.
+
+### Code Examples
+​```javascript
+console.log("Hello World!");
+​```
+
+### Lists
+- Item 1
+- Item 2
+  - Sub-item 2.1
+  - Sub-item 2.2
+
+### Links
+[Visit our website](https://example.com)
+
+### Tables
+| Header 1 | Header 2 |
+|----------|----------|
+| Cell 1   | Cell 2   |
+```
+
+### 5. Preview Your Post
+
+1. Run the development server:
+
+```bash
+pnpm dev
+```
+
+2. Open `http://localhost:4321` in your browser
+3. Navigate to your new post
+
+### 6. Publishing
+
+1. Set `draft: false` in the frontmatter
+2. Build the site:
+
+```bash
+pnpm build
+```
+
+### 7. Post Organization Tips
+
+- Keep image files under 1MB when possible
+- Use descriptive image filenames
+- Organize content with clear headings (H2, H3, etc.)
+- Add relevant tags for better discoverability
+- Include a meaningful description for SEO
 
 ## ⚙️ Frontmatter of Posts
 
@@ -75,6 +159,7 @@ draft: false
 ```
 
 ### Frontmatter Fields Explained
+
 - `title`: The title of your blog post.
 - `published`: The date when the post is published.
 - `description`: A brief description of the post.
