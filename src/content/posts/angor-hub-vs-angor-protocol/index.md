@@ -84,9 +84,9 @@ Say Mr. Scrooge is feeling confident about his investment. He locks up 10 BTC fo
 
 But then, doubt creeps in. Maybe the gold mine isn't as promising as it seemed, or Scrooge just gets cold feet. What if he decides to pull out the remaining funds? He can do that, but at a cost. Bailing out early means paying a penalty. The penalty is a time duration after which the investor's remaining/unspent funds are unlocked, not a monetary penalty.
 
-Here's the catch: The unlocked funds are meant for future work, but at the same time, Mr Scrooge is taking a gamble by trusting that Piccolo will deliver results before the next batch of BTC is released.
+Here's the catch: The unlocked funds are meant for future work, but at the same time, Mr Scrooge is taking a gamble by trusting that Piccolo will deliver results before the next batch of BTC is released. To manage this risk, milestones are set in place.
 
-Milestones are just preset dates and block numbers, not some complex system. When a milestone date arrives, the founder can access the set amount. For example, Piccolo gets the next 1 BTC only after reaching the next milestone, ensuring progress drives the investment, not just time.
+These milestones are simply pre-set dates and block numbers. When a milestone is reached, the founder can access the allocated funds. For example, Piccolo receives the next 1 BTC only when the next milestone arrives, ensuring that investment is tied to progress, not just time.
 
 But without a neutral third party to enforce the agreement, trust remains key. Investors and founders need to be on the same page, setting clear expectations before shaking hands - virtually, of course.
 
