@@ -2,7 +2,7 @@
 title: "Angor Hub & Angor Protocol"
 published: 2025-02-20
 description: "Understanding the differences between Angor Hub and Angor Protocol, and how they work together in decentralized crowdfunding"
-image: '/images/angor.svg'
+image: '/images/angor-angorhub.svg'
 tags: ['Angor', 'Angor Hub', 'Angor Protocol', 'Bitcoin', 'Crowdfunding']
 category: "Angor"
 draft: false
