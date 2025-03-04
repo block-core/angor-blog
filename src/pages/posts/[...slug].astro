@@ -13,7 +13,7 @@ import PostMetadata from '../../components/PostMeta.astro'
 import ImageWrapper from '../../components/misc/ImageWrapper.astro'
 import { profileConfig, siteConfig } from '../../config'
 import { formatDateToYYYYMMDD } from '../../utils/date-utils'
-
+ 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('posts', ({ data }) => {
     return import.meta.env.PROD ? data.draft !== true : true
@@ -48,11 +48,9 @@ const jsonLd = {
 <MainGridLayout banner={entry.data.image} title={entry.data.title} description={entry.data.description} lang={entry.data.lang} setOGTypeArticle={true} headings={headings}>
     <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
     <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative mb-4">
-        <div id="post-container" class:list={["card-base z-10 px-6 md:px-9 pt-6 pb-4 relative w-full ",
-            {}
-        ]}>
-            <!-- word count and reading time -->
-            <div class="flex flex-row text-black/30 dark:text-white/30 gap-5 mb-3 transition onload-animation">
+        <div id="post-container" class:list={["card-base z-10 px-6 md:px-9 pt-6 pb-4 relative w-full "]}>
+            <!-- word count, reading time and image toggle -->
+            <div class="flex flex-row text-black/30 dark:text-white/30 gap-5 mb-3 transition onload-animation items-center">
                 <div class="flex flex-row items-center">
                     <div class="transition h-6 w-6 rounded-md bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50 flex items-center justify-center mr-2">
                         <Icon name="material-symbols:notes-rounded"></Icon>
@@ -65,6 +63,22 @@ const jsonLd = {
                     </div>
                     <div class="text-sm">{remarkPluginFrontmatter.minutes} {" " + i18n(I18nKey.minutesCount)}</div>
                 </div>
+                
+                {entry.data.image && (
+                    <div class="flex flex-row items-center ml-auto">
+                        <button 
+                            id="toggle-post-image"
+                            data-post-slug={entry.slug}
+                            class="h-8 w-8 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 flex items-center justify-center transition-all duration-300"
+                            title="Toggle post image"
+                        >
+                            <Icon 
+                                name="material-symbols:image" 
+                                class="w-5 h-5 text-black/50 dark:text-white/50"
+                            />
+                        </button>
+                    </div>
+                )}
             </div>
 
             <!-- title -->
@@ -93,13 +107,27 @@ const jsonLd = {
                 {!entry.data.image && <div class="border-[var(--line-divider)] border-dashed border-b-[1px] mb-5"></div>}
             </div>
 
-            <!-- always show cover as long as it has one -->
+            <!-- Image display area -->
+            {entry.data.image && (
+                <div 
+                    id="post-image-container"
+                    class="mb-6 transition-all duration-300"
+                >
+                    <div
+                        id="post-image-wrapper" 
+                        class="hidden"
+                    >
+                        <img 
+                            src={entry.data.image} 
+                            alt="Post cover" 
+                            class="rounded-xl w-full h-auto object-cover"
+                            loading="lazy"
+                        />
+                    </div>
+                </div>
+            )}
 
-            {entry.data.image &&
-                <ImageWrapper id="post-cover" src={entry.data.image} basePath={path.join("content/posts/", getDir(entry.id))} class="mb-8 rounded-xl banner-container onload-animation"/>
-            }
-
-
+            <!-- Content -->
             <Markdown class="mb-6 markdown-content onload-animation">
                 <Content />
             </Markdown>
@@ -131,4 +159,42 @@ const jsonLd = {
         </a>
     </div>
 
+    <script>
+        /** @type {() => void} */
+        let cleanup = () => {};
+
+        function setupImageToggle() {
+            // Cleanup previous event listeners
+            cleanup();
+
+            const toggleBtn = document.querySelector('#toggle-post-image');
+            const imageWrapper = document.querySelector('#post-image-wrapper');
+            
+            if (!toggleBtn || !imageWrapper) return;
+            
+            function toggleImage() {
+                const isHidden = imageWrapper && imageWrapper.classList.contains('hidden');
+                if (imageWrapper) {
+                    imageWrapper.classList.toggle('hidden');
+                }
+                if (toggleBtn) {
+                    toggleBtn.classList.toggle('bg-primary/20');
+                }
+            }
+            
+            toggleBtn.addEventListener('click', toggleImage);
+            
+            // Store cleanup function
+            cleanup = () => toggleBtn.removeEventListener('click', toggleImage);
+        }
+
+        // Run on view transitions
+        document.addEventListener('astro:after-swap', setupImageToggle);
+        
+        // Run on initial page load
+        setupImageToggle();
+
+        // Cleanup on page unload
+        document.addEventListener('astro:before-swap', () => cleanup());
+    </script>
 </MainGridLayout>
