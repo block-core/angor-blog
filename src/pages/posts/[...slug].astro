@@ -13,15 +13,51 @@ import PostMetadata from '../../components/PostMeta.astro'
 import ImageWrapper from '../../components/misc/ImageWrapper.astro'
 import { profileConfig, siteConfig } from '../../config'
 import { formatDateToYYYYMMDD } from '../../utils/date-utils'
- 
+
+interface BlogEntry {
+  slug: string;
+  data: {
+    title: string;
+    description?: string;
+    draft?: boolean;
+    tags?: string[];
+    lang?: string;
+    published: Date;
+    updated?: Date;
+    image?: string;
+    category?: string;
+    nextSlug?: string;
+    nextTitle?: string;
+    prevSlug?: string;
+    prevTitle?: string;
+  };
+  render: () => Promise<{ Content: any, headings: any, remarkPluginFrontmatter: any }>;
+}
+
+interface JsonLD {
+  '@context': string;
+  '@type': string;
+  headline: string;
+  description: string;
+  keywords?: string[];
+  author: {
+    '@type': string;
+    name: string;
+    url: URL;
+  };
+  datePublished: string;
+  inLanguage: string;
+}
+
 export async function getStaticPaths() {
   const blogEntries = await getCollection('posts', ({ data }) => {
     return import.meta.env.PROD ? data.draft !== true : true
-  })
+  }) as unknown as BlogEntry[];
+  
   return blogEntries.map(entry => ({
     params: { slug: entry.slug },
     props: { entry },
-  }))
+  }));
 }
 
 const { entry } = Astro.props
@@ -29,7 +65,7 @@ const { Content, headings } = await entry.render()
 
 const { remarkPluginFrontmatter } = await entry.render()
 
-const jsonLd = {
+const jsonLd: JsonLD = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
   headline: entry.data.title,
@@ -38,11 +74,10 @@ const jsonLd = {
   author: {
     '@type': 'Person',
     name: profileConfig.name,
-    url: Astro.site,
+    url: Astro.site!,
   },
   datePublished: formatDateToYYYYMMDD(entry.data.published),
   inLanguage: (entry.data.lang ? entry.data.lang.replace('_', '-') : siteConfig.lang.replace('_', '-')),
-  // TODO include cover image here
 }
 ---
 <MainGridLayout banner={entry.data.image} title={entry.data.title} description={entry.data.description} lang={entry.data.lang} setOGTypeArticle={true} headings={headings}>
@@ -70,7 +105,7 @@ const jsonLd = {
                             id="toggle-post-image"
                             data-post-slug={entry.slug}
                             class="h-8 w-8 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 flex items-center justify-center transition-all duration-300"
-                            title="Toggle post image"
+                            title="Post image"
                         >
                             <Icon 
                                 name="material-symbols:image" 
@@ -101,8 +136,8 @@ const jsonLd = {
                         class="mb-5"
                         published={entry.data.published}
                         updated={entry.data.updated}
-                        tags={entry.data.tags}
-                        category={entry.data.category}
+                        tags={entry.data.tags || []}
+                        category={entry.data.category || ''}
                 ></PostMetadata>
                 {!entry.data.image && <div class="border-[var(--line-divider)] border-dashed border-b-[1px] mb-5"></div>}
             </div>
@@ -160,41 +195,15 @@ const jsonLd = {
     </div>
 
     <script>
-        /** @type {() => void} */
-        let cleanup = () => {};
-
-        function setupImageToggle() {
-            // Cleanup previous event listeners
-            cleanup();
-
-            const toggleBtn = document.querySelector('#toggle-post-image');
-            const imageWrapper = document.querySelector('#post-image-wrapper');
-            
-            if (!toggleBtn || !imageWrapper) return;
-            
-            function toggleImage() {
-                const isHidden = imageWrapper && imageWrapper.classList.contains('hidden');
-                if (imageWrapper) {
-                    imageWrapper.classList.toggle('hidden');
-                }
-                if (toggleBtn) {
-                    toggleBtn.classList.toggle('bg-primary/20');
-                }
-            }
-            
-            toggleBtn.addEventListener('click', toggleImage);
-            
-            // Store cleanup function
-            cleanup = () => toggleBtn.removeEventListener('click', toggleImage);
-        }
+        import { imageToggle } from '../../scripts/imageToggle';
 
         // Run on view transitions
-        document.addEventListener('astro:after-swap', setupImageToggle);
+        document.addEventListener('astro:after-swap', () => imageToggle.setupImageToggle());
         
         // Run on initial page load
-        setupImageToggle();
+        imageToggle.setupImageToggle();
 
         // Cleanup on page unload
-        document.addEventListener('astro:before-swap', () => cleanup());
+        document.addEventListener('astro:before-swap', () => imageToggle.cleanup());
     </script>
 </MainGridLayout>
