@@ -1,24 +1,31 @@
 ---
-import { formatDateToYYYYMMDD } from '../../utils/date-utils'
 import { Icon } from 'astro-icon/components'
-import { licenseConfig, profileConfig } from '../../config'
-import { i18n } from '../../i18n/translation'
-import I18nKey from '../../i18n/i18nKey'
+import { i18n } from '@i18n/translation'
+import I18nKey from '@i18n/i18nKey'
+import { formatDateToYYYYMMDD } from '@utils/date-utils'
+import { profileConfig as profileConf, licenseConfig as licenseConf } from '../../config'
+import { getPostUrlBySlug } from '@utils/url-utils'
 
-interface Props {
-  title: string
-  slug: string
-  pubDate: Date
-  class: string
+export interface Props {
+    title: string;
+    slug: string;
+    pubDate: Date;
+    class?: string;
+    author?: string;
+    nostrPubKey?: string;
 }
 
-const { title, slug, pubDate } = Astro.props
-const className = Astro.props.class
-const profileConf = profileConfig
-const licenseConf = licenseConfig
-const postUrl = decodeURIComponent(Astro.url.toString())
+const { title, slug, pubDate, class: className = '', author = '', nostrPubKey = '' } = Astro.props;
+const postUrl = getPostUrlBySlug(slug);
+
+// Use the author from props if available, otherwise use the profile config name
+const displayAuthor = author || profileConf.name;
+
+// Create Primal profile link if nostrPubKey is available
+const primalLink = nostrPubKey ? `https://primal.net/p/${nostrPubKey}` : null;
 ---
-<div class=`relative transition overflow-hidden bg-[var(--license-block-bg)] py-5 px-6 ${className}`>
+
+<div class={`relative transition overflow-hidden bg-[var(--license-block-bg)] py-5 px-6 ${className}`}>
     <div class="transition font-bold text-black/75 dark:text-white/75">
         {title}
     </div>
@@ -28,7 +35,13 @@ const postUrl = decodeURIComponent(Astro.url.toString())
     <div class="flex gap-6 mt-2">
         <div>
             <div class="transition text-black/30 dark:text-white/30 text-sm">{i18n(I18nKey.author)}</div>
-            <div class="transition text-black/75 dark:text-white/75 whitespace-nowrap">{profileConf.name}</div>
+            {primalLink ? (
+                <a href={primalLink} target="_blank" rel="noopener noreferrer" class="transition text-[var(--primary)] whitespace-nowrap">
+                    {displayAuthor}
+                </a>
+            ) : (
+                <div class="transition text-black/75 dark:text-white/75 whitespace-nowrap">{displayAuthor}</div>
+            )}
         </div>
         <div>
             <div class="transition text-black/30 dark:text-white/30 text-sm">{i18n(I18nKey.publishedAt)}</div>

@@ -7,6 +7,8 @@ tags: ['Angor', 'Angor Hub', 'Angor Protocol', 'Bitcoin', 'Crowdfunding']
 category: "Angor"
 draft: false
 lang: "en"
+author: "Angor Team"
+nostrPubKey: "npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02"
 ---
 
 ## Same Same but Different

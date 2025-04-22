@@ -48,34 +48,43 @@ if (!fs.existsSync(targetDir)) {
 
 // Check if folder already exists
 if (fs.existsSync(postDir)) {
-  console.error(`Error: Folder ${postDir} already exists`)
+  console.error(`Error: Folder "${folderName}" already exists in posts directory.`)
   process.exit(1)
 }
 
-// Create post folder with error handling
 try {
-  fs.mkdirSync(postDir, { recursive: true })
-  
-  const content = `---
-title: "${originalTitle}"
-published: ${getDate()}
-description: ""
-image: ""
+  fs.mkdirSync(postDir)
+  console.log(`Created directory: ${postDir}`)
+} catch (error) {
+  console.error(`Error creating post directory: ${error.message}`)
+  process.exit(1)
+}
+
+// Get date string for frontmatter
+const dateStr = getDate()
+
+// Create frontmatter for the new post
+const frontmatter = `---
+title: ${originalTitle}
+description: ''
+published: ${dateStr}
 tags: []
-category: ""
-draft: false
-lang: ""
+category: ''
+image: ''
+author: 'Angor'
+nostrPubKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
 ---
 
-Write your content here...
+Content goes here...
 `
 
-  // Using writeFileSync with UTF-8 encoding explicitly
-  fs.writeFileSync(path.join(postDir, "index.md"), content, 'utf8')
-  
-  console.log(`Post folder created at ${postDir}`)
-  console.log(`Index file created at ${path.join(postDir, "index.md")}`)
+// Write the markdown file
+const mdFilePath = path.join(postDir, "index.md")
+try {
+  fs.writeFileSync(mdFilePath, frontmatter)
+  console.log(`Created file: ${mdFilePath}`)
+  console.log("Post created successfully!")
 } catch (error) {
-  console.error(`Error creating post: ${error.message}`)
+  console.error(`Error writing markdown file: ${error.message}`)
   process.exit(1)
 }

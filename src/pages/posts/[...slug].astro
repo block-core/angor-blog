@@ -30,6 +30,8 @@ interface BlogEntry {
     nextTitle?: string;
     prevSlug?: string;
     prevTitle?: string;
+    author?: string;
+    nostrPubKey?: string;
   };
   render: () => Promise<{ Content: any, headings: any, remarkPluginFrontmatter: any }>;
 }
@@ -138,6 +140,8 @@ const jsonLd: JsonLD = {
                         updated={entry.data.updated}
                         tags={entry.data.tags || []}
                         category={entry.data.category || ''}
+                        author={entry.data.author || ''}
+                        nostrPubKey={entry.data.nostrPubKey || ''}
                 ></PostMetadata>
                 {!entry.data.image && <div class="border-[var(--line-divider)] border-dashed border-b-[1px] mb-5"></div>}
             </div>
@@ -167,7 +171,14 @@ const jsonLd: JsonLD = {
                 <Content />
             </Markdown>
 
-            {licenseConfig.enable && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
+            {licenseConfig.enable && <License 
+                title={entry.data.title} 
+                slug={entry.slug} 
+                pubDate={entry.data.published} 
+                author={entry.data.author || ''} 
+                nostrPubKey={entry.data.nostrPubKey || ''} 
+                class="mb-6 rounded-xl license-container onload-animation"
+            ></License>}
 
         </div>
     </div>
