@@ -58,18 +58,18 @@ const getPageUrl = (p: number) => {
     >
         <Icon name="material-symbols:chevron-left-rounded" class="text-[1.75rem]"></Icon>
     </a>
-    <div class="bg-[var(--card-bg)] flex flex-row rounded-lg items-center text-neutral-700 dark:text-neutral-300 font-bold">
+    <div class="bg-[var(--card-bg)] flex flex-row rounded-lg items-center text-neutral-700 dark:text-neutral-300 font-bold px-2 gap-1">
         {pages.map((p) => {
             if (p == HIDDEN)
                 return <Icon name="material-symbols:more-horiz" class="mx-1"/>;
             if (p == page.currentPage)
-                return <div class="h-11 w-11 rounded-lg bg-[var(--primary)] flex items-center justify-center
+                return <div class="h-9 w-9 rounded-md bg-[var(--primary)] flex items-center justify-center
                     font-bold text-white dark:text-black/70"
                 >
                     {p}
                 </div>
             return <a href={url(getPageUrl(p))} aria-label=`Page ${p}`
-                class="btn-card w-11 h-11 rounded-lg overflow-hidden active:scale-[0.85]"
+                class="btn-card w-9 h-9 rounded-md overflow-hidden active:scale-[0.85]"
             >{p}</a>
         })}
     </div>

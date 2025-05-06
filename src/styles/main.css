@@ -179,6 +179,14 @@
             @apply opacity-100 visible;
         }
     }
+
+    /* New styles for interactive cards */
+    .card-interactive {
+        @apply transition-all duration-300 ease-in-out;
+    }
+    .card-interactive:hover {
+        @apply shadow-xl transform -translate-y-1 scale-[1.02];
+    }
 }
 
 .custom-md img, #post-cover img {
