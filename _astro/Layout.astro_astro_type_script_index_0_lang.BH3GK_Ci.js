@@ -1,0 +1,1 @@
+import{_ as o}from"./preload-helper.CLcXU_4U.js";o((()=>import("./photoswipe.esm.CQ2-2Afl.js")),[]);const e=()=>{window.swup.hooks.on("page:view",(()=>{})),window.swup.hooks.on("content:replace",(()=>{}),{before:!0})};window.swup?e():document.addEventListener("swup:enable",e);
