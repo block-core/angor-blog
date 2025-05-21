@@ -2,10 +2,10 @@
 import { getPostUrlBySlug } from '@utils/url-utils'
 import PostCard from './PostCard.astro'
 
-const { page } = Astro.props
+const { page, isHomePage = false } = Astro.props
 
 const posts = page.data
-const featuredPostsCount = 4 // Number of posts to display full-width
+const featuredPostsCount = isHomePage ? 0 : 4  // No featured posts on home page
 const featuredPosts = posts.slice(0, featuredPostsCount)
 const regularPosts = posts.slice(featuredPostsCount)
 
@@ -40,7 +40,13 @@ const animationInterval = 50
 
     <!-- Regular Posts Section - Grid -->
     {regularPosts.length > 0 && (
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class:list={[
+            "grid gap-4",
+            {
+                "grid-cols-1 md:grid-cols-2": !isHomePage, 
+                "grid-cols-1 md:grid-cols-2 lg:grid-cols-3": isHomePage
+            }
+        ]}>
             {regularPosts.map((entry: any) => {
                 const currentDelay = animationDelayCounter++;
                 return (
