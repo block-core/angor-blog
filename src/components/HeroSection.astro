@@ -1,0 +1,261 @@
+---
+import { getPostUrlBySlug } from '@utils/url-utils';
+import { Icon } from 'astro-icon/components';
+import { i18n } from '@i18n/translation';
+import I18nKey from '@i18n/i18nKey';
+
+// This component receives the latest posts as props
+const { latestPosts = [] } = Astro.props;
+
+// Split posts into featured (for slider) and sidebar posts
+const featuredPosts = latestPosts.slice(0, 5); // First 5 posts for the slider
+const sidebarPosts = latestPosts.slice(0, 3); // First 3 posts for sidebar
+
+// Helper function to truncate text
+const truncateText = (text, maxLength) => {
+  if (!text) return '';
+  return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+};
+---
+
+<div class="hero-section w-full mb-8 onload-animation" style="animation-delay: calc(var(--content-delay) + 50ms);">
+  <div class="flex flex-col lg:flex-row gap-4">
+    <!-- Slider Section -->
+    <div class="slider-container relative w-full lg:w-2/3 rounded-[var(--radius-large)] overflow-hidden">
+      <div id="hero-slider" class="relative w-full h-[400px] md:h-[450px]">
+        {featuredPosts.map((post, index) => (
+          <div 
+            class:list={[
+              "slider-item absolute top-0 left-0 w-full h-full transition-all duration-500 rounded-[var(--radius-large)] overflow-hidden", 
+              { "active": index === 0 }
+            ]}
+            data-index={index}
+          >
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+            
+            {post.data.image && (
+              <img 
+                src={post.data.image} 
+                alt={post.data.title} 
+                class="w-full h-full object-cover"
+              />
+            )}
+            
+            <div class="absolute bottom-0 left-0 right-0 z-20 p-6 md:p-8 text-white">
+              {post.data.category && (
+                <span class="inline-block px-3 py-1 bg-[var(--primary)] text-black/90 dark:text-white/90 rounded-lg text-xs font-bold mb-3">
+                  {post.data.category}
+                </span>
+              )}
+              
+              <h2 class="text-2xl md:text-3xl font-bold mb-2 line-clamp-2">
+                <a href={getPostUrlBySlug(post.slug)} class="hover:text-[var(--primary)] transition-colors">
+                  {post.data.title}
+                </a>
+              </h2>
+              
+              <p class="text-white/80 line-clamp-2 mb-4 hidden md:block">
+                {truncateText(post.data.description, 150)}
+              </p>
+              
+              <div class="flex items-center text-white/60 text-sm">
+                <span>{new Date(post.data.published).toLocaleDateString()}</span>
+                <span class="mx-2">•</span>
+                <span>{post.data.author || 'Angor'}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <!-- Navigation Arrows -->
+      <button 
+        id="prev-slide" 
+        class="absolute top-1/2 left-4 transform -translate-y-1/2 z-30 bg-black/30 hover:bg-black/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all"
+        aria-label="Previous slide"
+      >
+        <Icon name="material-symbols:chevron-left-rounded" class="text-2xl" />
+      </button>
+      
+      <button 
+        id="next-slide" 
+        class="absolute top-1/2 right-4 transform -translate-y-1/2 z-30 bg-black/30 hover:bg-black/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all"
+        aria-label="Next slide"
+      >
+        <Icon name="material-symbols:chevron-right-rounded" class="text-2xl" />
+      </button>
+      
+      <!-- Slider Indicators -->
+      <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-30">
+        {featuredPosts.map((_, index) => (
+          <button 
+            class:list={[
+              "slider-indicator w-2 h-2 rounded-full transition-all", 
+              index === 0 ? "bg-white w-6" : "bg-white/50"
+            ]}
+            data-index={index}
+            aria-label={`Go to slide ${index + 1}`}
+          ></button>
+        ))}
+      </div>
+    </div>
+    
+    <!-- Sidebar Posts - Make total height equal to slider height -->
+    <div class="sidebar-posts w-full lg:w-1/3 flex flex-col gap-3 lg:h-[450px]">
+      {sidebarPosts.map((post, index) => (
+        <a 
+          href={getPostUrlBySlug(post.slug)} 
+          class="card-interactive group flex h-[calc(450px/3-0.5rem)] lg:h-[calc(100%/3-0.667rem)] rounded-[var(--radius-large)] overflow-hidden bg-[var(--card-bg)] relative"
+          style={`animation-delay: calc(var(--content-delay) + ${(index + 1) * 70}ms);`}
+        >
+          {post.data.image && (
+            <div class="w-1/3 h-full overflow-hidden">
+              <img 
+                src={post.data.image} 
+                alt={post.data.title} 
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+          )}
+          
+          <div class="w-2/3 p-4 flex flex-col justify-between">
+            <div>
+              {post.data.category && (
+                <span class="text-xs text-[var(--primary)] font-bold">
+                  {post.data.category}
+                </span>
+              )}
+              
+              <h3 class="font-bold text-black/90 dark:text-white/90 line-clamp-2 transition group-hover:text-[var(--primary)]">
+                {post.data.title}
+              </h3>
+            </div>
+            
+            <div class="text-xs text-black/50 dark:text-white/50">
+              {new Date(post.data.published).toLocaleDateString()}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Slider functionality
+  const setupSlider = () => {
+    const slider = document.getElementById('hero-slider');
+    if (!slider) return;
+    
+    const items = slider.querySelectorAll('.slider-item');
+    const indicators = document.querySelectorAll('.slider-indicator');
+    const prevBtn = document.getElementById('prev-slide');
+    const nextBtn = document.getElementById('next-slide');
+    
+    let current = 0;
+    const total = items.length;
+    
+    // Auto slide interval
+    let slideInterval;
+    
+    const goToSlide = (index) => {
+      // Loop back to start or end
+      if (index < 0) index = total - 1;
+      if (index >= total) index = 0;
+      
+      // Remove active class from all slides
+      items.forEach(item => {
+        item.classList.remove('active');
+        item.style.opacity = '0';
+        item.style.zIndex = '0';
+      });
+      
+      // Set active slide
+      items[index].classList.add('active');
+      items[index].style.opacity = '1';
+      items[index].style.zIndex = '1';
+      
+      // Update indicators
+      indicators.forEach((indicator, i) => {
+        if (i === index) {
+          indicator.classList.add('bg-white');
+          indicator.classList.add('w-6');
+          indicator.classList.remove('bg-white/50');
+          indicator.classList.remove('w-2');
+        } else {
+          indicator.classList.remove('bg-white');
+          indicator.classList.remove('w-6');
+          indicator.classList.add('bg-white/50');
+          indicator.classList.add('w-2');
+        }
+      });
+      
+      current = index;
+      
+      // Reset auto slide timer
+      resetSlideInterval();
+    };
+    
+    // Initialize first slide
+    items[0].style.opacity = '1';
+    items[0].style.zIndex = '1';
+    
+    // Set up event listeners
+    prevBtn?.addEventListener('click', () => goToSlide(current - 1));
+    nextBtn?.addEventListener('click', () => goToSlide(current + 1));
+    
+    // Indicator clicks
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => goToSlide(index));
+    });
+    
+    // Set up auto slide
+    const resetSlideInterval = () => {
+      clearInterval(slideInterval);
+      slideInterval = setInterval(() => {
+        goToSlide(current + 1);
+      }, 5000); // Change slide every 5 seconds
+    };
+    
+    resetSlideInterval();
+    
+    // Pause on hover
+    slider.addEventListener('mouseenter', () => {
+      clearInterval(slideInterval);
+    });
+    
+    slider.addEventListener('mouseleave', () => {
+      resetSlideInterval();
+    });
+  };
+  
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', setupSlider);
+  
+  // For Astro view transitions
+  document.addEventListener('astro:after-swap', setupSlider);
+</script>
+
+<style>
+  .slider-item {
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .slider-item.active {
+    opacity: 1;
+    z-index: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+  }
+  
+  .slider-indicator {
+    transition: width 0.3s ease, background-color 0.3s ease;
+  }
+</style>

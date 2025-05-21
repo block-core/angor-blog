@@ -1,6 +1,7 @@
 ---
 import { getPostUrlBySlug } from '@utils/url-utils'
 import PostCard from './PostCard.astro'
+import HeroSection from './HeroSection.astro'
 
 const { page, isHomePage = false } = Astro.props
 
@@ -13,6 +14,11 @@ let animationDelayCounter = 0
 const animationInterval = 50
 ---
 <div class="transition rounded-[var(--radius-large)] bg-[var(--card-bg)] py-1 md:py-0 md:bg-transparent mb-4">
+    <!-- Hero Section - Only show on home page -->
+    {isHomePage && (
+        <HeroSection latestPosts={posts} />
+    )}
+
     <!-- Featured Posts Section -->
     {featuredPosts.length > 0 && (
         <div class="flex flex-col gap-4 mb-4">
@@ -39,6 +45,10 @@ const animationInterval = 50
     )}
 
     <!-- Regular Posts Section - Grid -->
+    {regularPosts.length > 0 && isHomePage && (
+        <h2 class="text-2xl font-bold text-black/90 dark:text-white/90 mb-4 mt-8 onload-animation" style="animation-delay: calc(var(--content-delay) + 250ms);">Latest Articles</h2>
+    )}
+    
     {regularPosts.length > 0 && (
         <div class:list={[
             "grid gap-4",
@@ -47,7 +57,7 @@ const animationInterval = 50
                 "grid-cols-1 md:grid-cols-2 lg:grid-cols-3": isHomePage
             }
         ]}>
-            {regularPosts.map((entry: any) => {
+            {(isHomePage ? regularPosts.slice(3) : regularPosts).map((entry: any) => {
                 const currentDelay = animationDelayCounter++;
                 return (
                     <PostCard

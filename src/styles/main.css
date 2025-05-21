@@ -187,6 +187,30 @@
     .card-interactive:hover {
         @apply shadow-xl transform -translate-y-1 scale-[1.02];
     }
+
+    /* Hero Slider Animations */
+    @keyframes slideIn {
+        0% {
+            transform: translateX(20px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .hero-slider-animation {
+        animation: slideIn 0.5s ease-out forwards;
+    }
+
+    /* Ensure line-clamp works as expected */
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
 }
 
 .custom-md img, #post-cover img {
