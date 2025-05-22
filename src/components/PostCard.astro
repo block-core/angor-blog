@@ -60,10 +60,6 @@ const { remarkPluginFrontmatter } = await entry.render()
 
         <PostMetadata published={published} updated={updated} tags={tags} category={category} hideTagsForMobile={true} hideUpdateDate={true} class="mb-4"></PostMetadata>
 
-        <div class="transition text-75 mb-4 line-clamp-3 flex-grow">
-            { description || remarkPluginFrontmatter.excerpt }
-        </div>
-
         <div class="text-sm text-black/30 dark:text-white/30 flex justify-between items-center mt-auto pt-4">
             <div class="flex items-center">
                 <span>{remarkPluginFrontmatter.words} {i18n(I18nKey.wordsCount) || 'words'}</span>
@@ -79,12 +75,3 @@ const { remarkPluginFrontmatter } = await entry.render()
 </div>
 <div class="transition border-t-[1px] border-dashed mx-6 border-black/10 dark:border-white/[0.15] last:border-t-0 md:hidden"></div>
 
-<style>
-  /* Ensure line-clamp works as expected */
-  .line-clamp-3 {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-  }
-</style>
