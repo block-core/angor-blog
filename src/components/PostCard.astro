@@ -51,9 +51,10 @@ const { remarkPluginFrontmatter } = await entry.render()
     )}
     <div class="p-6 flex flex-col flex-grow">
         <a href={url}
-           class="transition group w-full block font-bold mb-3 text-2xl text-90
+           class="transition group w-full block font-bold mb-3 text-lg text-90
                 hover:text-[var(--primary)] dark:hover:text-[var(--primary)]
                 active:text-[var(--title-active)] dark:active:text-[var(--title-active)]
+                whitespace-nowrap overflow-hidden text-ellipsis
         ">
             {title}
         </a>
@@ -74,4 +75,11 @@ const { remarkPluginFrontmatter } = await entry.render()
     </div>
 </div>
 <div class="transition border-t-[1px] border-dashed mx-6 border-black/10 dark:border-white/[0.15] last:border-t-0 md:hidden"></div>
+
+<style>
+  /* Additional styles to enhance title truncation if needed */
+  a {
+    max-width: 100%;
+  }
+</style>
 
