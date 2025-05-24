@@ -6,7 +6,7 @@ import I18nKey from '@i18n/i18nKey'
 import Icon from '@iconify/svelte'
 let keywordDesktop = ''
 let keywordMobile = ''
-let result = []
+let result: any[] = []
 const fakeResult = [
   {
     url: url('/'),
@@ -37,11 +37,22 @@ onMount(() => {
       return
     }
 
-    let arr = []
+    let arr = [];
     if (import.meta.env.PROD) {
-      const ret = await pagefind.search(keyword)
-      for (const item of ret.results) {
-        arr.push(await item.data())
+      try {
+        // Check if pagefind is available before calling it
+        if (typeof window !== 'undefined' && window.pagefind) {
+          const ret = await window.pagefind.search(keyword)
+          for (const item of ret.results) {
+            arr.push(await item.data())
+          }
+        } else {
+          // Fallback to fake results if pagefind isn't loaded yet
+          arr = fakeResult
+        }
+      } catch (error) {
+        console.warn('Pagefind search error:', error)
+        arr = fakeResult
       }
     } else {
       // Mock data for non-production environment

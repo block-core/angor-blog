@@ -270,7 +270,9 @@ function setClickOutsideToClose(panel: string, ignores: string[]) {
 				return;
 			}
 		}
-		panelDom!.classList.add("float-panel-closed");
+		if (panelDom) {
+			panelDom.classList.add("float-panel-closed");
+		}
 	});
 }
 setClickOutsideToClose("display-setting", ["display-setting", "display-settings-switch"])
@@ -455,9 +457,9 @@ function scrollFunction() {
 		}
 		let threshold = window.innerHeight * (bannerHeight / 100) - NAVBAR_HEIGHT - MAIN_PANEL_EXCESS_HEIGHT - 16
 		if (document.body.scrollTop >= threshold || document.documentElement.scrollTop >= threshold) {
-			navbar.classList.add('navbar-hidden')
+			if (navbar) navbar.classList.add('navbar-hidden')
 		} else {
-			navbar.classList.remove('navbar-hidden')
+			if (navbar) navbar.classList.remove('navbar-hidden')
 		}
 	}
 }
@@ -476,11 +478,13 @@ window.onresize = () => {
 import PhotoSwipeLightbox from "photoswipe/lightbox"
 import "photoswipe/style.css"
 
-let lightbox: PhotoSwipeLightbox
+let lightbox: PhotoSwipeLightbox | null = null
 let pswp = import("photoswipe")
 
 function createPhotoSwipe() {
 	// PhotoSwipe disabled to create a more minimal UI experience
+	// Reset lightbox to null since we're not actually creating one
+	lightbox = null
 }
 
 const setup = () => {
@@ -494,7 +498,10 @@ const setup = () => {
 	window.swup.hooks.on(
 		"content:replace",
 		() => {
-			lightbox?.destroy?.()
+			if (lightbox && typeof lightbox.destroy === 'function') {
+				lightbox.destroy()
+				lightbox = null
+			}
 		},
 		{ before: true },
 	)
