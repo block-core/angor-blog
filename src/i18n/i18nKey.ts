@@ -1,38 +1,38 @@
 enum I18nKey {
-  home = 'home',
-  about = 'about',
-  archive = 'archive',
-  search = 'search',
+	home = "home",
+	about = "about",
+	archive = "archive",
+	search = "search",
 
-  tags = 'tags',
-  categories = 'categories',
-  recentPosts = 'recentPosts',
+	tags = "tags",
+	categories = "categories",
+	recentPosts = "recentPosts",
 
-  comments = 'comments',
+	comments = "comments",
 
-  untitled = 'untitled',
-  uncategorized = 'uncategorized',
-  noTags = 'noTags',
+	untitled = "untitled",
+	uncategorized = "uncategorized",
+	noTags = "noTags",
 
-  wordCount = 'wordCount',
-  wordsCount = 'wordsCount',
-  minuteCount = 'minuteCount',
-  minutesCount = 'minutesCount',
-  postCount = 'postCount',
-  postsCount = 'postsCount',
+	wordCount = "wordCount",
+	wordsCount = "wordsCount",
+	minuteCount = "minuteCount",
+	minutesCount = "minutesCount",
+	postCount = "postCount",
+	postsCount = "postsCount",
 
-  themeColor = 'themeColor',
+	themeColor = "themeColor",
+	lightMode = "lightMode",
+	darkMode = "darkMode",
+	systemMode = "systemMode",	more = "more",
+	latestStories = "latestStories",
+	pinnedPosts = "pinnedPosts",
+	showMore = "showMore",
+	viewAll = "viewAll",
 
-  lightMode = 'lightMode',
-  darkMode = 'darkMode',
-  systemMode = 'systemMode',
-
-  more = 'more',
-
-  author = 'author',
-  publishedAt = 'publishedAt',
-  license = 'license',
-  readMore = 'readMore',
+	author = "author",
+	publishedAt = "publishedAt",
+	license = "license",
 }
 
-export default I18nKey
+export default I18nKey;

@@ -4,7 +4,7 @@ import tailwindcss from 'tailwindcss';
 
 export default {
     plugins: {
-        'postcss-import': postcssImport,           
+        'postcss-import': postcssImport,          // to combine multiple css files
         'tailwindcss/nesting': postcssNesting,
         tailwindcss: tailwindcss,
     }

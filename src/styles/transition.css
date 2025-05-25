@@ -24,6 +24,17 @@ html.is-animating .transition-swup-fade {
     animation: 300ms fade-in-up;
     animation-fill-mode: forwards;
 }
+
+/* Override for PostStories component */
+.onload-animation.stories-wrapper,
+.stories-wrapper.onload-animation {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    animation: 300ms fade-in-up !important;
+    animation-fill-mode: forwards !important;
+}
+
 #navbar {
     animation-delay: 0ms
 }

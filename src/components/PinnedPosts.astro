@@ -1,0 +1,78 @@
+---
+import { Icon } from "astro-icon/components";
+import PostCard from "./PostCard.astro";
+import I18nKey from "../i18n/i18nKey";
+import { i18n } from "../i18n/translation";
+import { getPinnedPosts } from "../utils/content-utils";
+import { getPostUrlBySlug } from "../utils/url-utils";
+
+interface Props {
+	class?: string;
+	maxPosts?: number;
+}
+
+const { class: className, maxPosts = 4 } = Astro.props;
+const allPinnedPosts = await getPinnedPosts();
+const pinnedPosts = allPinnedPosts.slice(0, maxPosts);
+---
+
+{pinnedPosts.length > 0 && (
+	<div class:list={[className, "card-base px-6 md:px-9 pt-6 pb-6 mb-6 relative overflow-hidden"]}>
+		<!-- Background decoration -->
+		<div class="absolute top-0 right-0 w-24 h-24 opacity-5">
+			<Icon name="material-symbols:push-pin" class="text-8xl text-[var(--primary)] rotate-12" />
+		</div>
+		
+		<!-- Header -->
+		<div class="flex items-center gap-3 mb-6 relative z-10">
+			<div class="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--primary)]/10">
+				<Icon name="material-symbols:push-pin" class="text-lg text-[var(--primary)]" />
+			</div>
+			<div class="text-xl font-bold text-black dark:text-white">
+				{i18n(I18nKey.pinnedPosts)}
+			</div>
+			{allPinnedPosts.length > maxPosts && (
+				<div class="text-sm text-black/60 dark:text-white/60 ml-auto">
+					{pinnedPosts.length} / {allPinnedPosts.length}
+				</div>
+			)}
+		</div>
+				<!-- Pinned posts list - one per row -->
+		<div class="space-y-4 relative z-10">
+			{pinnedPosts.map((post, index) => (
+				<div class="relative group">
+					<!-- Pin indicator -->
+					<div class="absolute -top-2 -right-2 z-20 bg-[var(--primary)] text-white rounded-full p-1.5 shadow-lg group-hover:scale-110 transition-transform duration-200">
+						<Icon name="material-symbols:push-pin" class="text-sm" />
+					</div>
+					
+					<PostCard 
+						entry={post}
+						title={post.data.title}
+						tags={post.data.tags}
+						category={post.data.category}
+						published={post.data.published}
+						updated={post.data.updated}
+						url={getPostUrlBySlug(post.slug)}
+						image={post.data.image}
+						description={post.data.description}
+						draft={post.data.draft}
+						style=""
+						class="!bg-gradient-to-br from-[var(--card-bg)] to-[var(--card-bg)]/80 border-2 border-[var(--primary)]/20 border-dashed hover:border-[var(--primary)]/40 hover:shadow-lg transition-all duration-300 relative overflow-hidden"
+					/>
+					
+					<!-- Subtle gradient overlay for pinned effect -->
+					<div class="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/5 to-transparent pointer-events-none rounded-[var(--radius-large)]"></div>
+				</div>
+			))}
+		</div>
+				<!-- Show all pinned posts link if there are more -->
+		{allPinnedPosts.length > maxPosts && (
+			<div class="mt-6 text-center">
+				<button class="text-[var(--primary)] hover:text-[var(--primary)]/80 text-sm font-medium transition-colors duration-200">
+					{i18n(I18nKey.showMore)} ({allPinnedPosts.length - maxPosts} بیشتر)
+				</button>
+			</div>
+		)}
+	</div>
+)}

@@ -1,93 +1,58 @@
 ---
-import path from 'node:path'
-import { getCollection } from 'astro:content'
-import License from '@components/misc/License.astro'
-import Markdown from '@components/misc/Markdown.astro'
-import I18nKey from '@i18n/i18nKey'
-import { i18n } from '@i18n/translation'
-import MainGridLayout from '@layouts/MainGridLayout.astro'
-import { getDir, getPostUrlBySlug } from '@utils/url-utils'
-import { Icon } from 'astro-icon/components'
-import { licenseConfig } from 'src/config'
-import PostMetadata from '../../components/PostMeta.astro'
-import ImageWrapper from '../../components/misc/ImageWrapper.astro'
-import { profileConfig, siteConfig } from '../../config'
-import { formatDateToYYYYMMDD } from '../../utils/date-utils'
-
-interface BlogEntry {
-  slug: string;
-  data: {
-    title: string;
-    description?: string;
-    draft?: boolean;
-    tags?: string[];
-    lang?: string;
-    published: Date;
-    updated?: Date;
-    image?: string;
-    category?: string;
-    nextSlug?: string;
-    nextTitle?: string;
-    prevSlug?: string;
-    prevTitle?: string;
-    author?: string;
-    nostrPubKey?: string;
-  };
-  render: () => Promise<{ Content: any, headings: any, remarkPluginFrontmatter: any }>;
-}
-
-interface JsonLD {
-  '@context': string;
-  '@type': string;
-  headline: string;
-  description: string;
-  keywords?: string[];
-  author: {
-    '@type': string;
-    name: string;
-    url: URL;
-  };
-  datePublished: string;
-  inLanguage: string;
-}
+import path from "node:path";
+import License from "@components/misc/License.astro";
+import Markdown from "@components/misc/Markdown.astro";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getSortedPosts } from "@utils/content-utils";
+import { getDir, getPostUrlBySlug } from "@utils/url-utils";
+import { Icon } from "astro-icon/components";
+import { licenseConfig } from "src/config";
+import PostMetadata from "../../components/PostMeta.astro";
+import ImageWrapper from "../../components/misc/ImageWrapper.astro";
+import { profileConfig, siteConfig } from "../../config";
+import { formatDateToYYYYMMDD } from "../../utils/date-utils";
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection('posts', ({ data }) => {
-    return import.meta.env.PROD ? data.draft !== true : true
-  }) as unknown as BlogEntry[];
-  
-  return blogEntries.map(entry => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+	const blogEntries = await getSortedPosts();
+	return blogEntries.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { entry },
+	}));
 }
 
-const { entry } = Astro.props
-const { Content, headings } = await entry.render()
+const { entry } = Astro.props;
+const { Content, headings } = await entry.render();
 
-const { remarkPluginFrontmatter } = await entry.render()
+const { remarkPluginFrontmatter } = await entry.render();
 
-const jsonLd: JsonLD = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: entry.data.title,
-  description: entry.data.description || entry.data.title,
-  keywords: entry.data.tags,
-  author: {
-    '@type': 'Person',
-    name: profileConfig.name,
-    url: Astro.site!,
-  },
-  datePublished: formatDateToYYYYMMDD(entry.data.published),
-  inLanguage: (entry.data.lang ? entry.data.lang.replace('_', '-') : siteConfig.lang.replace('_', '-')),
-}
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	headline: entry.data.title,
+	description: entry.data.description || entry.data.title,
+	keywords: entry.data.tags,
+	author: {
+		"@type": "Person",
+		name: profileConfig.name,
+		url: Astro.site,
+	},
+	datePublished: formatDateToYYYYMMDD(entry.data.published),
+	inLanguage: entry.data.lang
+		? entry.data.lang.replace("_", "-")
+		: siteConfig.lang.replace("_", "-"),
+	// TODO include cover image here
+};
 ---
-<MainGridLayout banner={entry.data.image} title={entry.data.title} description={entry.data.description} lang={entry.data.lang} setOGTypeArticle={true} headings={headings} hideSidebar={false}>
+<MainGridLayout banner={entry.data.image} title={entry.data.title} description={entry.data.description} lang={entry.data.lang} setOGTypeArticle={true} headings={headings}>
     <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
     <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative mb-4">
-        <div id="post-container" class:list={["card-base z-10 px-6 md:px-9 pt-6 pb-4 relative w-full "]}>
-            <!-- word count, reading time and image toggle -->
-            <div class="flex flex-row text-black/30 dark:text-white/30 gap-5 mb-3 transition onload-animation items-center">
+        <div id="post-container" class:list={["card-base z-10 px-6 md:px-9 pt-6 pb-4 relative w-full ",
+            {}
+        ]}>
+            <!-- word count and reading time -->
+            <div class="flex flex-row text-black/30 dark:text-white/30 gap-5 mb-3 transition onload-animation">
                 <div class="flex flex-row items-center">
                     <div class="transition h-6 w-6 rounded-md bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50 flex items-center justify-center mr-2">
                         <Icon name="material-symbols:notes-rounded"></Icon>
@@ -100,85 +65,46 @@ const jsonLd: JsonLD = {
                     </div>
                     <div class="text-sm">{remarkPluginFrontmatter.minutes} {" " + i18n(I18nKey.minutesCount)}</div>
                 </div>
-                
-                {entry.data.image && (
-                    <div class="flex flex-row items-center ml-auto">
-                        <button 
-                            id="toggle-post-image"
-                            data-post-slug={entry.slug}
-                            class="h-8 w-8 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 flex items-center justify-center transition-all duration-300"
-                            title="Post image"
-                        >
-                            <Icon 
-                                name="material-symbols:image" 
-                                class="w-5 h-5 text-black/50 dark:text-white/50"
-                            />
-                        </button>
-                    </div>
-                )}
             </div>
 
             <!-- title -->
             <div class="relative onload-animation">
                 <div
                     data-pagefind-body data-pagefind-weight="10" data-pagefind-meta="title"
-                    class="transition w-full block font-bold mb-8
-                    text-2xl 
+                    class="transition w-full block font-bold mb-3
+                    text-3xl md:text-[2.25rem]/[2.75rem]
                     text-black/90 dark:text-white/90
                     md:before:w-1 before:h-5 before:rounded-md before:bg-[var(--primary)]
                     before:absolute before:top-[0.75rem] before:left-[-1.125rem]
                 ">
                     {entry.data.title}
                 </div>
-            </div>
-
-            <!-- metadata -->
+            </div>            <!-- metadata -->
             <div class="onload-animation">
                 <PostMetadata
                         class="mb-5"
                         published={entry.data.published}
                         updated={entry.data.updated}
-                        tags={entry.data.tags || []}
-                        category={entry.data.category || ''}
-                        author={entry.data.author || ''}
-                        nostrPubKey={entry.data.nostrPubKey || ''}
+                        tags={entry.data.tags}
+                        category={entry.data.category}
+                        author={entry.data.author}
+                        nostrPublicKey={entry.data.nostrPublicKey}
                 ></PostMetadata>
                 {!entry.data.image && <div class="border-[var(--line-divider)] border-dashed border-b-[1px] mb-5"></div>}
             </div>
 
-            <!-- Image display area -->
-            {entry.data.image && (
-                <div 
-                    id="post-image-container"
-                    class="mb-6 transition-all duration-300"
-                >
-                    <div
-                        id="post-image-wrapper" 
-                        class="hidden"
-                    >
-                        <img 
-                            src={entry.data.image} 
-                            alt="Post cover" 
-                            class="rounded-xl w-full h-auto object-cover"
-                            loading="lazy"
-                        />
-                    </div>
-                </div>
-            )}
+            <!-- always show cover as long as it has one -->
 
-            <!-- Content -->
+            {entry.data.image &&
+                <ImageWrapper id="post-cover" src={entry.data.image} basePath={path.join("content/posts/", getDir(entry.id))} class="mb-8 rounded-xl banner-container onload-animation"/>
+            }
+
+
             <Markdown class="mb-6 markdown-content onload-animation">
                 <Content />
             </Markdown>
 
-            {licenseConfig.enable && <License 
-                title={entry.data.title} 
-                slug={entry.slug} 
-                pubDate={entry.data.published} 
-                author={entry.data.author || ''} 
-                nostrPubKey={entry.data.nostrPubKey || ''} 
-                class="mb-6 rounded-xl license-container onload-animation"
-            ></License>}
+            {licenseConfig.enable && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} author={entry.data.author} nostrPublicKey={entry.data.nostrPublicKey} class="mb-6 rounded-xl license-container onload-animation"></License>}
 
         </div>
     </div>
@@ -205,16 +131,4 @@ const jsonLd: JsonLD = {
         </a>
     </div>
 
-    <script>
-        import { imageToggle } from '../../scripts/imageToggle';
-
-        // Run on view transitions
-        document.addEventListener('astro:after-swap', () => imageToggle.setupImageToggle());
-        
-        // Run on initial page load
-        imageToggle.setupImageToggle();
-
-        // Cleanup on page unload
-        document.addEventListener('astro:before-swap', () => imageToggle.cleanup());
-    </script>
 </MainGridLayout>

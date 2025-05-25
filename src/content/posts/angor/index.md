@@ -5,7 +5,10 @@ description: 'Discover the new Angor Blog, your ultimate resource for Bitcoin in
 image: '/images/angor.svg'
 tags:  [Bitcoin, Technology, Education]
 category: 'Angor'
-draft: false 
+draft: false
+author: 'Angor Team'
+nostrPublicKey: 'npub1angor987654321fedcba'
+pinned: true
 ---
 
 

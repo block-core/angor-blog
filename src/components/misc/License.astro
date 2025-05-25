@@ -1,30 +1,25 @@
 ---
-import { Icon } from 'astro-icon/components'
-import { i18n } from '@i18n/translation'
-import I18nKey from '@i18n/i18nKey'
-import { formatDateToYYYYMMDD } from '@utils/date-utils'
-import { profileConfig as profileConf, licenseConfig as licenseConf } from '../../config'
-import { getPostUrlBySlug } from '@utils/url-utils'
+import { Icon } from "astro-icon/components";
+import { licenseConfig, profileConfig } from "../../config";
+import I18nKey from "../../i18n/i18nKey";
+import { i18n } from "../../i18n/translation";
+import { formatDateToYYYYMMDD } from "../../utils/date-utils";
 
-export interface Props {
-    title: string;
-    slug: string;
-    pubDate: Date;
-    class?: string;
-    author?: string;
-    nostrPubKey?: string;
+interface Props {
+	title: string;
+	slug: string;
+	pubDate: Date;
+	class: string;
+	author?: string;
+	nostrPublicKey?: string;
 }
 
-const { title, slug, pubDate, class: className = '', author = '', nostrPubKey = '' } = Astro.props;
-const postUrl = getPostUrlBySlug(slug);
-
-// Use the author from props if available, otherwise use the profile config name
-const displayAuthor = author || profileConf.name;
-
-// Create Primal profile link if nostrPubKey is available
-const primalLink = nostrPubKey ? `https://primal.net/p/${nostrPubKey}` : null;
+const { title, pubDate, author, nostrPublicKey } = Astro.props;
+const className = Astro.props.class;
+const profileConf = profileConfig;
+const licenseConf = licenseConfig;
+const postUrl = decodeURIComponent(Astro.url.toString());
 ---
-
 <div class={`relative transition overflow-hidden bg-[var(--license-block-bg)] py-5 px-6 ${className}`}>
     <div class="transition font-bold text-black/75 dark:text-white/75">
         {title}
@@ -32,24 +27,37 @@ const primalLink = nostrPubKey ? `https://primal.net/p/${nostrPubKey}` : null;
     <a href={postUrl} class="link text-[var(--primary)]">
         {postUrl}
     </a>
-    <div class="flex gap-6 mt-2">
+    <div class="flex gap-6 mt-2">        
         <div>
             <div class="transition text-black/30 dark:text-white/30 text-sm">{i18n(I18nKey.author)}</div>
-            {primalLink ? (
-                <a href={primalLink} target="_blank" rel="noopener noreferrer" class="transition text-[var(--primary)] whitespace-nowrap">
-                    {displayAuthor}
-                </a>
-            ) : (
-                <div class="transition text-black/75 dark:text-white/75 whitespace-nowrap">{displayAuthor}</div>
-            )}
+            <div class="transition text-black/75 dark:text-white/75">
+                {author && author.trim() ? (
+                    nostrPublicKey && nostrPublicKey.trim() ? (
+                        <a 
+                            href={`https://primal.net/p/${nostrPublicKey}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            class="link text-[var(--primary)] hover:text-[var(--primary)]/80 transition-colors flex items-center gap-1 m-1"
+                            title={`View ${author} on Primal`}
+                        >
+                            <Icon name="material-symbols:key-outline" class="text-sm" />
+                            {author}
+                        </a>
+                    ) : (
+                        author
+                    )
+                ) : (
+                    profileConf.name
+                )}
+            </div>
         </div>
         <div>
             <div class="transition text-black/30 dark:text-white/30 text-sm">{i18n(I18nKey.publishedAt)}</div>
-            <div class="transition text-black/75 dark:text-white/75 whitespace-nowrap">{formatDateToYYYYMMDD(pubDate)}</div>
+            <div class="transition text-black/75 dark:text-white/75 line-clamp-2">{formatDateToYYYYMMDD(pubDate)}</div>
         </div>
         <div>
             <div class="transition text-black/30 dark:text-white/30 text-sm">{i18n(I18nKey.license)}</div>
-            <a href={licenseConf.url} target="_blank" class="link text-[var(--primary)] whitespace-nowrap">{licenseConf.name}</a>
+            <a href={licenseConf.url} target="_blank" class="link text-[var(--primary)] line-clamp-2">{licenseConf.name}</a>
         </div>
     </div>
     <Icon name="fa6-brands:creative-commons" class="transition text-[15rem] absolute pointer-events-none right-6 top-1/2 -translate-y-1/2 text-black/5 dark:text-white/5"></Icon>

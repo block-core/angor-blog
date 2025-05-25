@@ -1,81 +1,28 @@
 ---
-import { getPostUrlBySlug } from '@utils/url-utils'
-import PostCard from './PostCard.astro'
-import HeroSection from './HeroSection.astro'
+import type { CollectionEntry } from "astro:content";
+import { getPostUrlBySlug } from "@utils/url-utils";
+import PostCard from "./PostCard.astro";
 
-const { page, isHomePage = false } = Astro.props
+const { page } = Astro.props;
 
-const posts = page.data
-const featuredPostsCount = isHomePage ? 0 : 4  // No featured posts on home page
-const featuredPosts = posts.slice(0, featuredPostsCount)
-const regularPosts = posts.slice(featuredPostsCount)
-
-let animationDelayCounter = 0
-const animationInterval = 50
+let delay = 0;
+const interval = 50;
 ---
-<div class="transition rounded-[var(--radius-large)] bg-[var(--card-bg)] py-1 md:py-0 md:bg-transparent mb-4">
-    <!-- Hero Section - Only show on home page -->
-    {isHomePage && (
-        <HeroSection latestPosts={posts} />
-    )}
-
-    <!-- Featured Posts Section -->
-    {featuredPosts.length > 0 && (
-        <div class="flex flex-col gap-4 mb-4">
-            {featuredPosts.map((entry: any) => {
-                const currentDelay = animationDelayCounter++;
-                return (
-                    <PostCard
-                        entry={entry}
-                        title={entry.data.title}
-                        tags={entry.data.tags}
-                        category={entry.data.category}
-                        published={entry.data.published}
-                        updated={entry.data.updated}
-                        url={getPostUrlBySlug(entry.slug)}
-                        image={entry.data.image}
-                        description={entry.data.description}
-                        draft={entry.data.draft}
-                        class:list={["onload-animation", "w-full"]}
-                        style={`animation-delay: calc(var(--content-delay) + ${currentDelay * animationInterval}ms);`}
-                    />
-                );
-            })}
-        </div>
-    )}
-
-    <!-- Regular Posts Section - Grid -->
-    {regularPosts.length > 0 && isHomePage && (
-        <h2 class="text-2xl font-bold text-black/90 dark:text-white/90 mb-4 mt-8 onload-animation" style="animation-delay: calc(var(--content-delay) + 250ms);">Latest Articles</h2>
-    )}
-    
-    {regularPosts.length > 0 && (
-        <div class:list={[
-            "grid gap-4",
-            {
-                "grid-cols-1 md:grid-cols-2": !isHomePage, 
-                "grid-cols-1 md:grid-cols-2 lg:grid-cols-3": isHomePage
-            }
-        ]}>
-            {(isHomePage ? regularPosts.slice(3) : regularPosts).map((entry: any) => {
-                const currentDelay = animationDelayCounter++;
-                return (
-                    <PostCard
-                        entry={entry}
-                        title={entry.data.title}
-                        tags={entry.data.tags}
-                        category={entry.data.category}
-                        published={entry.data.published}
-                        updated={entry.data.updated}
-                        url={getPostUrlBySlug(entry.slug)}
-                        image={entry.data.image}
-                        description={entry.data.description}
-                        draft={entry.data.draft}
-                        class:list={["onload-animation"]}
-                        style={`animation-delay: calc(var(--content-delay) + ${currentDelay * animationInterval}ms);`}
-                    />
-                );
-            })}
-        </div>
-    )}
+<div class="transition flex flex-col rounded-[var(--radius-large)] bg-[var(--card-bg)] py-1 md:py-0 md:bg-transparent md:gap-4 mb-4">
+    {page.data.map((entry: CollectionEntry<"posts">) => (
+        <PostCard
+                entry={entry}
+                title={entry.data.title}
+                tags={entry.data.tags}
+                category={entry.data.category}
+                published={entry.data.published}
+                updated={entry.data.updated}
+                url={getPostUrlBySlug(entry.slug)}
+                image={entry.data.image}
+                description={entry.data.description}
+                draft={entry.data.draft}
+                class:list="onload-animation"
+                style={`animation-delay: calc(var(--content-delay) + ${delay++ * interval}ms);`}
+        ></PostCard>
+    ))}
 </div>

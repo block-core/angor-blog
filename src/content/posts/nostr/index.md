@@ -6,6 +6,9 @@ image: '/images/nostr.svg'
 tags: ['nostr', 'decentralization' ]
 category: 'Technology'
 draft: false
+author: 'Milad'
+nostrPublicKey: 'npub1xyz123456789abcdefghijk'
+pinned: false
 ---
 
 ### Nostr: The Future of Decentralized Social Networking

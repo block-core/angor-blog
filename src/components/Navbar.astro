@@ -1,98 +1,35 @@
 ---
-import { Icon } from 'astro-icon/components'
-import DisplaySettings from './widget/DisplaySettings.svelte'
-import { LinkPreset, type NavBarLink } from '../types/config'
-import { navBarConfig, siteConfig } from '../config'
-import NavMenuPanel from './widget/NavMenuPanel.astro'
-import Search from './Search.svelte'
-import { LinkPresets } from '../constants/link-presets'
-import LightDarkSwitch from './LightDarkSwitch.svelte'
-import { url } from '../utils/url-utils'
-const className = Astro.props.class
+import { Icon } from "astro-icon/components";
+import { navBarConfig, siteConfig } from "../config";
+import { LinkPresets } from "../constants/link-presets";
+import { LinkPreset, type NavBarLink } from "../types/config";
+import { url } from "../utils/url-utils";
+import LightDarkSwitch from "./LightDarkSwitch.svelte";
+import Search from "./Search.svelte";
+import DisplaySettings from "./widget/DisplaySettings.svelte";
+import NavMenuPanel from "./widget/NavMenuPanel.astro";
+const className = Astro.props.class;
 
 let links: NavBarLink[] = navBarConfig.links.map(
-  (item: NavBarLink | LinkPreset): NavBarLink => {
-    if (typeof item === 'number') {
-      return LinkPresets[item]
-    }
-    return item
-  },
-)
-
-interface AppMenuItem {
-    name: string;
-    desc: string;
-    url: string;
-    icon: string;
-}
-
-const appMenuItems: AppMenuItem[] = [
-    {
-        name: 'Angor App',
-        desc: 'Create and manage funding',
-        url: 'https://test.angor.io',
-        icon: 'fa6-solid:rocket'
-    },
-    {
-        name: 'Angor Blog',
-        desc: 'News and updates',
-        url: 'https://blog.angor.io',
-        icon: 'fa6-solid:newspaper'
-    },
-    {
-        name: 'Angor Hub',
-        desc: 'Discover projects to fund',
-        url: 'https://hub.angor.io',
-        icon: 'fa6-solid:compass'
-    },
-    {
-        name: 'Angor Profile',
-        desc: 'Manage your project profile',
-        url: 'https://profile.angor.io',
-        icon: 'fa6-solid:user'
-    },
-    {
-        name: 'Angor Web',
-        desc: 'Learn about Angor Protocol',
-        url: 'https://angor.io',
-        icon: 'fa6-solid:globe'
-    },
-    {
-        name: 'Angor Docs',
-        desc: 'Angor Documentation',
-        url: 'https://docs.angor.io',
-        icon: 'fa6-solid:book'
-    }
-];
+	(item: NavBarLink | LinkPreset): NavBarLink => {
+		if (typeof item === "number") {
+			return LinkPresets[item];
+		}
+		return item;
+	},
+);
 ---
 <div id="navbar" class="z-50 onload-animation">
     <div class="absolute h-8 left-0 right-0 -top-8 bg-[var(--card-bg)] transition"></div> <!-- used for onload animation -->
     <div class:list={[
         className,
         "card-base !overflow-visible max-w-[var(--page-width)] h-[4.5rem] !rounded-t-none mx-auto flex items-center justify-between px-4"]}>
-        <div class="app-launcher">
-            <a class="btn-plain scale-animation rounded-lg h-[3.25rem] px-5 font-bold active:scale-95">
-                <div class="flex flex-row text-[var(--primary)] items-center text-md">
-                    <Icon name="material-symbols:home-outline-rounded" class="text-[1.75rem] mb-1 mr-2" />
-                    {siteConfig.title}
-                </div>
-            </a>
-            <div class="app-menu" id="app-menu">
-                <div class="app-menu-content">
-                    {appMenuItems.map(item => (
-                        <a href={item.url} class="app-item group">
-                            <Icon name={item.icon} class="app-item-icon" />
-                            <div class="app-item-content">
-                                <span class="app-name">{item.name}</span>
-                                <br>
-                                <span class="app-desc">{item.desc}</span>
-                            </div>
-                        </a>
-                    ))}
-                </div>
+        <a href={url('/')} class="btn-plain scale-animation rounded-lg h-[3.25rem] px-5 font-bold active:scale-95">
+            <div class="flex flex-row text-[var(--primary)] items-center text-md">
+                <Icon name="material-symbols:home-outline-rounded" class="text-[1.75rem] mb-1 mr-2" />
+                {siteConfig.title}
             </div>
-        </div>
-
+        </a>
         <div class="hidden md:flex">
             {links.map((l) => {
                 return <a aria-label={l.name} href={l.external ? l.url : url(l.url)} target={l.external ? "_blank" : null}
@@ -107,13 +44,13 @@ const appMenuItems: AppMenuItem[] = [
         </div>
         <div class="flex">
             <!--<SearchPanel client:load>-->
-            <Search client:load></Search>
+            <Search client:only="svelte"></Search>
             {!siteConfig.themeColor.fixed && (
                     <button aria-label="Display Settings" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" id="display-settings-switch">
                         <Icon name="material-symbols:palette-outline" class="text-[1.25rem]"></Icon>
                     </button>
             )}
-            <LightDarkSwitch client:load></LightDarkSwitch>
+            <LightDarkSwitch client:only="svelte"></LightDarkSwitch>
             <button aria-label="Menu" name="Nav Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90 md:!hidden" id="nav-menu-switch">
                 <Icon name="material-symbols:menu-rounded" class="text-[1.25rem]"></Icon>
             </button>
@@ -124,7 +61,6 @@ const appMenuItems: AppMenuItem[] = [
 </div>
 
 <script>
-
 function switchTheme() {
     if (localStorage.theme === 'dark') {
         document.documentElement.classList.remove('dark');
@@ -138,52 +74,33 @@ function switchTheme() {
 function loadButtonScript() {
     let switchBtn = document.getElementById("scheme-switch");
     if (switchBtn) {
-        switchBtn.addEventListener("click", function () {
+        switchBtn.onclick = function () {
             switchTheme()
-        });
+        };
     }
 
     let settingBtn = document.getElementById("display-settings-switch");
     if (settingBtn) {
-        settingBtn.addEventListener("click", function () {
+        settingBtn.onclick = function () {
             let settingPanel = document.getElementById("display-setting");
             if (settingPanel) {
                 settingPanel.classList.toggle("float-panel-closed");
             }
-        });
+        };
     }
 
     let menuBtn = document.getElementById("nav-menu-switch");
     if (menuBtn) {
-        menuBtn.addEventListener("click", function () {
+        menuBtn.onclick = function () {
             let menuPanel = document.getElementById("nav-menu-panel");
             if (menuPanel) {
                 menuPanel.classList.toggle("float-panel-closed");
             }
-        });
+        };
     }
 }
 
 loadButtonScript();
-
-document.addEventListener('astro:after-swap', () => {
-    loadButtonScript();
-}, { once: false });
-
-function toggleAppMenu(event: MouseEvent) {
-    const menu = document.getElementById('app-menu');
-    if (menu) {
-        menu.classList.toggle('show');
-    }
-}
-
-document.querySelector('.app-launcher')?.addEventListener('click', (e: Event) => toggleAppMenu(e as MouseEvent));
-document.addEventListener('click', (event) => {
-    if (!(event.target as HTMLElement).closest('.app-launcher')) {
-        document.getElementById('app-menu')?.classList.remove('show');
-    }
-});
-
 </script>
 
 {import.meta.env.PROD && <script is:inline define:vars={{scriptUrl: url('/pagefind/pagefind.js')}}>

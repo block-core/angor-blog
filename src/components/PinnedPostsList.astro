@@ -1,0 +1,80 @@
+---
+import { Icon } from "astro-icon/components";
+import I18nKey from "../i18n/i18nKey";
+import { i18n } from "../i18n/translation";
+import { getPinnedPosts } from "../utils/content-utils";
+import { getPostUrlBySlug } from "../utils/url-utils";
+
+interface Props {
+	class?: string;
+	maxPosts?: number;
+	showTitle?: boolean;
+}
+
+const { class: className, maxPosts = 3, showTitle = true } = Astro.props;
+const pinnedPosts = await getPinnedPosts(maxPosts);
+---
+
+{pinnedPosts.length > 0 && (
+	<div class:list={[className, "card-base px-4 md:px-6 pt-4 pb-4"]}>
+		{showTitle && (
+			<div class="flex items-center gap-2 mb-4">
+				<Icon name="material-symbols:push-pin" class="text-base text-[var(--primary)]" />
+				<div class="text-lg font-medium text-black dark:text-white">
+					{i18n(I18nKey.pinnedPosts)}
+				</div>
+			</div>
+		)}
+		
+		<div class="space-y-3">
+			{pinnedPosts.map((post) => (
+				<div class="group">
+					<a 
+						href={getPostUrlBySlug(post.slug)} 
+						class="block p-3 rounded-lg bg-[var(--card-bg)] hover:bg-[var(--card-bg)]/80 border border-[var(--line-divider)] border-dashed hover:border-[var(--primary)]/30 transition-all duration-200"
+					>
+						<div class="flex items-start gap-3">
+							<!-- Pin indicator -->
+							<div class="flex-shrink-0 mt-1">
+								<div class="w-6 h-6 rounded-full bg-[var(--primary)]/10 flex items-center justify-center">
+									<Icon name="material-symbols:push-pin" class="text-xs text-[var(--primary)]" />
+								</div>
+							</div>
+							
+							<!-- Content -->
+							<div class="flex-1 min-w-0">
+								<h3 class="font-medium text-sm text-black dark:text-white group-hover:text-[var(--primary)] transition-colors duration-200 line-clamp-2 mb-1">
+									{post.data.title}
+								</h3>
+								
+								{post.data.description && (
+									<p class="text-xs text-black/60 dark:text-white/60 line-clamp-2 mb-2">
+										{post.data.description}
+									</p>
+								)}
+								
+								<div class="flex items-center gap-2 text-xs text-black/40 dark:text-white/40">
+									{post.data.author && (
+										<>
+											<Icon name="material-symbols:person" class="text-xs" />
+											<span>{post.data.author}</span>
+										</>
+									)}
+									{post.data.author && post.data.category && <span>•</span>}
+									{post.data.category && (
+										<span>{post.data.category}</span>
+									)}
+								</div>
+							</div>
+							
+							<!-- Arrow -->
+							<div class="flex-shrink-0 mt-1">
+								<Icon name="material-symbols:chevron-right-rounded" class="text-base text-black/30 dark:text-white/30 group-hover:text-[var(--primary)] transition-colors duration-200" />
+							</div>
+						</div>
+					</a>
+				</div>
+			))}
+		</div>
+	</div>
+)}
