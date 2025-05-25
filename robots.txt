@@ -1,4 +1,4 @@
 User-agent: *
-Allow: /
+Disallow: /_astro/
 
 Sitemap: https://blog.angor.io/sitemap-index.xml
