@@ -6,6 +6,8 @@ image: '/images/bitcoin-full-node.svg'
 tags: [Bitcoin, Cryptocurrency]
 category: Cryptocurrency
 draft: false
+author: 'Angor Team'
+nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
 ---
 
 Running a Bitcoin full node is a great way to support the Bitcoin network and ensure its decentralization. A full node validates transactions and blocks, helping maintain the integrity of the blockchain. Here’s a step-by-step guide to setting up a Bitcoin full node on Windows, macOS, and Linux.

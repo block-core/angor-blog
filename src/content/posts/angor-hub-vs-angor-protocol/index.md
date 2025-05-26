@@ -7,8 +7,8 @@ tags: ['Angor', 'Angor-Hub', 'Angor-Protocol', 'Bitcoin', 'Crowdfunding']
 category: "Angor"
 draft: false
 lang: "en"
-author: "Angor Team"
-nostrPubKey: "npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02"
+author: 'paco de la india'
+nostrPublicKey: 'npub1v67clmf4jrezn8hsz28434nc0y5fu65e5esws04djnl2kasxl5tskjmjjk'
 ---
 
 ## Same Same but Different

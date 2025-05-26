@@ -6,6 +6,8 @@ image: '/images/time-lock-contracts.svg'
 tags: [Time-Lock-Contracts, Smart-Contracts]
 category: 'Technology'
 draft: false
+author: 'Angor Team'
+nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
 ---
 ### Innovative Time-Lock Contracts: Revolutionizing Crowdfunding with Angor
 

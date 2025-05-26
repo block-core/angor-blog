@@ -6,6 +6,8 @@ image: '/images/how-to-invest-using-angor.webp'
 tags:  [Bitcoin, Technology, Education]
 category: 'Angor'
 draft: false 
+author: 'Angor Team'
+nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
 ---
 ### Invest in Projects Securely with Angor: A Step-by-Step Guide
 

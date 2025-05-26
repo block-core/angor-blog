@@ -6,7 +6,7 @@ tags: [bitcoin]
 category: 'bitcoin'
 image: '/images/keeping-promises-without-police.png'
 author: 'paco de la india'
-nostrPubKey: 'npub1v67clmf4jrezn8hsz28434nc0y5fu65e5esws04djnl2kasxl5tskjmjjk'
+nostrPublicKey: 'npub1v67clmf4jrezn8hsz28434nc0y5fu65e5esws04djnl2kasxl5tskjmjjk'
 ---
 
 ## Ensuring Fair Revenue Sharing in a Stateless System

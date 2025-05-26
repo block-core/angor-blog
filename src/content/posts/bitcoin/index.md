@@ -6,6 +6,8 @@ image: '/images/bitcoin.svg'
 tags: [Bitcoin, Cryptocurrency]
 category: Cryptocurrency
 draft: false
+author: 'Angor Team'
+nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
 ---
 
 Bitcoin, often hailed as the first decentralized digital currency, has undeniably transformed the landscape of financial transactions worldwide. Its inception in 2009 by an anonymous entity known as Satoshi Nakamoto marked the beginning of what would soon become a global phenomenon in both technology and investment.

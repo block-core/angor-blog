@@ -6,6 +6,8 @@ image: "/images/how-to-test-angor.webp"
 tags: ['Crowdfunding', 'Bitcoin' ,'Nostr','Angor']
 category: Angor
 draft: false
+author: 'Angor Team'
+nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
 ---
 
 ## Introduction to Angor Testing

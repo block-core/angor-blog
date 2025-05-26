@@ -6,6 +6,8 @@ image: '/images/ico.svg'
 tags: [ICO, Cryptocurrency, Blockchain]
 category: Cryptocurrency
 draft: false
+author: 'Angor Team'
+nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
 ---
 
 An Initial Coin Offering (ICO) is a funding mechanism in the digital currency market inspired by the traditional Initial Public Offering (IPO) in the stock market. Just as capital is raised in the stock market, the crypto world utilizes ICOs to gather funds for new projects. If you're curious about what ICOs entail, this article will guide you through every aspect.

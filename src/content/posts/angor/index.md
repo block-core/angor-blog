@@ -7,8 +7,8 @@ tags:  [Bitcoin, Technology, Education]
 category: 'Angor'
 draft: false
 author: 'Angor Team'
-nostrPublicKey: 'npub1angor987654321fedcba'
-pinned: true
+nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
+pinned: false
 ---
 
 
