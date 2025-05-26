@@ -6,8 +6,6 @@ image: '/images/nostr.svg'
 tags: ['nostr', 'decentralization' ]
 category: 'Technology'
 draft: false
-author: 'Milad'
-nostrPublicKey: 'npub1xyz123456789abcdefghijk'
 pinned: false
 author: 'Angor Team'
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
