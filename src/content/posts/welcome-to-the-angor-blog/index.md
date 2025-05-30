@@ -2,7 +2,7 @@
 title: Welcome to the Angor Blog!
 published: 2024-05-09
 description: 'Discover the new Angor Blog, your ultimate resource for Bitcoin investment insights and updates on the Angor platform.'
-image: '/images/angor.svg'
+image: '/images/welcome-to-the-angor-blog.webp'
 tags:  [Bitcoin, Technology, Education]
 category: 'Angor'
 draft: false
