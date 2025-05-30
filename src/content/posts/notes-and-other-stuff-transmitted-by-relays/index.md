@@ -2,7 +2,7 @@
 title: Decentralized Social Networking
 published: 2024-05-10
 description: Explore Nostr, a revolutionary decentralized protocol promising a censorship-resistant and truly global social network.
-image: '/images/nostr.svg'
+image: '/images/notes-and-other-stuff-transmitted-by-relays.webp'
 tags: ['nostr', 'decentralization' ]
 category: 'Technology'
 draft: false
