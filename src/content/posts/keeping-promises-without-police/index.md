@@ -4,7 +4,7 @@ description: 'Stateless funding, enforced by Bitcoin. No courts. No police. Just
 published: 2025-05-22
 tags: [bitcoin]
 category: 'bitcoin'
-image: '/images/keeping-promises-without-police.png'
+image: '/images/keeping-promises-without-police.webp'
 author: 'paco de la india'
 nostrPublicKey: 'npub1v67clmf4jrezn8hsz28434nc0y5fu65e5esws04djnl2kasxl5tskjmjjk'
 ---
