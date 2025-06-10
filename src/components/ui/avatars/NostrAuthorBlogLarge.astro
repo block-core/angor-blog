@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { getAuthorProfile, type NostrAuthorProfile } from "@utils/nostr";
 import { formatDate } from "@utils/utils";
 
 interface Props {
@@ -10,20 +9,10 @@ interface Props {
 
 const { blogEntry, lang = "en" } = Astro.props;
 
-// Fetch Nostr profile if nostrPublicKey exists
-let nostrProfile: NostrAuthorProfile | null = null;
-if (blogEntry.data.nostrPublicKey) {
-  try {
-    nostrProfile = await getAuthorProfile(blogEntry.data.nostrPublicKey);
-  } catch (error) {
-    console.error("Error fetching Nostr profile:", error);
-  }
-}
-
-// Use Nostr data if available, otherwise fallback to blog frontmatter
-const authorName = nostrProfile?.display_name || nostrProfile?.name || blogEntry.data.author;
-const authorImage = nostrProfile?.picture || blogEntry.data.authorImage;
-const authorRole = blogEntry.data.role || (nostrProfile?.about ? nostrProfile.about.slice(0, 50) + '...' : '');
+// Use fallback data initially
+const authorName = blogEntry.data.author;
+const authorImage = blogEntry.data.authorImage;
+const authorRole = blogEntry.data.role || '';
 
 // Date formatting based on language
 const formatDateByLang = (date: Date, language: string) => {
@@ -52,7 +41,7 @@ const formatDateByLang = (date: Date, language: string) => {
 };
 ---
 
-<div class="flex w-full gap-x-5 sm:items-center sm:gap-x-3">
+<div class="flex w-full gap-x-5 sm:items-center sm:gap-x-3" data-nostr-author-large data-nostr-pubkey={blogEntry.data.nostrPublicKey} data-lang={lang}>
   <!-- Author Avatar -->
   <div class="shrink-0">
     <img
@@ -60,6 +49,7 @@ const formatDateByLang = (date: Date, language: string) => {
       src={typeof authorImage === 'string' ? authorImage : authorImage.src}
       alt={authorName}
       loading="lazy"
+      data-author-image
     />
   </div>
   
@@ -69,21 +59,17 @@ const formatDateByLang = (date: Date, language: string) => {
       <div>
         <!-- Author Name -->
         <div class="hs-tooltip inline-block [--placement:bottom] [--trigger:hover]">
-          <span class="font-bold text-neutral-700 dark:text-neutral-300">
+          <span class="font-bold text-neutral-700 dark:text-neutral-300" data-author-name>
             {authorName}
           </span>
-          {/* Tooltip for Nostr info */}
-          {nostrProfile && (
-            <span
-              class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-sm transition-opacity dark:bg-slate-700"
-              role="tooltip"
-            >
-              {lang === 'fa' ? 'پروفایل نوستر' : 
-               lang === 'ar' ? 'ملف نوستر' :
-               lang === 'fr' ? 'Profil Nostr' : 
-               'Nostr Profile'}: {nostrProfile.npub.slice(0, 16)}...
-            </span>
-          )}
+          {/* Tooltip for Nostr info - initially hidden */}
+          <span
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-sm transition-opacity dark:bg-slate-700"
+            role="tooltip"
+            data-nostr-tooltip
+            style="display: none;"
+          >
+          </span>
         </div>
         
         <!-- Metadata -->
@@ -100,11 +86,72 @@ const formatDateByLang = (date: Date, language: string) => {
             }
           </li>
           {authorRole && (
-            <li class="relative inline-block pe-6 before:absolute before:end-2 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-300 last:pe-0 last-of-type:before:hidden dark:text-neutral-400 dark:before:bg-neutral-600">
+            <li class="relative inline-block pe-6 before:absolute before:end-2 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-300 last:pe-0 last-of-type:before:hidden dark:text-neutral-400 dark:before:bg-neutral-600" data-author-role>
               {authorRole}
             </li>
-          )}        </ul>
+          )}
+        </ul>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  import { getAuthorProfile } from "@utils/nostr";
+
+  async function loadNostrProfile() {
+    const containers = document.querySelectorAll('[data-nostr-author-large]');
+    
+    for (const container of containers) {
+      const pubkey = container.getAttribute('data-nostr-pubkey');
+      const lang = container.getAttribute('data-lang') || 'en';
+      
+      if (!pubkey) continue;
+      
+      try {
+        const profile = await getAuthorProfile(pubkey);
+        
+        if (profile) {
+          // Update author name
+          const nameEl = container.querySelector('[data-author-name]');
+          if (nameEl && (profile.display_name || profile.name)) {
+            nameEl.textContent = profile.display_name || profile.name || '';
+          }
+          
+          // Update author image
+          const imageEl = container.querySelector('[data-author-image]') as HTMLImageElement;
+          if (imageEl && profile.picture) {
+            imageEl.src = profile.picture;
+            imageEl.alt = profile.display_name || profile.name || imageEl.alt;
+          }
+          
+          // Update author role
+          const roleEl = container.querySelector('[data-author-role]');
+          if (roleEl && profile.about) {
+            roleEl.textContent = profile.about.slice(0, 50) + '...';
+          }
+          
+          // Show and update tooltip
+          const tooltipEl = container.querySelector('[data-nostr-tooltip]') as HTMLElement;
+          if (tooltipEl && profile.npub) {
+            const tooltipText = lang === 'fa' ? 'پروفایل نوستر' : 
+                               lang === 'ar' ? 'ملف نوستر' :
+                               lang === 'fr' ? 'Profil Nostr' : 
+                               'Nostr Profile';
+            tooltipEl.textContent = `${tooltipText}: ${profile.npub.slice(0, 16)}...`;
+            tooltipEl.style.display = 'inline-block';
+          }
+        }
+      } catch (error) {
+        console.error('Error loading Nostr profile:', error);
+      }
+    }
+  }
+
+  // Load profiles when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadNostrProfile);
+  } else {
+    loadNostrProfile();
+  }
+</script>

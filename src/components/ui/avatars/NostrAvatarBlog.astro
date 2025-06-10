@@ -1,6 +1,5 @@
 ---
 // Import necessary components and modules
-import { getAuthorProfile } from "@utils/nostr";
 import type { CollectionEntry } from "astro:content";
 
 const { blogEntry } = Astro.props;
@@ -9,27 +8,59 @@ interface Props {
   blogEntry: CollectionEntry<"blog">;
 }
 
-// Get Nostr profile data
-let profile: any = null;
-if (blogEntry.data.nostrPublicKey) {
-  try {
-    profile = await getAuthorProfile(blogEntry.data.nostrPublicKey);
-  } catch (error) {
-    console.error('Error fetching Nostr profile:', error);
-  }
-}
-
-// Fallback to frontmatter data if Nostr profile is not available
-const authorImage = profile?.picture || blogEntry.data.authorImage;
-const authorImageAlt = profile?.name ? `${profile.name} avatar` : blogEntry.data.authorImageAlt;
+// Use fallback data initially
+const authorImage = blogEntry.data.authorImage;
+const authorImageAlt = blogEntry.data.authorImageAlt;
 ---
 
-<div class="shrink-0">
+<div class="shrink-0" data-nostr-avatar data-nostr-pubkey={blogEntry.data.nostrPublicKey}>
   <img
     class="size-[46px] rounded-full border-2 border-neutral-50"
-    src={authorImage}
+    src={authorImage.src}
     alt={authorImageAlt}
     draggable="false"
     loading="lazy"
+    data-author-image
   />
 </div>
+
+<script>
+  import { getAuthorProfile } from "@utils/nostr";
+
+  async function loadNostrAvatar() {
+    const containers = document.querySelectorAll('[data-nostr-avatar]');
+    
+    for (const container of containers) {
+      const pubkey = container.getAttribute('data-nostr-pubkey');
+      
+      if (!pubkey) continue;
+      
+      try {
+        const profile = await getAuthorProfile(pubkey);
+        
+        if (profile) {
+          const imageEl = container.querySelector('[data-author-image]') as HTMLImageElement;
+          
+          // Update author image
+          if (imageEl && profile.picture) {
+            imageEl.src = profile.picture;
+          }
+          
+          // Update alt text
+          if (imageEl && (profile.display_name || profile.name)) {
+            imageEl.alt = `${profile.display_name || profile.name} avatar`;
+          }
+        }
+      } catch (error) {
+        console.error('Error loading Nostr avatar:', error);
+      }
+    }
+  }
+
+  // Load avatars when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadNostrAvatar);
+  } else {
+    loadNostrAvatar();
+  }
+</script>
