@@ -27,7 +27,7 @@ jobs:
           run_install: false # Disable auto-install
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Build
         run: pnpm run build
