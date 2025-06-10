@@ -6,7 +6,6 @@ import NostrAuthorBlogLarge from "@components/ui/avatars/NostrAuthorBlogLarge.as
 import PrimaryCTA from "@components/ui/buttons/PrimaryCTA.astro";
 import { getTranslation } from "@utils/translations";
 import { generateBlogPostUrl } from "@utils/linkManager";
-import { getAuthorProfile } from "@utils/nostr";
 import type { SupportedLocale } from "@utils/linkManager";
 
 const { blogEntry, recentBlogLocale = "" } = Astro.props;
@@ -16,19 +15,9 @@ interface Props {
   recentBlogLocale?: string;
 }
 
-// Get Nostr profile data
-let profile: any = null;
-if (blogEntry.data.nostrPublicKey) {
-  try {
-    profile = await getAuthorProfile(blogEntry.data.nostrPublicKey);
-  } catch (error) {
-    console.error('Error fetching Nostr profile:', error);
-  }
-}
-
-// Fallback to frontmatter data if Nostr profile is not available
-const authorName = profile?.name || profile?.display_name || blogEntry.data.author;
-const authorRole = profile?.about || blogEntry.data.role || "";
+// Use fallback data initially - client-side will update if Nostr profile is available
+const authorName = blogEntry.data.author;
+const authorRole = blogEntry.data.role || "";
 
 // Get localized "Read More" text
 const readMoreText = getTranslation(recentBlogLocale || Astro.currentLocale, "read_more");
@@ -38,7 +27,8 @@ const blogUrl = generateBlogPostUrl(blogEntry, recentBlogLocale as SupportedLoca
 ---
 
 <!-- Root container, which is divided into 2 grid column layout for larger screens -->
-<div class="grid gap-8 sm:grid-cols-2 sm:items-center">  <!-- Container for the blog post's cover image -->
+<div class="grid gap-8 sm:grid-cols-2 sm:items-center" data-nostr-recent-card data-nostr-pubkey={blogEntry.data.nostrPublicKey}>
+  <!-- Container for the blog post's cover image -->
   <div class="sm:order-2">
     {blogEntry.data.cardImage && blogEntry.data.cardImage.src && blogEntry.data.cardImage.src.trim() !== "" && (
       <div class="relative rounded-lg pt-[50%] sm:pt-[100%]">
@@ -69,14 +59,12 @@ const blogUrl = generateBlogPostUrl(blogEntry, recentBlogLocale as SupportedLoca
       <NostrAuthorBlogLarge blogEntry={blogEntry} lang={recentBlogLocale} />
 
       <div class="ms-3 sm:ms-4">
-        <p class="font-bold text-neutral-800 dark:text-neutral-200 sm:mb-1">
+        <p class="font-bold text-neutral-800 dark:text-neutral-200 sm:mb-1" data-author-name>
           {authorName}
         </p>
-        {authorRole && (
-          <p class="text-xs text-neutral-500">
-            {authorRole}
-          </p>
-        )}
+        <p class="text-xs text-neutral-500" data-author-role>
+          {authorRole}
+        </p>
       </div>
     </div>    <!-- Read More button which is a link to the blog post detailed page -->
     <div class="mt-5">
@@ -88,3 +76,45 @@ const blogUrl = generateBlogPostUrl(blogEntry, recentBlogLocale as SupportedLoca
     </div>
   </div>
 </div>
+
+<script>
+  import { getAuthorProfile } from "@utils/nostr";
+
+  async function loadNostrRecentCardProfile() {
+    const cards = document.querySelectorAll('[data-nostr-recent-card]');
+    
+    for (const card of cards) {
+      const pubkey = card.getAttribute('data-nostr-pubkey');
+      
+      if (!pubkey) continue;
+      
+      try {
+        const profile = await getAuthorProfile(pubkey);
+        
+        if (profile) {
+          const authorNameEl = card.querySelector('[data-author-name]');
+          const authorRoleEl = card.querySelector('[data-author-role]');
+          
+          if (profile.name || profile.display_name) {
+            if (authorNameEl) {
+              authorNameEl.textContent = profile.display_name || profile.name || '';
+            }
+          }
+          
+          if (profile.about && authorRoleEl) {
+            authorRoleEl.textContent = profile.about;
+          }
+        }
+      } catch (error) {
+        console.error('Error loading Nostr profile for recent card:', error);
+      }
+    }
+  }
+
+  // Load profiles when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadNostrRecentCardProfile);
+  } else {
+    loadNostrRecentCardProfile();
+  }
+</script>
