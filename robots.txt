@@ -1,4 +1,19 @@
-User-agent: *
-Disallow: /_astro/
+User-agent: Googlebot
+Disallow:
+Allow: /
+Crawl-delay: 10
 
-Sitemap: https://blog.angor.io/sitemap-index.xml
+User-agent: Yandex
+Disallow:
+Allow: /
+Crawl-delay: 2
+
+User-agent: archive.org_bot
+Disallow:
+Allow: /
+Crawl-delay: 2
+
+User-agent: *
+Disallow: /
+
+Sitemap: https://angor.io/sitemap-index.xml
