@@ -33,8 +33,6 @@ const authorName = blogEntry.data.author;
 </div>
 
 <script>
-  import { getAuthorProfile } from "@utils/nostr";
-
   // Generate default avatar with initials and color
   const getInitials = (name: string) => {
     return name
@@ -58,7 +56,7 @@ const authorName = blogEntry.data.author;
   };
 
   function generateDefaultAvatars() {
-    const containers = document.querySelectorAll('[data-nostr-avatar]');
+    const containers = document.querySelectorAll('[data-nostr-avatar]:not([data-processed])');
     
     for (const container of containers) {
       const authorName = container.getAttribute('data-author-name');
@@ -70,54 +68,19 @@ const authorName = blogEntry.data.author;
         
         defaultAvatarEl.textContent = initials;
         defaultAvatarEl.className = `size-[46px] rounded-full border-2 border-neutral-50 flex items-center justify-center text-white font-bold text-xs ${avatarColor}`;
-      }
-    }
-  }
-
-  async function loadNostrAvatar() {
-    const containers = document.querySelectorAll('[data-nostr-avatar]');
-    
-    for (const container of containers) {
-      const pubkey = container.getAttribute('data-nostr-pubkey');
-      
-      if (!pubkey) continue;
-      
-      try {
-        const profile = await getAuthorProfile(pubkey);
         
-        if (profile && profile.picture) {
-          const imageEl = container.querySelector('[data-author-image]') as HTMLImageElement;
-          const defaultAvatarEl = container.querySelector('[data-default-avatar]') as HTMLElement;
-          
-          if (imageEl) {
-            // Update image source and alt text
-            imageEl.src = profile.picture;
-            if (profile.display_name || profile.name) {
-              imageEl.alt = `${profile.display_name || profile.name} avatar`;
-            }
-            
-            // Show profile image and hide default avatar
-            imageEl.classList.remove('hidden');
-            if (defaultAvatarEl) {
-              defaultAvatarEl.classList.add('hidden');
-            }
-          }
-        }
-      } catch (error) {
-        console.error('Error loading Nostr avatar:', error);
+        container.setAttribute('data-processed', 'true');
       }
     }
   }
 
-  // Initialize everything when DOM is ready
-  function initializeAvatars() {
+  // Generate avatars immediately and on DOM changes
+  generateDefaultAvatars();
+  
+  // Also run when new content is added dynamically
+  const observer = new MutationObserver(() => {
     generateDefaultAvatars();
-    loadNostrAvatar();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeAvatars);
-  } else {
-    initializeAvatars();
-  }
+  });
+  
+  observer.observe(document.body, { childList: true, subtree: true });
 </script>
