@@ -1,24 +1,23 @@
 {
-  "extends": "astro/tsconfigs/base",
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "baseUrl": ".",
-    "strictNullChecks": true,
-    "allowJs": false,
-    "declaration": true,
-    "plugins": [
-      {
-        "name": "@astrojs/ts-plugin"
-      }
-    ],
     "paths": {
+      "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
-      "@assets/*": ["src/assets/*"],
-      "@constants/*": ["src/constants/*"],
-      "@utils/*": ["src/utils/*"],
-      "@i18n/*": ["src/i18n/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@/*": ["src/*"]
+      "@content/*": ["src/content/*"],
+      "@data/*": ["src/data_files/*"],
+      "@images/*": ["src/images/*"],
+      "@scripts/*": ["src/assets/scripts/*"],
+      "@styles/*": ["src/assets/styles/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": [
+    "dist",
+    "src/components/ui/cards/CardInsight.astro",
+    "src/components/ui/cards/CardSmall.astro",
+    "src/components/ui/cards/CardWide.astro"
+  ]
 }

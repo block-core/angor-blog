@@ -1,0 +1,171 @@
+---
+// Import the necessary components
+import MainLayout from "@/layouts/MainLayout.astro";
+import { getCollection } from "astro:content";
+
+// Get the latest 3 blog posts dynamically
+const allBlogPosts = await getCollection("blog");
+const latestPosts = allBlogPosts
+  .filter(post => post.id.startsWith("en/")) // Only English posts
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+  .slice(0, 3);
+---
+
+<MainLayout>
+  <!-- Hero Section -->
+  <section class="py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl text-center">
+        <!-- Main Heading -->
+        <h1 class="text-5xl font-light tracking-tight text-neutral-900 dark:text-white sm:text-7xl">
+          Welcome to 
+          <span class="text-[#086c81] dark:text-[#cbdde1] font-normal">Angor Blog</span>
+        </h1>
+        
+        <!-- Description -->
+        <p class="mt-8 text-xl leading-relaxed text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
+          Discover insights about decentralized finance, blockchain technology, and the future of digital assets. 
+          Read our latest articles and explore content published on the Nostr network.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="mt-12 flex items-center justify-center gap-x-8">          <a 
+            href="/blog" 
+            class="rounded-lg bg-[#086c81] px-8 py-4 text-base font-medium text-white hover:bg-[#022229] transition-colors duration-200"
+          >
+            Read Blog
+          </a>
+          <a 
+            href="/nostr-articles" 
+            class="text-base font-medium text-neutral-900 dark:text-white hover:text-[#086c81] dark:hover:text-[#cbdde1] transition-colors duration-200"
+          >
+            Nostr Articles →
+          </a>
+        </div>
+
+        <!-- Blog Stats -->
+        <div class="mt-20 grid grid-cols-1 gap-12 sm:grid-cols-3">
+          <div class="text-center">
+            <div class="text-4xl font-light text-neutral-900 dark:text-white">{allBlogPosts.length}</div>
+            <div class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">Total Articles</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-light text-neutral-900 dark:text-white">{allBlogPosts.filter(post => post.id.startsWith("en/")).length}</div>
+            <div class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">English Posts</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-light text-neutral-900 dark:text-white">{allBlogPosts.filter(post => post.id.startsWith("fr/")).length}</div>
+            <div class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">French Posts</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Blog Posts Section -->
+  <section class="py-24 bg-neutral-50 dark:bg-neutral-900 rounded-2xl">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="mx-auto max-w-2xl text-center mb-16">
+        <h2 class="text-4xl font-light text-neutral-900 dark:text-white">
+          Latest Blog Posts
+        </h2>
+        <p class="mt-6 text-lg text-neutral-600 dark:text-neutral-400">
+          Stay updated with the latest insights, tutorials, and news from the Angor ecosystem.
+        </p>
+      </div>
+
+      <!-- Blog Posts Grid -->
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {latestPosts.map((post) => (
+          <article class="group bg-white/50 dark:bg-neutral-800/50 backdrop-blur-sm rounded-2xl shadow-lg border border-neutral-200/50 dark:border-neutral-700/50 overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <!-- Blog Post Image -->
+            <div class="aspect-video overflow-hidden">
+              <img 
+                src={post.data.cardImage.src} 
+                alt={post.data.cardImageAlt} 
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
+            <div class="p-8">
+              <div class="flex items-center justify-between mb-6">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#086c81]/10 text-[#086c81] dark:bg-[#cbdde1]/10 dark:text-[#cbdde1]">
+                  {post.data.tags?.[0] || "Blog"}
+                </span>
+                <time class="text-sm text-neutral-500 dark:text-neutral-400">
+                  {new Date(post.data.pubDate).toLocaleDateString("en-US", { 
+                    year: "numeric", 
+                    month: "short", 
+                    day: "numeric" 
+                  })}
+                </time>
+              </div>              <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-4 group-hover:text-[#086c81] dark:group-hover:text-[#cbdde1] transition-colors duration-200">
+                <a href={`/blog/${post.id.replace('en/', '')}`}>
+                  {post.data.title}
+                </a>
+              </h3>
+              <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6 line-clamp-3">
+                {post.data.description}
+              </p>
+              <div class="flex items-center justify-between">
+                <a 
+                  href={`/blog/${post.id.replace('en/', '')}`}
+                  class="inline-flex items-center text-sm font-semibold text-[#086c81] dark:text-[#cbdde1] hover:text-[#022229] dark:hover:text-white transition-colors duration-200"
+                >
+                  Read more 
+                  <svg class="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </a>
+                <span class="text-xs text-neutral-500 dark:text-neutral-400">
+                  {post.data.readTime} min read
+                </span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- View All Blog Posts Button -->
+      <div class="mt-16 text-center">
+        <a 
+          href="/blog" 
+          class="inline-flex items-center justify-center rounded-lg bg-[#086c81] px-8 py-4 text-base font-medium text-white hover:bg-[#022229] transition-colors duration-200"
+        >
+          View All Blog Posts
+          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-24">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-4xl font-light text-neutral-900 dark:text-white">
+          Ready to start your DeFi journey?
+        </h2>
+        <p class="mt-6 text-lg text-neutral-600 dark:text-neutral-400">
+          Join thousands of users who trust Angor for their decentralized finance needs.
+        </p>
+        <div class="mt-10 flex items-center justify-center gap-x-8">
+          <a 
+            href="/blog" 
+            class="rounded-lg bg-[#086c81] px-8 py-4 text-base font-medium text-white hover:bg-[#022229] transition-colors duration-200"
+          >
+            Get Started Now
+          </a>
+          <a 
+            href="/contact" 
+            class="text-base font-medium text-neutral-900 dark:text-white hover:text-[#086c81] dark:hover:text-[#cbdde1] transition-colors duration-200"
+          >
+            Contact Us →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

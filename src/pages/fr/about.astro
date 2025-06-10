@@ -1,0 +1,36 @@
+---
+// Import the necessary components
+import MainLayout from "@/layouts/MainLayout.astro";
+import AboutSection from "@components/sections/fr/AboutSection_fr.astro";
+import { SITE } from "@data/constants";
+
+const pageTitle: string = `À Propos d'Angor | ${SITE.title}`;
+const metaDescription =
+  "Découvrez Angor, un protocole de financement participatif décentralisé qui transforme le financement de projets en utilisant le réseau Bitcoin et le protocole Nostr avec sécurité, sans confiance et transparence.";
+const ogTitle = "À Propos d'Angor | Angor";
+---
+
+<MainLayout
+  title={pageTitle}
+  lang="fr"
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://angor.blog/fr/about",
+    url: "https://angor.blog/fr/about",
+    name: "À Propos d'Angor | Angor",
+    description: metaDescription,
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://angor.blog/fr/",
+      name: "Angor",
+      description:
+        "Angor offre des outils technologiques décentralisés de premier plan et des services experts pour répondre à tous les besoins de votre projet.",
+    },
+    inLanguage: "fr",
+  }}
+>
+  <AboutSection />
+</MainLayout>

@@ -1,8 +1,8 @@
 # build output
 dist/
-
 # generated types
 .astro/
+.idea/
 
 # dependencies
 node_modules/
@@ -13,15 +13,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+
 # environment variables
 .env
 .env.production
 
 # macOS-specific files
 .DS_Store
-
-.vercel
-
-package-lock.json
-bun.lockb
-yarn.lock

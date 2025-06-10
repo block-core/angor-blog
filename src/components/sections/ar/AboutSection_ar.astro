@@ -1,0 +1,136 @@
+---
+// Component Imports
+import Icon from "@components/ui/icons/Icon.astro";
+
+const title: string = "حول أنجور";
+const subTitle: string = 
+  "تحويل تمويل المشاريع من خلال التكنولوجيا اللامركزية";
+---
+
+<!-- About Section -->
+<section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14" dir="rtl">
+  <div class="mx-auto max-w-4xl">
+    <div class="text-center">
+      <h1
+        class="text-balance text-3xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200 md:text-5xl md:leading-tight"
+      >
+        {title}
+      </h1>
+      <p class="mt-4 text-pretty text-lg text-neutral-600 dark:text-neutral-400">
+        {subTitle}
+      </p>
+    </div>
+
+    <div class="mt-12 space-y-8">
+      <!-- Main Description -->
+      <div class="prose prose-lg mx-auto dark:prose-invert">
+        <p class="text-lg leading-relaxed text-neutral-700 dark:text-neutral-300">
+          أنجور هو بروتوكول تمويل جماعي لامركزي يحول طريقة تمويل المشاريع من خلال استخدام شبكة البيتكوين وبروتوكول نوستر. مصمم مع وضع الأمان وعدم الحاجة للثقة والشفافية في الاعتبار، يمكن أنجور المستثمرين ومؤسسي المشاريع والمطورين من التفاعل ضمن نظام بيئي لامركزي قوي.
+        </p>
+      </div>
+
+      <!-- Key Features -->
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mt-16">
+        <div class="text-center">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#086c81]/10 dark:bg-[#cbdde1]/10">
+            <Icon name="shield" class="h-8 w-8 text-[#086c81] dark:text-[#cbdde1]" />
+          </div>
+          <h3 class="mt-4 text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+            الأمان أولاً
+          </h3>
+          <p class="mt-2 text-neutral-600 dark:text-neutral-400">
+            مبني على نموذج الأمان القوي للبيتكوين، مما يضمن حماية استثماراتك ومشاريعك بواسطة أكثر البلوك تشين أماناً في العالم.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#086c81]/10 dark:bg-[#cbdde1]/10">
+            <Icon name="users" class="h-8 w-8 text-[#086c81] dark:text-[#cbdde1]" />
+          </div>
+          <h3 class="mt-4 text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+            نظام بدون ثقة
+          </h3>
+          <p class="mt-2 text-neutral-600 dark:text-neutral-400">
+            لا حاجة للثقة في الوسطاء. العقود الذكية والبراهين المشفرة تضمن أن جميع الأطراف يمكنها التفاعل بثقة.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#086c81]/10 dark:bg-[#cbdde1]/10">
+            <Icon name="eye" class="h-8 w-8 text-[#086c81] dark:text-[#cbdde1]" />
+          </div>
+          <h3 class="mt-4 text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+            شفافية كاملة
+          </h3>
+          <p class="mt-2 text-neutral-600 dark:text-neutral-400">
+            كل معاملة ومعلم مشروع مرئي على البلوك تشين، مما يوفر شفافية كاملة لجميع أصحاب المصلحة.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#086c81]/10 dark:bg-[#cbdde1]/10">
+            <Icon name="globe" class="h-8 w-8 text-[#086c81] dark:text-[#cbdde1]" />
+          </div>
+          <h3 class="mt-4 text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+            وصول عالمي
+          </h3>
+          <p class="mt-2 text-neutral-600 dark:text-neutral-400">
+            يمكن الوصول إليه من أي مكان في العالم دون قيود جغرافية أو متطلبات مصرفية تقليدية.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#086c81]/10 dark:bg-[#cbdde1]/10">
+            <Icon name="lightning" class="h-8 w-8 text-[#086c81] dark:text-[#cbdde1]" />
+          </div>
+          <h3 class="mt-4 text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+            مدعوم بالبيتكوين
+          </h3>
+          <p class="mt-2 text-neutral-600 dark:text-neutral-400">
+            يستفيد من شبكة البيتكوين للمعاملات الآمنة والثابتة وتخزين القيمة دون الاعتماد على الأنظمة المالية التقليدية.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#086c81]/10 dark:bg-[#cbdde1]/10">
+            <Icon name="nostr" class="h-8 w-8 text-[#086c81] dark:text-[#cbdde1]" />
+          </div>
+          <h3 class="mt-4 text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+            تكامل نوستر
+          </h3>
+          <p class="mt-2 text-neutral-600 dark:text-neutral-400">
+            يستخدم بروتوكول نوستر للتواصل اللامركزي، مما يضمن تحديثات المشروع المقاومة للرقابة والتفاعل المجتمعي.
+          </p>
+        </div>
+      </div>
+
+      <!-- Mission Statement -->
+      <div class="mt-16 text-center">
+        <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-6">
+          مهمتنا
+        </h2>
+        <p class="text-lg leading-relaxed text-neutral-700 dark:text-neutral-300 max-w-3xl mx-auto">
+          نؤمن بديمقراطية الوصول إلى التمويل مع إزالة الحاجة للثقة بين الأطراف. من خلال دمج أمان البيتكوين مع قدرات التواصل لنوستر، نحن نبني مستقبل تمويل المشاريع اللامركزي حيث يمكن للابتكار أن يزدهر دون حواجز تقليدية.
+        </p>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="mt-16 text-center">
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a 
+            href="/ar/welcome-to-docs/" 
+            class="rounded-lg bg-[#086c81] px-8 py-4 text-base font-medium text-white hover:bg-[#022229] transition-colors duration-200"
+          >
+            ابدأ الآن
+          </a>
+          <a 
+            href="/ar/contact" 
+            class="rounded-lg border border-neutral-300 dark:border-neutral-600 px-8 py-4 text-base font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors duration-200"
+          >
+            اتصل بنا
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

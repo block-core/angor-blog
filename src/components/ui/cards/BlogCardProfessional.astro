@@ -1,0 +1,149 @@
+---
+// Import necessary components and utilities
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { generateBlogPostUrl } from "@utils/linkManager";
+import { getAuthorProfile } from "@utils/nostr";
+import { formatDate } from "@utils/utils";
+import { getTranslation } from "@utils/translations";
+import type { SupportedLocale } from "@utils/linkManager";
+
+const { blogEntry, locale = "" } = Astro.props;
+
+interface Props {
+  blogEntry: CollectionEntry<"blog">;
+  locale?: string;
+}
+
+// Get Nostr profile data
+let profile: any = null;
+if (blogEntry.data.nostrPublicKey) {
+  try {
+    profile = await getAuthorProfile(blogEntry.data.nostrPublicKey);
+  } catch (error) {
+    console.error('Error fetching Nostr profile:', error);
+  }
+}
+
+// Fallback to frontmatter data if Nostr profile is not available
+const authorName = profile?.name || profile?.display_name || blogEntry.data.author;
+
+// Generate the professional dynamic URL using LinkManager
+const blogPostUrl = generateBlogPostUrl(blogEntry, locale as SupportedLocale);
+
+// Get localized "Read" text
+const readText = getTranslation(locale, "read");
+---
+
+<article class="group overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-neutral-700 dark:shadow-neutral-900/50 hover:scale-[1.02]">
+  <a href={blogPostUrl} class="block" data-astro-prefetch>
+    <!-- Image Container with 770x450 aspect ratio -->
+    <div class="relative aspect-[770/450] overflow-hidden">
+      {blogEntry.data.cardImage && (
+        <Image
+          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          src={blogEntry.data.cardImage}
+          alt={blogEntry.data.cardImageAlt}
+          width={770}
+          height={450}
+          format="webp"
+          loading="lazy"
+        />
+      )}      <!-- Date Badge -->
+      <div class="absolute right-4 top-4 rtl:left-4 rtl:right-auto ltr:right-4 ltr:left-auto">
+        <span class="inline-block rounded-lg bg-black/70 px-3 py-1 text-sm font-medium text-white backdrop-blur-sm">
+          {formatDate(blogEntry.data.pubDate)}
+        </span>
+      </div>
+    </div>
+      <!-- Content Section -->    
+       <div class="p-4 sm:p-6">
+      <!-- Title - Larger and at top -->
+      <h3 class="mb-3 sm:mb-4 line-clamp-2 text-xl sm:text-2xl font-bold leading-tight text-neutral-800 transition-colors group-hover:text-cyan-600 dark:text-neutral-200 dark:group-hover:text-cyan-400">
+        {blogEntry.data.title}
+      </h3>
+      
+      <!-- Description as summary -->
+      <p class="mb-3 sm:mb-4 line-clamp-3 text-sm text-neutral-600 dark:text-neutral-400">
+        {blogEntry.data.description}
+      </p>      <!-- Author Info with improved metadata -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3 min-w-0 flex-1 mr-3 rtl:mr-0 rtl:ml-3">
+          {/* Author Avatar - Use Nostr picture if available */}
+          {profile?.picture ? (
+            <img 
+              src={profile.picture} 
+              alt={authorName}
+              class="h-8 w-8 rounded-full object-cover flex-shrink-0 border border-neutral-200 dark:border-neutral-600"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+          ) : null}
+          <div class={`h-8 w-8 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0 ${profile?.picture ? 'hidden' : 'flex'}`}>
+            <span class="text-xs font-bold text-white">
+              {authorName ? authorName.charAt(0).toUpperCase() : 'A'}
+            </span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-medium text-neutral-800 dark:text-neutral-200 truncate">
+              {authorName}
+            </p>
+            {profile?.about && (
+              <p class="text-xs text-neutral-500 dark:text-neutral-400 truncate">
+                {profile.about}
+              </p>
+            )}
+          </div>
+        </div>        
+        <!-- Read More Arrow -->
+        <div class="flex items-center gap-1 text-cyan-600 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 dark:text-cyan-400 flex-shrink-0">
+          <span class="text-sm font-medium hidden sm:inline">{readText}</span>
+          <svg class="h-4 w-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </div>
+      
+      <!-- Tags Section -->
+      {blogEntry.data.tags && blogEntry.data.tags.length > 0 && (
+        <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-600">
+          <div class="flex flex-wrap gap-2">
+            {blogEntry.data.tags.slice(0, 4).map((tag: string) => {
+              const baseUrl = locale && locale !== "en" ? `/${locale}/blog` : "/blog";
+              const tagUrl = `${baseUrl}/tag/${encodeURIComponent(tag)}`;
+              return (
+                <a 
+                  href={tagUrl}
+                  class="inline-block rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600 transition-colors duration-200 hover:bg-cyan-50 hover:text-cyan-600 dark:bg-neutral-600 dark:text-neutral-300 dark:hover:bg-cyan-900/20 dark:hover:text-cyan-400"
+                  title={`View articles about ${tag}`}
+                >
+                  #{tag}
+                </a>
+              );
+            })}
+            {blogEntry.data.tags.length > 4 && (
+              <span class="inline-block rounded-full bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-500 dark:bg-neutral-600 dark:text-neutral-400">
+                +{blogEntry.data.tags.length - 4}
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  </a>
+</article>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

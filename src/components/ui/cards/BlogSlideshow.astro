@@ -1,0 +1,186 @@
+---
+// Import necessary components and utilities
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { generateBlogPostUrl } from "@utils/linkManager";
+import { getAuthorProfile } from "@utils/nostr";
+import { formatDate } from "@utils/utils";
+import type { SupportedLocale } from "@utils/linkManager";
+
+const { blogPosts, locale = "", compact = false } = Astro.props;
+
+interface Props {
+  blogPosts: CollectionEntry<"blog">[];
+  locale?: string;
+  compact?: boolean;
+}
+---
+
+<div class="relative w-full overflow-hidden rounded-2xl bg-neutral-50 dark:bg-neutral-900">
+  <!-- Slideshow Container -->
+  <div id="blog-slideshow" class={`relative w-full ${compact ? 'h-[350px]' : 'h-[450px]'}`}>
+    {blogPosts.map((post, index) => {
+      const blogUrl = generateBlogPostUrl(post, locale as SupportedLocale);
+      return (
+        <div 
+          class={`absolute inset-0 transition-all duration-500 ease-in-out ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+          data-slide={index}
+        >
+          <a href={blogUrl} class="group block h-full w-full" data-astro-prefetch>
+            <!-- Image Container with 770x450 aspect ratio -->
+            <div class="relative h-full w-full overflow-hidden">
+              {post.data.cardImage && (
+                <Image
+                  class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  src={post.data.cardImage}
+                  alt={post.data.cardImageAlt}
+                  width={770}
+                  height={450}
+                  format="webp"
+                  loading={index === 0 ? "eager" : "lazy"}
+                />
+              )}
+              
+              <!-- Gradient Overlay -->
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+              
+              <!-- Content Overlay -->
+              <div class="absolute bottom-0 left-0 right-0 p-8 text-white">                <div class="mb-3">
+                  <span class="inline-block rounded-full bg-cyan-500/20 px-3 py-1 text-sm font-medium text-cyan-300 backdrop-blur-sm">
+                    {formatDate(post.data.pubDate)}
+                  </span>
+                </div>
+                
+                <h3 class="mb-3 text-2xl font-bold leading-tight transition-colors group-hover:text-cyan-300 lg:text-3xl">
+                  {post.data.description}
+                </h3>
+                
+                <p class="line-clamp-2 text-neutral-200 opacity-90">
+                  {post.data.title}
+                </p>
+                  <div class="mt-4 flex items-center space-x-3 rtl:space-x-reverse">
+                  <div class="h-8 w-8 rounded-full bg-neutral-600"></div>
+                  <span class="text-sm font-medium text-neutral-300">
+                    {post.data.author}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      );
+    })}
+  </div>
+  
+  <!-- Navigation Dots -->
+  <div class="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 space-x-2">
+    {blogPosts.map((_, index) => (
+      <button
+        class={`h-2 w-2 rounded-full transition-all duration-300 ${index === 0 ? 'bg-white w-6' : 'bg-white/50 hover:bg-white/75'}`}
+        data-slide-to={index}
+        aria-label={`Go to slide ${index + 1}`}
+      ></button>
+    ))}
+  </div>
+  
+  <!-- Navigation Arrows -->
+  <button 
+    id="prev-slide" 
+    class="absolute left-4 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition-all hover:bg-black/50"
+    aria-label="Previous slide"
+  >
+    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+  
+  <button 
+    id="next-slide" 
+    class="absolute right-4 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition-all hover:bg-black/50"
+    aria-label="Next slide"
+  >
+    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const slideshow = document.getElementById('blog-slideshow');
+    const slides = slideshow?.querySelectorAll('[data-slide]');
+    const dots = document.querySelectorAll('[data-slide-to]');
+    const prevBtn = document.getElementById('prev-slide');
+    const nextBtn = document.getElementById('next-slide');
+    
+    let currentSlide = 0;
+    const totalSlides = slides?.length || 0;
+    
+    function showSlide(index: number) {
+      if (!slides) return;
+      
+      // Hide all slides
+      slides.forEach((slide) => {
+        slide.classList.remove('opacity-100', 'z-10');
+        slide.classList.add('opacity-0', 'z-0');
+      });
+      
+      // Show current slide
+      const current = slides[index];
+      if (current) {
+        current.classList.remove('opacity-0', 'z-0');
+        current.classList.add('opacity-100', 'z-10');
+      }
+      
+      // Update dots
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.remove('bg-white/50', 'w-2');
+          dot.classList.add('bg-white', 'w-6');
+        } else {
+          dot.classList.remove('bg-white', 'w-6');
+          dot.classList.add('bg-white/50', 'w-2');
+        }
+      });
+    }
+    
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      showSlide(currentSlide);
+    }
+    
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      showSlide(currentSlide);
+    }
+    
+    // Event listeners
+    nextBtn?.addEventListener('click', nextSlide);
+    prevBtn?.addEventListener('click', prevSlide);
+    
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+      });
+    });
+    
+    // Auto-play
+    setInterval(nextSlide, 5000);
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
+    });
+  });
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

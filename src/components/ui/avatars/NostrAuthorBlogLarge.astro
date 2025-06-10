@@ -1,0 +1,110 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getAuthorProfile, type NostrAuthorProfile } from "@utils/nostr";
+import { formatDate } from "@utils/utils";
+
+interface Props {
+  blogEntry: CollectionEntry<"blog">;
+  lang?: string;
+}
+
+const { blogEntry, lang = "en" } = Astro.props;
+
+// Fetch Nostr profile if nostrPublicKey exists
+let nostrProfile: NostrAuthorProfile | null = null;
+if (blogEntry.data.nostrPublicKey) {
+  try {
+    nostrProfile = await getAuthorProfile(blogEntry.data.nostrPublicKey);
+  } catch (error) {
+    console.error("Error fetching Nostr profile:", error);
+  }
+}
+
+// Use Nostr data if available, otherwise fallback to blog frontmatter
+const authorName = nostrProfile?.display_name || nostrProfile?.name || blogEntry.data.author;
+const authorImage = nostrProfile?.picture || blogEntry.data.authorImage;
+const authorRole = blogEntry.data.role || (nostrProfile?.about ? nostrProfile.about.slice(0, 50) + '...' : '');
+
+// Date formatting based on language
+const formatDateByLang = (date: Date, language: string) => {
+  switch (language) {
+    case 'fa':
+      return new Intl.DateTimeFormat('fa-IR', {
+        year: 'numeric',
+        month: 'long', 
+        day: 'numeric'
+      }).format(date);
+    case 'ar':
+      return new Intl.DateTimeFormat('ar-SA', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).format(date);
+    case 'fr':
+      return new Intl.DateTimeFormat('fr-FR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).format(date);
+    default:
+      return formatDate(date);
+  }
+};
+---
+
+<div class="flex w-full gap-x-5 sm:items-center sm:gap-x-3">
+  <!-- Author Avatar -->
+  <div class="shrink-0">
+    <img
+      class="size-12 rounded-full"
+      src={typeof authorImage === 'string' ? authorImage : authorImage.src}
+      alt={authorName}
+      loading="lazy"
+    />
+  </div>
+  
+  <!-- Author Info -->
+  <div class="grow">
+    <div class="flex items-center justify-between gap-x-2">
+      <div>
+        <!-- Author Name -->
+        <div class="hs-tooltip inline-block [--placement:bottom] [--trigger:hover]">
+          <span class="font-bold text-neutral-700 dark:text-neutral-300">
+            {authorName}
+          </span>
+          {/* Tooltip for Nostr info */}
+          {nostrProfile && (
+            <span
+              class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-sm transition-opacity dark:bg-slate-700"
+              role="tooltip"
+            >
+              {lang === 'fa' ? 'پروفایل نوستر' : 
+               lang === 'ar' ? 'ملف نوستر' :
+               lang === 'fr' ? 'Profil Nostr' : 
+               'Nostr Profile'}: {nostrProfile.npub.slice(0, 16)}...
+            </span>
+          )}
+        </div>
+        
+        <!-- Metadata -->
+        <ul class="text-xs text-neutral-500">
+          <li class="relative inline-block pe-6 before:absolute before:end-2 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-300 last:pe-0 last-of-type:before:hidden dark:text-neutral-400 dark:before:bg-neutral-600">
+            {formatDateByLang(blogEntry.data.pubDate, lang)}
+          </li>
+          <li class="relative inline-block pe-6 before:absolute before:end-2 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-300 last:pe-0 last-of-type:before:hidden dark:text-neutral-400 dark:before:bg-neutral-600">
+            {blogEntry.data.readTime} {
+              lang === 'fa' ? 'دقیقه مطالعه' :
+              lang === 'ar' ? 'دقيقة قراءة' :
+              lang === 'fr' ? 'min de lecture' :
+              'min read'
+            }
+          </li>
+          {authorRole && (
+            <li class="relative inline-block pe-6 before:absolute before:end-2 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-300 last:pe-0 last-of-type:before:hidden dark:text-neutral-400 dark:before:bg-neutral-600">
+              {authorRole}
+            </li>
+          )}        </ul>
+      </div>
+    </div>
+  </div>
+</div>

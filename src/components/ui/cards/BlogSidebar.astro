@@ -1,0 +1,130 @@
+---
+// Import necessary utilities
+import { getTranslation } from "@utils/translations";
+import type { CollectionEntry } from "astro:content";
+
+const { blogPosts, locale = "" } = Astro.props;
+
+interface Props {
+  blogPosts: CollectionEntry<"blog">[];
+  locale?: string;
+}
+
+// Get unique tags from all posts and count their usage
+const tagCounts = new Map<string, number>();
+blogPosts.forEach(post => {
+  if (post.data.tags) {
+    post.data.tags.forEach((tag: string) => {
+      tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+    });
+  }
+});
+
+// Sort tags by popularity (usage count) and take top 15
+const popularTags = Array.from(tagCounts.entries())
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 15)
+  .map(([tag]) => tag);
+
+// Localized text
+const tagsText = getTranslation(locale, "tags");
+const clickTagInfo = getTranslation(locale, "click_tag_info");
+const viewArticlesAbout = getTranslation(locale, "view_articles_about");
+
+// Helper function to generate tag search URL (for future tag filtering functionality)
+const generateTagUrl = (tag: string) => {
+  const baseUrl = locale && locale !== "en" ? `/${locale}/blog` : "/blog";
+  return `${baseUrl}/tag/${encodeURIComponent(tag)}`;
+};
+---
+
+<!-- Sidebar with exact height matching to slideshow -->
+<div id="blog-sidebar" class="min-h-0">
+  <!-- Popular Tags - Single focused section -->
+  {popularTags.length > 0 && (
+    <div class="rounded-2xl bg-white p-6 shadow-lg dark:bg-neutral-700 dark:shadow-neutral-900/50 h-full flex flex-col"><h3 class="mb-6 text-xl font-bold text-neutral-800 dark:text-neutral-200">
+        🏷️ {tagsText}
+      </h3>
+        <!-- Tags grid with scrollable content -->
+      <div class="flex flex-wrap gap-3 flex-1 overflow-y-auto pr-2 tags-scrollable">        {popularTags.map((tag) => (          <a 
+            href={generateTagUrl(tag)}
+            class="inline-block rounded-full bg-neutral-100 px-4 py-2 text-sm font-medium text-neutral-700 transition-colors duration-200 hover:text-cyan-600 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:text-cyan-400 cursor-pointer"
+            title={`${viewArticlesAbout} ${tag}`}
+          >
+            #{tag}
+          </a>
+        ))}
+      </div>
+      
+      <!-- Footer note -->
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex-shrink-0">
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 text-center">
+          {clickTagInfo}
+        </p>
+      </div>
+    </div>
+  )}
+</div>
+
+<!-- JavaScript to match sidebar height to slideshow height exactly -->
+<script>
+  function matchSidebarToSlideshowHeight() {
+    const slideshow = document.getElementById('blog-slideshow');
+    const sidebar = document.getElementById('blog-sidebar');
+    
+    if (slideshow && sidebar) {
+      const slideshowHeight = slideshow.offsetHeight;
+      sidebar.style.height = `${slideshowHeight}px`;
+    }
+  }
+
+  // Initial height matching
+  document.addEventListener('DOMContentLoaded', matchSidebarToSlideshowHeight);
+  
+  // Update on window resize
+  window.addEventListener('resize', matchSidebarToSlideshowHeight);
+  
+  // Update after images load (in case slideshow height changes)
+  window.addEventListener('load', matchSidebarToSlideshowHeight);
+</script>
+
+<style>
+  .tags-scrollable::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .tags-scrollable::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .tags-scrollable::-webkit-scrollbar-thumb {
+    background: #06b6d4;
+    border-radius: 3px;
+  }
+  
+  .tags-scrollable::-webkit-scrollbar-thumb:hover {
+    background: #0891b2;
+  }
+  
+  /* Firefox scrollbar */
+  .tags-scrollable {
+    scrollbar-width: thin;
+    scrollbar-color: #06b6d4 transparent;
+  }
+</style>
+
+<style>
+  /* Custom scrollbar for recent posts */
+  .space-y-3::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .space-y-3::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .space-y-3::-webkit-scrollbar-thumb {
+    background: #06b6d4;
+    border-radius: 2px;
+  }
+</style>

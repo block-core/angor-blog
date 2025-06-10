@@ -1,0 +1,342 @@
+---
+// Import the necessary dependencies.
+import ContactIconBlock from "@components/ui/blocks/ContactIconBlock.astro";
+import Icon from "@components/ui/icons/Icon.astro";
+
+// Define the variables that will be used in this component
+const title: string = "تماس با ما";
+const subTitle: string = "مستقیماً از طریق Nostr یا ایمیل با ما در ارتباط باشید";
+const connectTitle: string = "اتصال اکانت Nostr";
+const connectSubTitle: string = "برای ارسال پیام رمزگذاری شده، اکستنشن Nostr خود را متصل کنید.";
+const messageTitle: string = "ارسال پیام";
+const messageSubTitle: string = "پیام شما به صورت رمزگذاری شده و مستقیماً به Angor ارسال خواهد شد.";
+---
+
+<!-- Nostr Contact Section -->
+<section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+  <div class="mx-auto max-w-2xl lg:max-w-5xl">
+    <div class="text-center">
+      <h1
+        class="text-balance text-2xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200 md:text-4xl md:leading-tight"
+      >
+        {title}
+      </h1>
+      <p class="mt-1 text-pretty text-neutral-600 dark:text-neutral-400">
+        {subTitle}
+      </p>
+    </div>
+
+    <div class="mt-12 grid items-center gap-6 lg:grid-cols-2 lg:gap-16">
+      <!-- Nostr Contact Form -->
+      <div class="flex flex-col rounded-xl p-4 sm:p-6 lg:p-8">
+        <!-- Connection Status -->        
+         <div id="connection-status" class="mb-6 hidden">
+          <div class="flex items-center gap-3 rounded-lg bg-cyan-50 border border-cyan-200 p-4 dark:bg-cyan-950/30 dark:border-cyan-800/50">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-cyan-600 dark:text-cyan-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-sm font-semibold text-cyan-800 dark:text-cyan-200">
+                متصل شده
+              </h3>
+              <p id="connected-npub" class="text-sm text-cyan-700 dark:text-cyan-300">
+                <!-- User's npub will be shown here -->
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connect Button Section -->
+        <div id="connect-section">
+          <h2 class="mb-4 text-xl font-bold text-neutral-700 dark:text-neutral-300">
+            {connectTitle}
+          </h2>          <p class="mb-6 text-sm text-neutral-600 dark:text-neutral-400">
+            {connectSubTitle}
+          </p>
+          
+          <div class="flex justify-center">
+            <button
+              id="connect-nostr-btn"
+              class="inline-flex w-full items-center justify-center gap-x-2 whitespace-nowrap rounded-lg border border-transparent bg-cyan-400 p-3 text-sm font-bold text-neutral-50 outline-hidden ring-zinc-500 transition duration-300 hover:bg-cyan-500 focus-visible:ring-3 disabled:pointer-events-none disabled:opacity-50 dark:ring-zinc-200 dark:focus:outline-hidden dark:focus:ring-1 sm:w-auto"
+            >
+              <div class="flex items-center justify-center gap-2">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                اتصال اکستنشن Nostr
+              </div>
+            </button>
+          </div>
+
+          <!-- Extension Help -->
+          <div class="mt-4">
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 text-center">
+              اکستنشن Nostr ندارید؟ 
+              <a href="https://github.com/aljazceru/awesome-nostr#nip-07-browser-extensions" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 class="text-orange-600 hover:text-orange-700 underline">
+                اکستنشن نصب کنید
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Message Form Section -->
+        <div id="message-section" class="hidden">
+          <h2 class="mb-4 text-xl font-bold text-neutral-700 dark:text-neutral-300">
+            {messageTitle}
+          </h2>
+          <p class="mb-6 text-sm text-neutral-600 dark:text-neutral-400">
+            {messageSubTitle}
+          </p>
+
+          <form id="nostr-message-form">
+            <div class="space-y-4">
+              <!-- Subject -->
+              <div>
+                <label for="message-subject" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+                  موضوع
+                </label>
+                <input
+                  type="text"
+                  id="message-subject"
+                  name="subject"
+                  placeholder="موضوع پیام خود را وارد کنید"
+                  class="block w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700 placeholder:text-neutral-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-600 dark:bg-neutral-700/30 dark:text-neutral-300 dark:placeholder:text-neutral-400"
+                  required
+                />
+              </div>
+
+              <!-- Message -->
+              <div>
+                <label for="message-content" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+                  پیام
+                </label>
+                <textarea
+                  id="message-content"
+                  name="message"
+                  rows="6"
+                  placeholder="پیام خود را اینجا بنویسید..."
+                  class="block w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700 placeholder:text-neutral-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-600 dark:bg-neutral-700/30 dark:text-neutral-300 dark:placeholder:text-neutral-400"
+                  required
+                ></textarea>
+              </div>              <!-- Send Button -->
+              <button
+                type="submit"
+                id="send-message-btn"
+                class="inline-flex w-full items-center justify-center gap-x-2 whitespace-nowrap rounded-lg border border-transparent bg-cyan-400 p-3 text-sm font-bold text-neutral-50 outline-hidden ring-zinc-500 transition duration-300 hover:bg-cyan-500 focus-visible:ring-3 disabled:pointer-events-none disabled:opacity-50 dark:ring-zinc-200 dark:focus:outline-hidden dark:focus:ring-1 sm:w-auto"
+              >
+                <span id="send-btn-text">ارسال پیام رمزگذاری شده</span>
+                <span id="send-btn-loading" class="hidden">در حال ارسال...</span>
+              </button>
+            </div>
+          </form>            <!-- Success Message -->
+          <div id="success-message" class="mt-4 hidden">
+            <div class="rounded-lg bg-cyan-50 border border-cyan-200 p-4 dark:bg-cyan-950/30 dark:border-cyan-800/50">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg class="h-5 w-5 text-cyan-600 dark:text-cyan-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                <div class="mr-3">
+                  <h3 class="text-sm font-semibold text-cyan-800 dark:text-cyan-200">
+                    پیام با موفقیت ارسال شد
+                  </h3>
+                  <p class="text-sm font-semibold text-cyan-800 dark:text-cyan-200">
+                    پیام شما به صورت رمزگذاری شده به Angor ارسال شد. به زودی پاسخ خواهید گرفت.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div><!-- Error Message -->
+          <div id="error-message" class="mt-4 hidden">
+            <div class="rounded-lg bg-red-50 border border-red-200 p-4 dark:bg-red-950/30 dark:border-red-800/50">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg class="h-5 w-5 text-red-600 dark:text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                <div class="mr-3">
+                  <h3 class="text-sm font-semibold text-red-800 dark:text-red-200">
+                    خطا در ارسال پیام
+                  </h3>
+                  <p id="error-text" class="mt-1 text-sm text-red-700 dark:text-red-300">
+                    <!-- Error message will be shown here -->
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>      <!-- Contact Information -->
+      <div class="divide-y divide-neutral-300 dark:divide-neutral-700">
+        <ContactIconBlock
+          heading="اکستنشن Nostr"
+          content="یک اکستنشن Nostr برای اتصال به شبکه و ارسال پیام‌های رمزگذاری شده نصب کنید"
+          isLinkVisible={true}
+          linkTitle="دانلود اکستنشن"
+          linkURL="https://github.com/aljazceru/awesome-nostr#nip-07-browser-extensions"
+          isArrowVisible={true}
+          ><Icon name="nostr" />
+        </ContactIconBlock>
+
+        <ContactIconBlock
+          heading="پشتیبانی فنی"
+          content="برای دریافت کمک از طریق ایمیل با ما تماس بگیرید"
+          isLinkVisible={true}
+          linkTitle="support@angor.io"
+          linkURL="mailto:support@angor.io"
+          ><Icon name="envelopeOpen" />
+        </ContactIconBlock>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Nostr Contact Script -->
+<script>
+  import { nostrService } from '@/utils/nostr';
+
+  const ANGOR_NPUB = 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02';
+  // DOM Elements
+  const connectSection = document.getElementById('connect-section');
+  const messageSection = document.getElementById('message-section');
+  const connectionStatus = document.getElementById('connection-status');
+  const connectBtn = document.getElementById('connect-nostr-btn') as HTMLButtonElement | null;
+  const messageForm = document.getElementById('nostr-message-form') as HTMLFormElement | null;
+  const sendBtn = document.getElementById('send-message-btn') as HTMLButtonElement | null;
+  const sendBtnText = document.getElementById('send-btn-text');
+  const sendBtnLoading = document.getElementById('send-btn-loading');
+  const successMessage = document.getElementById('success-message');
+  const errorMessage = document.getElementById('error-message');
+  const errorText = document.getElementById('error-text');
+  const connectedNpub = document.getElementById('connected-npub');
+
+  let userPubkey: string | null = null;
+  // Check if Nostr extension is available
+  function checkNostrExtension() {
+    if (!nostrService.hasNostrExtension()) {
+      showError('اکستنشن Nostr یافت نشد. لطفاً ابتدا یک اکستنشن Nostr نصب کنید.');
+      if (connectBtn) {
+        connectBtn.disabled = true;
+        connectBtn.textContent = 'اکستنشن Nostr یافت نشد';
+      }
+      return false;
+    }
+    return true;
+  }
+  // Connect to Nostr extension
+  async function connectNostr() {
+    if (!checkNostrExtension()) return;
+
+    try {
+      if (connectBtn) {
+        connectBtn.disabled = true;
+        connectBtn.innerHTML = '<div class="flex items-center justify-center gap-2"><svg class="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>در حال اتصال...</div>';
+      }
+
+      const user = await nostrService.connectUser();
+      
+      if (user) {
+        userPubkey = user.pubkey;
+        
+        // Show connection status
+        if (connectedNpub) {
+          connectedNpub.textContent = `${user.npub.slice(0, 16)}...`;
+        }
+        connectionStatus?.classList.remove('hidden');
+        
+        // Hide connect section and show message form
+        connectSection?.classList.add('hidden');
+        messageSection?.classList.remove('hidden');
+        
+        hideError();
+      }
+    } catch (error) {
+      console.error('Error connecting to Nostr:', error);
+      showError(error instanceof Error ? error.message : 'خطا در اتصال به اکستنشن Nostr');
+      if (connectBtn) {
+        connectBtn.disabled = false;
+        connectBtn.innerHTML = '<div class="flex items-center justify-center gap-2"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>اتصال اکستنشن Nostr</div>';
+      }
+    }
+  }
+  // Send message
+  async function sendMessage(subject: string, message: string) {
+    if (!userPubkey) {
+      showError('ابتدا اکانت Nostr خود را متصل کنید');
+      return;
+    }
+
+    try {
+      // Disable send button and show loading
+      if (sendBtn) {
+        sendBtn.disabled = true;
+      }
+      sendBtnText?.classList.add('hidden');
+      sendBtnLoading?.classList.remove('hidden');
+
+      // Prepare the full message
+      const fullMessage = `موضوع: ${subject}\n\n${message}`;
+      
+      // Send the encrypted message
+      const messageId = await nostrService.sendDirectMessage(userPubkey, ANGOR_NPUB, fullMessage);
+      
+      console.log('Message sent successfully:', messageId);
+      
+      // Show success message
+      hideError();
+      successMessage?.classList.remove('hidden');
+      
+      // Reset form
+      messageForm?.reset();
+      
+    } catch (error) {
+      console.error('Error sending message:', error);
+      showError(error instanceof Error ? error.message : 'خطا در ارسال پیام');
+    } finally {
+      // Re-enable send button
+      if (sendBtn) {
+        sendBtn.disabled = false;
+      }
+      sendBtnText?.classList.remove('hidden');
+      sendBtnLoading?.classList.add('hidden');
+    }
+  }
+  // Show error message
+  function showError(message: string) {
+    if (errorText) {
+      errorText.textContent = message;
+    }
+    errorMessage?.classList.remove('hidden');
+    successMessage?.classList.add('hidden');
+  }
+
+  // Hide error message
+  function hideError() {
+    errorMessage?.classList.add('hidden');
+  }
+
+  // Event listeners
+  connectBtn?.addEventListener('click', connectNostr);
+  messageForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    if (!messageForm) return;
+    
+    const formData = new FormData(messageForm);
+    const subject = formData.get('subject') as string;
+    const message = formData.get('message') as string;
+    
+    if (!subject.trim() || !message.trim()) {
+      showError('لطفاً تمام فیلدها را پر کنید');
+      return;
+    }
+      await sendMessage(subject.trim(), message.trim());
+  });
+</script>

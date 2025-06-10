@@ -1,0 +1,166 @@
+---
+// Import the necessary components
+import MainLayout from "@/layouts/MainLayout.astro";
+import { getCollection } from "astro:content";
+
+// Get the latest 3 blog posts dynamically
+const allBlogPosts = await getCollection("blog");
+const latestPosts = allBlogPosts
+  .filter(post => post.id.startsWith("fa/")) // Only Persian posts
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+  .slice(0, 3);
+---
+
+<MainLayout   
+  title="به آنگور خوش آمدید | بلاگ"
+  description="به آنگور خوش آمدید - پلتفرم بیت‌کوین، نوستر و فناوری‌های غیرمتمرکز"
+  lang="fa"
+  dir="rtl">
+  <!-- Hero Section -->
+  <section class="py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl text-center">        <!-- Main Heading -->
+        <h1 class="text-5xl font-light tracking-tight text-neutral-900 dark:text-white sm:text-7xl">
+          به 
+          <span class="text-[#086c81] dark:text-[#cbdde1] font-normal">وبلاگ آنگور</span>
+          خوش آمدید
+        </h1>
+        
+        <!-- Description -->
+        <p class="mt-8 text-xl leading-relaxed text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
+          بینش‌هایی درباره مالی غیرمتمرکز، فناوری بلاک‌چین و آینده دارایی‌های دیجیتال کشف کنید. 
+          آخرین مقالات ما را بخوانید و محتوای منتشرشده در شبکه نوستر را کاوش کنید.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="mt-12 flex items-center justify-center gap-x-8">          <a 
+            href="/fa/blog" 
+            class="rounded-lg bg-[#086c81] px-8 py-4 text-base font-medium text-white hover:bg-[#022229] transition-colors duration-200"
+          >
+            مطالعه وبلاگ
+          </a>          <a 
+            href="/fa/nostr-articles" 
+            class="text-base font-medium text-neutral-900 dark:text-white hover:text-[#086c81] dark:hover:text-[#cbdde1] transition-colors duration-200"
+          >
+            → مقالات نوستر
+          </a>
+        </div>        <!-- Blog Stats -->
+        <div class="mt-20 grid grid-cols-1 gap-12 sm:grid-cols-3">
+          <div class="text-center">
+            <div class="text-4xl font-light text-neutral-900 dark:text-white">{allBlogPosts.length}</div>
+            <div class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">کل مقالات</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-light text-neutral-900 dark:text-white">{allBlogPosts.filter(post => post.id.startsWith("fa/")).length}</div>
+            <div class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">مقالات فارسی</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-light text-neutral-900 dark:text-white">{allBlogPosts.filter(post => post.id.startsWith("en/")).length}</div>
+            <div class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">مقالات انگلیسی</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Blog Posts Section -->
+  <section class="py-24 bg-neutral-50 dark:bg-neutral-900 rounded-2xl">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">      <!-- Section Header -->
+      <div class="mx-auto max-w-2xl text-center mb-16">
+        <h2 class="text-4xl font-light text-neutral-900 dark:text-white">
+          آخرین مقالات وبلاگ
+        </h2>
+        <p class="mt-6 text-lg text-neutral-600 dark:text-neutral-400">
+          با آخرین بینش‌ها، آموزش‌ها و اخبار از اکوسیستم آنگور به‌روز بمانید.
+        </p>
+      </div>
+
+      <!-- Blog Posts Grid -->
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {latestPosts.map((post) => (
+          <article class="group bg-white/50 dark:bg-neutral-800/50 backdrop-blur-sm rounded-2xl shadow-lg border border-neutral-200/50 dark:border-neutral-700/50 overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <!-- Blog Post Image -->
+            <div class="aspect-video overflow-hidden">
+              <img 
+                src={post.data.cardImage.src} 
+                alt={post.data.cardImageAlt} 
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
+            <div class="p-8">
+              <div class="flex items-center justify-between mb-6">              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#086c81]/10 text-[#086c81] dark:bg-[#cbdde1]/10 dark:text-[#cbdde1]">
+                {post.data.tags?.[0] || "وبلاگ"}
+              </span>
+                <time class="text-sm text-neutral-500 dark:text-neutral-400">
+                  {new Date(post.data.pubDate).toLocaleDateString("en-US", { 
+                    year: "numeric", 
+                    month: "short", 
+                    day: "numeric" 
+                  })}
+                </time>
+              </div>              <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-4 group-hover:text-[#086c81] dark:group-hover:text-[#cbdde1] transition-colors duration-200">
+                <a href={`/fa/blog/${post.id.replace('fa/', '')}`}>
+                  {post.data.title}
+                </a>
+              </h3>
+              <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6 line-clamp-3">
+                {post.data.description}
+              </p>              <div class="flex items-center justify-between">
+                <a 
+                  href={`/fa/blog/${post.id.replace('fa/', '')}`}
+                  class="inline-flex items-center text-sm font-semibold text-[#086c81] dark:text-[#cbdde1] hover:text-[#022229] dark:hover:text-white transition-colors duration-200"
+                >
+                  ادامه مطالعه 
+                  <svg class="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </a>
+                <span class="text-xs text-neutral-500 dark:text-neutral-400">
+                  {post.data.readTime} دقیقه مطالعه
+                </span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>      <!-- View All Blog Posts Button -->
+      <div class="mt-16 text-center">
+        <a 
+          href="/fa/blog" 
+          class="inline-flex items-center justify-center rounded-lg bg-[#086c81] px-8 py-4 text-base font-medium text-white hover:bg-[#022229] transition-colors duration-200"
+        >
+          مشاهده همه مقالات وبلاگ
+          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- CTA Section -->
+  <section class="py-24">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-4xl font-light text-neutral-900 dark:text-white">
+          آماده شروع سفر DeFi خود هستید؟
+        </h2>
+        <p class="mt-6 text-lg text-neutral-600 dark:text-neutral-400">
+          به هزاران کاربری بپیوندید که برای نیازهای مالی غیرمتمرکز خود به آنگور اعتماد می‌کنند.
+        </p>
+        <div class="mt-10 flex items-center justify-center gap-x-8">
+          <a 
+            href="/fa/docs" 
+            class="rounded-lg bg-[#086c81] px-8 py-4 text-base font-medium text-white hover:bg-[#022229] transition-colors duration-200"
+          >
+            اکنون شروع کنید
+          </a>          <a 
+            href="/fa/contact" 
+            class="text-base font-medium text-neutral-900 dark:text-white hover:text-[#086c81] dark:hover:text-[#cbdde1] transition-colors duration-200"
+          >
+            → تماس با ما
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+

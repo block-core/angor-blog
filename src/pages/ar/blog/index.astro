@@ -1,0 +1,138 @@
+---
+// Import necessary components, modules and types
+import MainLayout from "@/layouts/MainLayout.astro";
+import BlogSlideshow from "@components/ui/cards/BlogSlideshow.astro";
+import BlogCardProfessional from "@components/ui/cards/BlogCardProfessional.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "@data/constants";
+import { getTranslation } from "@utils/translations";
+
+// Get all blogs post in Arabic and sort them based on publish date
+
+const arabicBlogEntries = await getCollection("blog", ({ id }) => {
+  return id.startsWith("ar/");
+});
+
+const blogPosts: CollectionEntry<"blog">[] = arabicBlogEntries.sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+// Separate the latest 3 posts for slideshow (they will also appear in the main list)
+const latestPosts: CollectionEntry<"blog">[] = blogPosts.slice(0, 3);
+// All posts will be displayed in the grid
+const allPosts: CollectionEntry<"blog">[] = blogPosts;
+
+// Define variables for page content
+const title: string = "مدونة أنجور";
+const subTitle: string = "آخر الرؤى حول البيتكوين ونوستر والتقنيات اللامركزية.";
+
+const pageTitle: string = `المدونة | ${SITE.title}`;
+const metaDescription =
+  "ابق على اطلاع بأحدث الاتجاهات والتطورات في صناعة التقنيات اللامركزية مع رؤى من فريق خبراء أنجور.";
+const ogTitle = "مدونة صناعة التقنيات اللامركزية | أنجور";
+
+// Get localized text
+const latestArticlesText = getTranslation("ar", "latest_articles");
+const moreArticlesText = getTranslation("ar", "more_articles");
+const discoverPostsText = getTranslation("ar", "discover_posts");
+---
+
+<MainLayout
+  title={pageTitle}
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  lang="ar"
+  dir="rtl"
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://angor.io/ar/blog",
+    url: "https://angor.io/ar/blog",
+    name: "المدونة | أنجور",
+    description: metaDescription,
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://angor.io",
+      name: "أنجور",
+      description:
+        "أنجور يقدم أدوات وخدمات التقنيات اللامركزية عالية المستوى لتلبية جميع احتياجات مشاريعك.",
+    },
+    inLanguage: "ar-SA",
+  }}
+>
+  <section
+    class="mx-auto max-w-[85rem] space-y-8 px-4 pt-16 sm:px-6 lg:px-8 2xl:max-w-full"
+  >
+    {/* Page header */}
+    <div class="mx-auto max-w-3xl text-left sm:text-center">
+      <h1
+        class="block text-4xl font-bold tracking-tight text-balance text-neutral-800 md:text-5xl lg:text-6xl dark:text-neutral-200"
+      >
+        {title}
+      </h1>
+
+      <p
+        class="mt-4 text-lg text-pretty text-neutral-600 dark:text-neutral-400"
+      >
+        {subTitle}
+      </p>
+    </div>
+  </section>  {/* Featured Content Section - Half width slideshow with sidebar */}
+  {latestPosts.length > 0 && (
+    <section
+      class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
+    >
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 lg:text-3xl">
+          {latestArticlesText}
+        </h2>
+        <p class="mt-2 text-neutral-600 dark:text-neutral-400">
+          {discoverPostsText}
+        </p>
+      </div>
+        {/* Two-column layout: Slideshow + Sidebar */}
+      <div class="w-full">
+        {/* Slideshow - Full width */}
+        <BlogSlideshow blogPosts={latestPosts} locale="ar" />
+      </div>
+    </section>
+  )}
+
+  {/* All Posts Grid */}
+  {allPosts.length > 0 && (
+    <section
+      class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
+    >
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 lg:text-3xl">
+          {moreArticlesText}
+        </h2>
+      </div>
+      
+      {/* 3-Column Responsive Grid */}
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {allPosts.map((blogEntry) => (
+          <BlogCardProfessional blogEntry={blogEntry} locale="ar" />
+        ))}
+      </div>
+    </section>
+  )}
+
+  {/* Empty State */}
+  {blogPosts.length === 0 && (
+    <section
+      class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
+    >
+      <div class="text-center py-12">
+        <h3 class="text-2xl font-semibold text-neutral-800 dark:text-neutral-200">
+          قريباً
+        </h3>
+        <p class="mt-3 text-neutral-600 dark:text-neutral-400">
+          نعمل على إضافة المزيد من المحتوى باللغة العربية. تابعونا للحصول على التحديثات.
+        </p>
+      </div>
+    </section>
+  )}
+</MainLayout>

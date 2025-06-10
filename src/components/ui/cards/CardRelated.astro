@@ -1,0 +1,45 @@
+---
+// Import necessary modules and utilities
+import { Image } from "astro:assets";
+import { formatDate } from "@utils/utils";
+import { generateBlogPostUrl } from "@utils/linkManager";
+import type { CollectionEntry } from "astro:content";
+import type { SupportedLocale } from "@utils/linkManager";
+
+const { blogEntry, recentBlogLocale = "" } = Astro.props;
+
+interface Props {
+  blogEntry: CollectionEntry<"blog">;
+  recentBlogLocale?: string;
+}
+
+// Generate professional dynamic URL using LinkManager
+const blogUrl = generateBlogPostUrl(blogEntry, recentBlogLocale as SupportedLocale);
+---
+
+<a
+  class="group block rounded-xl outline-hidden ring-zinc-500 transition duration-300 focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden blog-card"
+  href={blogUrl}
+  data-astro-prefetch
+>  <div>
+    {blogEntry.data.cardImage && blogEntry.data.cardImage.src && blogEntry.data.cardImage.src.trim() !== "" && (
+      <Image
+        class="aspect-video rounded-xl"
+        src={blogEntry.data.cardImage}
+        alt={blogEntry.data.cardImageAlt}
+        draggable={"false"}
+        format={"avif"}
+      />
+    )}
+    <!-- The title of the blog post -->
+    <h3
+      class="mt-2 text-balance text-lg font-medium text-neutral-800 group-hover:text-cyan-400 dark:text-neutral-300 dark:group-hover:text-neutral-50"
+    >
+      {blogEntry.data.title}
+    </h3>
+    <!-- The formatted publication date of the blog post -->
+    <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+      {formatDate(blogEntry.data.pubDate)}
+    </p>
+  </div></a
+>

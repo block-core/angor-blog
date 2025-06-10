@@ -1,0 +1,118 @@
+---
+// Import necessary components, modules and types
+import MainLayout from "@/layouts/MainLayout.astro";
+import BlogCardProfessional from "@components/ui/cards/BlogCardProfessional.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "@data/constants";
+import { getTranslation } from "@utils/translations";
+
+// Get all blogs post in Persian and sort them based on publish date
+
+const persianBlogEntries = await getCollection("blog", ({ id }) => {
+  return id.startsWith("fa/");
+});
+
+const blogPosts: CollectionEntry<"blog">[] = persianBlogEntries.sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+// Separate the latest 3 posts for slideshow (they will also appear in the main list)
+const latestPosts: CollectionEntry<"blog">[] = blogPosts.slice(0, 3);
+// All posts will be displayed in the grid
+const allPosts: CollectionEntry<"blog">[] = blogPosts;
+
+// Define variables for page content
+const title: string = "وبلاگ آنگور";
+const subTitle: string = "آخرین بینش‌ها درباره بیت‌کوین، نوستر و فناوری‌های غیرمتمرکز.";
+
+const pageTitle: string = `وبلاگ | ${SITE.title}`;
+const metaDescription =
+  "با آخرین روندها و تحولات در صنعت فناوری‌های غیرمتمرکز همراه با بینش‌های تیم متخصصان آنگور به‌روز بمانید.";
+const ogTitle = "وبلاگ صنعت فناوری‌های غیرمتمرکز | آنگور";
+
+// Get localized text
+const latestArticlesText = getTranslation("fa", "latest_articles");
+const moreArticlesText = getTranslation("fa", "more_articles");
+const discoverPostsText = getTranslation("fa", "discover_posts");
+---
+
+<MainLayout
+  title={pageTitle}
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  lang="fa"
+  dir="rtl"
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://angor.io/fa/blog",
+    url: "https://angor.io/fa/blog",
+    name: "وبلاگ | آنگور",
+    description: metaDescription,
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://angor.io",
+      name: "آنگور",
+      description:
+        "آنگور ابزارها و خدمات فناوری‌های غیرمتمرکز درجه یک را برای تأمین تمام نیازهای پروژه‌های شما ارائه می‌دهد.",
+    },
+    inLanguage: "fa-IR",
+  }}
+>  <section
+    class="mx-auto max-w-[85rem] space-y-8 px-4 pt-16 sm:px-6 lg:px-8 2xl:max-w-full"
+  >
+    {/* Page header */}
+    <div class="mx-auto max-w-3xl text-left sm:text-center">
+      <h1
+        class="block text-4xl font-bold tracking-tight text-balance text-neutral-800 md:text-5xl lg:text-6xl dark:text-neutral-200"
+      >
+        {title}
+      </h1>
+
+      <p
+        class="mt-4 text-lg text-pretty text-neutral-600 dark:text-neutral-400"
+      >
+        {subTitle}
+      </p>
+    </div>
+  </section>
+  {/* All Posts Grid */}
+  {blogPosts.length > 0 && (
+    <section
+      class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
+    >
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 lg:text-3xl">
+          {latestArticlesText}
+        </h2>
+        <p class="mt-2 text-neutral-600 dark:text-neutral-400">
+          {discoverPostsText}
+        </p>
+      </div>
+        {/* 3-Column Responsive Grid */}
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {blogPosts.map((blogEntry) => (
+          <BlogCardProfessional blogEntry={blogEntry} locale="fa" />
+        ))}
+      </div>
+    </section>
+  )}
+
+  {/* Empty State */}
+  {blogPosts.length === 0 && (
+    <section
+      class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
+    >
+      <div class="text-center py-12">
+        <h3 class="text-2xl font-semibold text-neutral-800 dark:text-neutral-200">
+          به‌زودی
+        </h3>
+        <p class="mt-3 text-neutral-600 dark:text-neutral-400">
+          ما در حال اضافه کردن محتوای بیشتری به زبان فارسی هستیم. برای دریافت به‌روزرسانی‌ها با ما همراه باشید.
+        </p>
+      </div>
+    </section>
+  )}
+</MainLayout>

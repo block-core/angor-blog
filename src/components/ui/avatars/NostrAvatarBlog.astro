@@ -1,0 +1,35 @@
+---
+// Import necessary components and modules
+import { getAuthorProfile } from "@utils/nostr";
+import type { CollectionEntry } from "astro:content";
+
+const { blogEntry } = Astro.props;
+
+interface Props {
+  blogEntry: CollectionEntry<"blog">;
+}
+
+// Get Nostr profile data
+let profile: any = null;
+if (blogEntry.data.nostrPublicKey) {
+  try {
+    profile = await getAuthorProfile(blogEntry.data.nostrPublicKey);
+  } catch (error) {
+    console.error('Error fetching Nostr profile:', error);
+  }
+}
+
+// Fallback to frontmatter data if Nostr profile is not available
+const authorImage = profile?.picture || blogEntry.data.authorImage;
+const authorImageAlt = profile?.name ? `${profile.name} avatar` : blogEntry.data.authorImageAlt;
+---
+
+<div class="shrink-0">
+  <img
+    class="size-[46px] rounded-full border-2 border-neutral-50"
+    src={authorImage}
+    alt={authorImageAlt}
+    draggable="false"
+    loading="lazy"
+  />
+</div>

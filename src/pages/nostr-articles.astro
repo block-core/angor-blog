@@ -1,0 +1,300 @@
+---
+// Import necessary components
+import MainLayout from "@/layouts/MainLayout.astro";
+import { SITE } from "@data/constants";
+import { getNostrArticles, type NostrArticle } from "@/utils/nostr";
+import { parseNostrContent, extractFirstImage, type ParsedToken } from "@/utils/parseContent";
+
+// Configuration - Add your Nostr pubkey here
+const ANGOR_NPUB = "npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02"; // Replace with actual npub
+
+let nostrArticles: NostrArticle[] = [];
+let error: string | null = null;
+let isLoading = true;
+
+try {
+  // Fetch real articles from Nostr
+  nostrArticles = await getNostrArticles(ANGOR_NPUB, 10);
+  
+  // If no articles found, show friendly message
+  if (nostrArticles.length === 0) {
+    console.log("No articles found on Nostr network");
+  }
+} catch (err) {
+  error = "Failed to load articles from Nostr network";
+  console.error("Error fetching Nostr articles:", err);
+} finally {
+  isLoading = false;
+}
+
+// Helper function to render parsed content
+function renderParsedContent(tokens: (string | ParsedToken)[]): string {
+  return tokens.map(token => {
+    if (typeof token === 'string') {
+      return token;
+    }
+    
+    switch (token.token) {
+      case 'image':
+        return `<img src="${token.safeWord}" alt="Content image" class="max-w-full h-auto rounded-lg my-4" loading="lazy" />`;
+      case 'video':
+        return `<video controls class="max-w-full h-auto rounded-lg my-4"><source src="${token.safeWord}" /></video>`;
+      case 'youtube':
+        return `<iframe src="${token.safeWord}" class="w-full aspect-video rounded-lg my-4" frameborder="0" allowfullscreen></iframe>`;
+      case 'spotify':
+        return `<iframe src="${token.safeWord}" width="100%" height="352" frameborder="0" class="rounded-lg my-4"></iframe>`;
+      case 'link':
+        return `<a href="${token.word}" target="_blank" rel="noopener noreferrer" class="text-[#086c81] hover:underline">${token.word}</a>`;
+      case 'npub':
+        return `<span class="text-[#086c81] font-mono text-sm">@${token.word.slice(0, 16)}...</span>`;
+      default:
+        return token.word;
+    }
+  }).join('');
+}
+---
+
+<MainLayout
+  title={`Nostr Articles | ${SITE.title}`}
+  description="Articles published by Angor on the Nostr network. Explore decentralized social media, censorship-resistant communication, and the future of open protocols."
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://angor.blog/nostr-articles",
+    "url": "https://angor.blog/nostr-articles", 
+    "name": "Nostr Articles | Angor Blog",
+    "description": "Articles published by Angor on the Nostr network. Explore decentralized social media and censorship-resistant communication.",
+    "isPartOf": {
+      "@type": "WebSite",
+      "url": "https://angor.blog",
+      "name": "Angor Blog"
+    }
+  }}
+>
+  <!-- Page Header -->
+  <section class="py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl text-center">
+        <h1 class="text-4xl font-light tracking-tight text-neutral-900 dark:text-white sm:text-6xl">
+          Nostr 
+          <span class="text-[#086c81] dark:text-[#cbdde1] font-normal">Articles</span>
+        </h1>
+        <p class="mt-6 text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
+          Articles published by Angor on the Nostr network. Explore decentralized social media, censorship-resistant communication, and the future of open protocols.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading State -->
+  {isLoading && (
+    <section class="py-16">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="text-center">
+          <div class="inline-flex items-center px-4 py-2 text-sm text-neutral-600 dark:text-neutral-400">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Loading articles from Nostr network...
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Error State -->
+  {error && (
+    <section class="py-16">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="text-center">
+          <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6">
+            <h3 class="text-lg font-medium text-red-800 dark:text-red-200 mb-2">Unable to Load Articles</h3>
+            <p class="text-red-600 dark:text-red-300">{error}</p>
+            <button 
+              onclick="location.reload()" 
+              class="mt-4 inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- No Articles State -->
+  {!isLoading && !error && nostrArticles.length === 0 && (
+    <section class="py-16">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="text-center">
+          <div class="bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg p-8">
+            <h3 class="text-lg font-medium text-neutral-900 dark:text-white mb-2">No Articles Found</h3>
+            <p class="text-neutral-600 dark:text-neutral-400">No articles have been published on the Nostr network yet.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Nostr Articles Grid -->
+  {!isLoading && !error && nostrArticles.length > 0 && (
+    <section class="py-16 bg-neutral-50 dark:bg-neutral-900 rounded-2xl">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
+          {nostrArticles.map((article) => {
+            const firstImage = extractFirstImage(article.content) || article.image;
+            const contentPreview = article.summary || article.content.slice(0, 300) + '...';
+            const readTimeMinutes = Math.ceil(article.content.length / 1000);
+            
+            return (
+              <article class="group bg-white dark:bg-neutral-800 rounded-2xl shadow-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300">
+                {/* Article Image */}
+                {firstImage && (
+                  <div class="aspect-video overflow-hidden">
+                    <img 
+                      src={firstImage} 
+                      alt={article.title}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                
+                {/* Article Header */}
+                <div class="p-8 pb-6">
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-2">
+                      <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#086c81]/10 text-[#086c81] dark:bg-[#cbdde1]/10 dark:text-[#cbdde1]">
+                        Nostr
+                      </span>
+                      <span class="text-sm text-neutral-500 dark:text-neutral-400">
+                        {readTimeMinutes} min read
+                      </span>
+                    </div>
+                    <time class="text-sm text-neutral-500 dark:text-neutral-400">
+                      {new Date(article.publishedAt * 1000).toLocaleDateString("en-US", { 
+                        year: "numeric", 
+                        month: "short", 
+                        day: "numeric" 
+                      })}
+                    </time>
+                  </div>
+                  
+                  <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4 group-hover:text-[#086c81] dark:group-hover:text-[#cbdde1] transition-colors duration-200">
+                    {article.title}
+                  </h2>
+                  
+                  <div class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
+                    <div set:html={renderParsedContent(parseNostrContent(contentPreview))}></div>
+                  </div>
+
+                  {/* Tags */}
+                  {article.tags.length > 0 && (
+                    <div class="flex flex-wrap gap-2 mb-6">
+                      {article.tags.map((tag) => (
+                        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-neutral-100 text-neutral-700 dark:bg-neutral-700 dark:text-neutral-300">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Nostr Metadata */}
+                <div class="px-8 py-6 bg-neutral-50 dark:bg-neutral-800/50 border-t border-neutral-200 dark:border-neutral-700">
+                  <div class="space-y-3">
+                    {/* Author */}
+                    <div class="flex items-center justify-between">
+                      <span class="text-sm text-neutral-600 dark:text-neutral-400">Author:</span>
+                      <div class="flex items-center space-x-2">
+                        {article.authorProfile?.picture && (
+                          <img 
+                            src={article.authorProfile.picture} 
+                            alt={article.author}
+                            class="w-6 h-6 rounded-full"
+                            loading="lazy"
+                          />
+                        )}
+                        <span class="text-sm font-medium text-neutral-900 dark:text-white">{article.author}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Nostr Event ID */}
+                    <div class="flex items-center justify-between">
+                      <span class="text-sm text-neutral-600 dark:text-neutral-400">Event ID:</span>
+                      <code class="text-xs font-mono text-[#086c81] dark:text-[#cbdde1] bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">
+                        {article.eventId.slice(0, 16)}...
+                      </code>
+                    </div>
+                    
+                    {/* Relays */}
+                    <div class="flex flex-col space-y-1">
+                      <span class="text-sm text-neutral-600 dark:text-neutral-400">Published on relays:</span>
+                      <div class="flex flex-wrap gap-1">
+                        {article.relays.slice(0, 2).map((relay) => (
+                          <code class="text-xs font-mono text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">
+                            {relay.replace('wss://', '')}
+                          </code>
+                        ))}
+                        {article.relays.length > 2 && (
+                          <span class="text-xs text-neutral-500 dark:text-neutral-400">
+                            +{article.relays.length - 2} more
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Read on Nostr Button */}
+                  <div class="mt-6">
+                    <a 
+                      href={`https://njump.me/${article.eventId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="w-full inline-flex items-center justify-center px-4 py-2 bg-[#086c81] hover:bg-[#022229] text-white text-sm font-medium rounded-lg transition-colors duration-200"
+                    >
+                      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                      </svg>
+                      Read on Nostr
+                    </a>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- About Nostr Section -->
+  <section class="py-16">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl text-center">
+        <h2 class="text-3xl font-light text-neutral-900 dark:text-white mb-6">
+          What is Nostr?
+        </h2>
+        <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-8">
+          Nostr (Notes and Other Stuff Transmitted by Relays) is a simple, open protocol that enables 
+          a truly censorship-resistant and global social network. These articles are originally published 
+          by Angor on the Nostr network and are also shared here for broader accessibility.
+        </p>
+        <div class="flex items-center justify-center gap-x-6">
+          <a 
+            href="https://nostr.com" 
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center px-6 py-3 bg-[#086c81] hover:bg-[#022229] text-white text-sm font-medium rounded-lg transition-colors duration-200"
+          >
+            Learn More About Nostr
+            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

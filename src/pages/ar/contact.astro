@@ -1,0 +1,38 @@
+---
+// Import the necessary components
+import MainLayout from "@/layouts/MainLayout.astro";
+import NostrContactSection from "@components/sections/ar/NostrContactSection_ar.astro";
+import { SITE } from "@data/constants";
+
+const pageTitle: string = `اتصل بنا | ${SITE.title}`;
+const metaDescription =
+  "تواصل معنا عبر شبكة Nostr اللامركزية. اربط حساب Nostr الخاص بك وأرسل رسالتك المشفرة مباشرة.";
+const ogTitle = "اتصل بنا | أنجور";
+---
+
+<MainLayout
+  title={pageTitle}
+  description={metaDescription}
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  lang="ar"
+  dir="rtl"
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://angor.blog/ar/contact",
+    url: "https://angor.blog/ar/contact",
+    name: "اتصل بنا | أنجور",
+    description: metaDescription,
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://angor.blog/ar/",
+      name: "أنجور",
+      description:
+        "أنجور يقدم أدوات وخدمات التقنيات اللامركزية عالية المستوى لتلبية جميع احتياجات مشاريعك.",
+    },
+    inLanguage: "ar",
+  }}
+>
+  <NostrContactSection />
+</MainLayout>

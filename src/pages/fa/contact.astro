@@ -1,0 +1,38 @@
+---
+// Import the necessary components
+import MainLayout from "@/layouts/MainLayout.astro";
+import NostrContactSection from "@components/sections/fa/NostrContactSection_fa.astro";
+import { SITE } from "@data/constants";
+
+const pageTitle: string = `تماس با ما | ${SITE.title}`;
+const metaDescription =
+  "از طریق شبکه غیرمتمرکز Nostr با ما در ارتباط باشید. اکانت Nostr خود را متصل کنید و پیام رمزگذاری شده خود را مستقیماً ارسال کنید.";
+const ogTitle = "تماس با ما | آنگور";
+---
+
+<MainLayout
+  title={pageTitle}
+  description={metaDescription}
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  lang="fa"
+  dir="rtl"
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://angor.blog/fa/contact",
+    url: "https://angor.blog/fa/contact",
+    name: "تماس با ما | آنگور",
+    description: metaDescription,
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://angor.blog/fa/",
+      name: "آنگور",
+      description:
+        "آنگور ابزارها و خدمات فناوری‌های غیرمتمرکز درجه یک را برای تأمین تمام نیازهای پروژه‌های شما ارائه می‌دهد.",
+    },
+    inLanguage: "fa",
+  }}
+>
+  <NostrContactSection />
+</MainLayout>

@@ -1,0 +1,313 @@
+---
+// Import necessary components and utilities
+import MainLayout from "@/layouts/MainLayout.astro";
+import NostrAuthorBlogLarge from "@components/ui/avatars/NostrAuthorBlogLarge.astro";
+import CardRelated from "@components/ui/cards/CardRelated.astro";
+import Bookmark from "@components/ui/buttons/Bookmark.astro";
+import SocialShare from "@components/ui/buttons/SocialShare.astro";
+import PostFeedback from "@components/ui/feedback/PostFeedback.astro";
+import { Image } from "astro:assets";
+import { capitalize } from "@utils/utils";
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "@data/constants";
+
+// Update getStaticPaths for Arabic posts
+export async function getStaticPaths() {
+  const blogPosts = await getCollection("blog", ({ id }) =>
+    id.startsWith("ar/")
+  );
+  return blogPosts.map((post) => {
+    const idWithoutLang = post.id.replace(/^ar\//, ""); // Remove the "ar/" prefix
+    return {
+      params: { id: idWithoutLang },
+      props: { post },
+    };
+  });
+}
+
+// Get the current post's data
+const { post } = Astro.props;
+
+const { Content } = await render(post);
+
+const blogPosts: CollectionEntry<"blog">[] = await getCollection(
+  "blog",
+  ({ id }) => id.startsWith("ar/")
+);
+
+// Filter out the current post to get related posts
+const relatedPosts: CollectionEntry<"blog">[] = blogPosts.filter(
+  (blogEntry) => blogEntry.id !== post.id
+);
+
+const pageTitle: string = `${post.data.title} | ${SITE.title}`;
+// Use the post description for meta description
+const metaDescription = post.data.description;
+const ogTitle = `${post.data.title} | مدونة | ${SITE.title}`;
+---
+
+<MainLayout
+  title={pageTitle}
+  customDescription={metaDescription}
+  lang="ar"
+  customOgTitle={ogTitle}
+  dir="rtl"
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.data.title,
+    image: post.data.cardImage.src,
+    datePublished: post.data.pubDate.toISOString(),
+    author: {
+      "@type": "Person",
+      name: post.data.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE.title,
+      logo: {
+        "@type": "ImageObject",
+        url: "https://blog.angor.io/favicon.ico",
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://blog.angor.io/ar/blog/${post.id.replace(/^ar\//, "")}`,
+    },
+  }}
+>
+  <section class="mx-auto max-w-3xl px-4 pt-6 pb-12 sm:px-6 lg:px-8 lg:pt-10">
+    <div class="max-w-2xl">      <div class="mb-6 flex items-center justify-between">
+        <NostrAuthorBlogLarge blogEntry={post} lang="ar" />
+      </div>
+      {/* Blog post title */}
+      <h2
+        class="mb-3 text-2xl font-bold text-neutral-800 md:text-3xl dark:text-neutral-200"
+      >
+        {post.data.title}      </h2>      {/* Blog post card image */}
+      {post.data.cardImage && post.data.cardImage.src && post.data.cardImage.src.trim() !== "" && (
+        <div class="mb-6 md:mb-8">
+          <Image 
+            src={post.data.cardImage} 
+            alt={post.data.cardImageAlt || post.data.title}
+            class="w-full rounded-lg shadow-lg"
+            width={800}
+            height={400}
+          />
+        </div>
+      )}
+      
+      {/* Blog post contents */}
+      <article class="prose prose-lg prose-neutral dark:prose-invert max-w-none mb-5 space-y-5 md:mb-8 md:space-y-8">
+        <Content />
+      </article>
+      <div
+        class="mx-auto grid max-w-(--breakpoint-lg) gap-y-5 sm:flex sm:items-center sm:justify-between sm:gap-y-0"
+      >
+        {/* Blog post tags */}
+        <div
+          class="flex flex-wrap gap-x-2 gap-y-1 sm:flex-nowrap sm:items-center sm:gap-y-0"
+        >
+          {
+            post.data.tags?.map((tag: string) => (
+              <span class="inline-flex items-center gap-x-1.5 rounded-lg bg-neutral-400/30 px-3 py-1.5 text-xs font-medium text-neutral-700 outline-hidden focus:outline-hidden focus-visible:ring-3 focus-visible:outline-hidden dark:bg-neutral-700/60 dark:text-neutral-300">
+                {capitalize(tag)}
+              </span>
+            ))
+          }
+        </div>
+        {/* Bookmark and Share buttons */}
+        <div class="flex items-center justify-end gap-x-1.5">
+          <Bookmark />
+          <div
+            class="mx-3 block h-4 border-e border-neutral-400 dark:border-neutral-500"
+          >
+          </div>
+          <div class="inline-flex">
+            <SocialShare pageTitle={post.data.title} />
+          </div>
+        </div>
+      </div>
+    </div>
+    <PostFeedback
+      title="هل كانت هذه المقالة مفيدة؟"
+      firstChoice="نعم"
+      secondChoice="لا"
+    />
+  </section>
+
+  {/* Related articles section */}
+  <section class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <div class="mb-10 max-w-2xl">
+      <h2
+        class="text-2xl font-bold text-balance text-neutral-800 md:text-4xl md:leading-tight dark:text-neutral-200"
+      >
+        مقالات ذات صلة
+      </h2>
+    </div>    <div class="grid grid-cols-2 gap-6">
+      {relatedPosts.map((entry) => <CardRelated blogEntry={entry} />)}
+    </div>
+  </section>
+</MainLayout>
+
+<style is:global>
+  /* Blog content typography styles */
+  article.prose h1,
+  article.prose h2,
+  article.prose h3,
+  article.prose h4,
+  article.prose h5,
+  article.prose h6 {
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    scroll-margin-top: 3rem;
+    color: #1f2937;
+  }
+
+  .dark article.prose h1,
+  .dark article.prose h2,
+  .dark article.prose h3,
+  .dark article.prose h4,
+  .dark article.prose h5,
+  .dark article.prose h6 {
+    color: #f9fafb;
+  }
+
+  article.prose h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  article.prose h2 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  article.prose h3 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  article.prose h4 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  article.prose h5 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  article.prose h6 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  article.prose p {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #374151;
+  }
+
+  .dark article.prose p {
+    color: #d1d5db;
+  }
+
+  article.prose ul,
+  article.prose ol {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+
+  .dark article.prose ul,
+  .dark article.prose ol {
+    color: #d1d5db;
+  }
+
+  article.prose li {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  article.prose blockquote {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+    border-left: 4px solid #d1d5db;
+    font-style: italic;
+    color: #6b7280;
+  }
+
+  .dark article.prose blockquote {
+    border-left-color: #4b5563;
+    color: #9ca3af;
+  }
+
+  article.prose code {
+    background-color: #f3f4f6;
+    color: #dc2626;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+  }
+
+  .dark article.prose code {
+    background-color: #374151;
+    color: #fca5a5;
+  }
+
+  article.prose pre {
+    background-color: #f3f4f6;
+    color: #1f2937;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .dark article.prose pre {
+    background-color: #374151;
+    color: #f9fafb;
+  }
+
+  article.prose strong {
+    color: #1f2937;
+  }
+
+  .dark article.prose strong {
+    color: #f9fafb;
+  }
+
+  article.prose a {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+
+  .dark article.prose a {
+    color: #60a5fa;
+  }
+
+  article.prose a:hover {
+    color: #1d4ed8;
+  }
+  .dark article.prose a:hover {
+    color: #93c5fd;
+  }
+
+  article.prose hr {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border: none;
+    border-top: 1px solid #d1d5db;
+    height: 1px;
+  }
+
+  .dark article.prose hr {
+    border-top-color: #4b5563;
+  }
+</style>
