@@ -1,15 +1,39 @@
 ---
-import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
-import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
 import ThemeSelect from "src/components/ui/starlight/ThemeSelectMobile.astro";
- ---
+
+// Simple replacement for LanguageSelect - you can customize this based on your needs
+const languages = [
+  { code: 'en', label: 'English' },
+  { code: 'fr', label: 'Français' },
+  { code: 'ar', label: 'العربية' },
+  { code: 'fa', label: 'فارسی' }
+];
+
+// Simple replacement for SocialIcons - you can customize this based on your needs
+const socialLinks = [
+  { href: 'https://github.com/block-core/angor', label: 'GitHub', icon: 'github' },
+  { href: 'https://twitter.com/angor_io', label: 'Twitter', icon: 'twitter' }
+];
+---
 
 <div class="mobile-preferences sl-flex">
   <div class="sl-flex social-icons">
-    <SocialIcons {...Astro.props}><slot /></SocialIcons>
+    <!-- Simple social icons replacement -->
+    {socialLinks.map(link => (
+      <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
+        <span class="social-icon">{link.icon}</span>
+      </a>
+    ))}
   </div>
   <ThemeSelect />
-  <LanguageSelect {...Astro.props}><slot /></LanguageSelect>
+  <!-- Simple language select replacement -->
+  <div class="language-select">
+    <select>
+      {languages.map(lang => (
+        <option value={lang.code}>{lang.label}</option>
+      ))}
+    </select>
+  </div>
 </div>
 
 <style>

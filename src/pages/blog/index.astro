@@ -18,10 +18,6 @@ const blogPosts: CollectionEntry<"blog">[] = englishBlogEntries.sort(
     b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// Separate the latest 3 posts for slideshow (they will also appear in the main list)
-const latestPosts: CollectionEntry<"blog">[] = blogPosts.slice(0, 3);
-// All posts will be displayed in the grid
-const allPosts: CollectionEntry<"blog">[] = blogPosts;
 
 // Define variables for page content
 const title: string = "Angor Blog";
@@ -34,7 +30,6 @@ const ogTitle = "Decentralized Technology Blog | Angor";
 
 // Get localized text
 const latestArticlesText = getTranslation("en", "latest_articles");
-const moreArticlesText = getTranslation("en", "more_articles");
 const discoverPostsText = getTranslation("en", "discover_posts");
 ---
 

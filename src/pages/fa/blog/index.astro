@@ -18,11 +18,6 @@ const blogPosts: CollectionEntry<"blog">[] = persianBlogEntries.sort(
     b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// Separate the latest 3 posts for slideshow (they will also appear in the main list)
-const latestPosts: CollectionEntry<"blog">[] = blogPosts.slice(0, 3);
-// All posts will be displayed in the grid
-const allPosts: CollectionEntry<"blog">[] = blogPosts;
-
 // Define variables for page content
 const title: string = "وبلاگ آنگور";
 const subTitle: string = "آخرین بینش‌ها درباره بیت‌کوین، نوستر و فناوری‌های غیرمتمرکز.";
@@ -34,7 +29,6 @@ const ogTitle = "وبلاگ صنعت فناوری‌های غیرمتمرکز | 
 
 // Get localized text
 const latestArticlesText = getTranslation("fa", "latest_articles");
-const moreArticlesText = getTranslation("fa", "more_articles");
 const discoverPostsText = getTranslation("fa", "discover_posts");
 ---
 
