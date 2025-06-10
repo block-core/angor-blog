@@ -11,12 +11,46 @@ interface Props {
 // Use fallback data initially
 const authorImage = blogEntry.data.authorImage;
 const authorImageAlt = blogEntry.data.authorImageAlt;
+const authorName = blogEntry.data.author;
+
+// Generate default avatar with initials and color
+const getInitials = (name: string) => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .substring(0, 2)
+    .toUpperCase();
+};
+
+const getAvatarColor = (name: string) => {
+  const colors = [
+    'bg-[#086c81]', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500',
+    'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-orange-500'
+  ];
+  const hash = name.split('').reduce((a, b) => {
+    a = ((a << 5) - a) + b.charCodeAt(0);
+    return a & a;
+  }, 0);
+  return colors[Math.abs(hash) % colors.length];
+};
+
+const authorInitials = getInitials(authorName);
+const avatarColor = getAvatarColor(authorName);
 ---
 
 <div class="shrink-0" data-nostr-avatar data-nostr-pubkey={blogEntry.data.nostrPublicKey}>
+  <!-- Default Avatar with Initials -->
+  <div 
+    class={`size-[46px] rounded-full border-2 border-neutral-50 flex items-center justify-center text-white font-bold text-xs ${avatarColor}`}
+    data-default-avatar
+  >
+    {authorInitials}
+  </div>
+  <!-- Nostr Profile Image (initially hidden) -->
   <img
-    class="size-[46px] rounded-full border-2 border-neutral-50"
-    src={authorImage.src}
+    class="size-[46px] rounded-full border-2 border-neutral-50 hidden"
+    src={typeof authorImage === 'string' ? authorImage : authorImage?.src || ''}
     alt={authorImageAlt}
     draggable="false"
     loading="lazy"
@@ -38,17 +72,22 @@ const authorImageAlt = blogEntry.data.authorImageAlt;
       try {
         const profile = await getAuthorProfile(pubkey);
         
-        if (profile) {
+        if (profile && profile.picture) {
           const imageEl = container.querySelector('[data-author-image]') as HTMLImageElement;
+          const defaultAvatarEl = container.querySelector('[data-default-avatar]') as HTMLElement;
           
-          // Update author image
-          if (imageEl && profile.picture) {
+          if (imageEl) {
+            // Update image source and alt text
             imageEl.src = profile.picture;
-          }
-          
-          // Update alt text
-          if (imageEl && (profile.display_name || profile.name)) {
-            imageEl.alt = `${profile.display_name || profile.name} avatar`;
+            if (profile.display_name || profile.name) {
+              imageEl.alt = `${profile.display_name || profile.name} avatar`;
+            }
+            
+            // Show profile image and hide default avatar
+            imageEl.classList.remove('hidden');
+            if (defaultAvatarEl) {
+              defaultAvatarEl.classList.add('hidden');
+            }
           }
         }
       } catch (error) {
