@@ -2,57 +2,24 @@
 // Import necessary components
 import MainLayout from "@/layouts/MainLayout.astro";
 import { SITE } from "@data/constants";
-
-// Mock Nostr articles data for UI testing (French)
-const nostrArticles = [
-  {
-    id: "nostr-article-1",
-    title: "Démarrer avec le protocole Nostr",
-    description: "Un guide complet pour comprendre le protocole Nostr et comment il révolutionne les médias sociaux décentralisés. Apprenez les bases, les concepts clés, et pourquoi Nostr est important pour l'avenir de la communication résistante à la censure.",
-    content: "Nostr (Notes et Autres Trucs Transmis par des Relais) est un protocole simple et ouvert qui permet un réseau social véritablement résistant à la censure et global. Contrairement aux plateformes de médias sociaux traditionnelles, Nostr ne dépend pas d'un serveur central ou d'une autorité...",
-    author: "Équipe Angor",
-    publishedAt: "2024-12-15",
-    tags: ["nostr", "protocole", "décentralisé", "tutoriel"],
-    readTime: "8 min",
-    npub: "npub1angor5k8x7m2nwq3p4c6v9h8j1l0z3y5r4t6u8i9o0p2a1s3d4f5g6",
-    eventId: "note1angor5k8x7m2nwq3p4c6v9h8j1l0z3y5r4t6u8i9o0p2a1s3d4f5g6h7j8",
-    relays: ["wss://relay.angor.io", "wss://relay.damus.io", "wss://nos.lol"]
-  },
-  {
-    id: "nostr-article-2", 
-    title: "Construire des applications décentralisées sur Nostr",
-    description: "Explorez comment les développeurs peuvent construire des applications décentralisées puissantes en utilisant le protocole Nostr. Des notes de base aux applications complexes, découvrez les possibilités du développement résistant à la censure.",
-    content: "Le protocole Nostr ouvre des possibilités infinies pour construire des applications décentralisées. Contrairement aux applications web traditionnelles qui dépendent de serveurs centralisés, les applications Nostr peuvent fonctionner à travers un réseau de relais...",
-    author: "Communauté des Développeurs",
-    publishedAt: "2024-12-10",
-    tags: ["nostr", "développement", "dApps", "programmation"],
-    readTime: "12 min",
-    npub: "npub1devcom8h3k2m7n9p6q4w5e8r7t2y1u6i9o3p8a5s2d4f7g1h9j6k3",
-    eventId: "note1angor8h3k2m7n9p6q4w5e8r7t2y1u6i9o3p8a5s2d4f7g1h9j6k3l8m2",
-    relays: ["wss://relay.angor.io", "wss://relay.snort.social", "wss://relay.damus.io"]
-  }
-];
-
-const pageTitle: string = `Articles Nostr | ${SITE.title}`;
+import NostrArticlesClient from "@/components/NostrArticlesClient.astro";
 ---
 
 <MainLayout
-  title={pageTitle}
-  description="Les articles publiés par Angor sur le réseau Nostr sont également partagés ici. Explorez les médias sociaux décentralisés et la communication résistante à la censure."
-  lang="fr"
+  title={`Articles Nostr | ${SITE.title}`}
+  description="Articles publiés par Angor sur le réseau Nostr. Explorez les médias sociaux décentralisés, la communication résistante à la censure et l'avenir des protocoles ouverts."
   structuredData={{
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": "https://angor.blog/fr/nostr-articles",
     "url": "https://angor.blog/fr/nostr-articles", 
-    "name": "Articles Nostr | Blog Angor",
-    "description": "Les articles publiés par Angor sur le réseau Nostr sont également partagés ici. Explorez les médias sociaux décentralisés et la communication résistante à la censure.",
+    "name": "Articles Nostr | Angor Blog",
+    "description": "Articles publiés par Angor sur le réseau Nostr. Explorez les médias sociaux décentralisés et la communication résistante à la censure.",
     "isPartOf": {
       "@type": "WebSite",
       "url": "https://angor.blog",
-      "name": "Blog Angor"
-    },
-    "inLanguage": "fr"
+      "name": "Angor Blog"
+    }
   }}
 >
   <!-- Page Header -->
@@ -64,101 +31,14 @@ const pageTitle: string = `Articles Nostr | ${SITE.title}`;
           <span class="text-[#086c81] dark:text-[#cbdde1] font-normal">Nostr</span>
         </h1>
         <p class="mt-6 text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
-          Les articles publiés par Angor sur le réseau Nostr sont également partagés ici. Explorez les médias sociaux décentralisés, la communication résistante à la censure, et l'avenir des protocoles ouverts.
+          Articles publiés par Angor sur le réseau Nostr. Explorez les médias sociaux décentralisés, la communication résistante à la censure et l'avenir des protocoles ouverts.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Nostr Articles Grid -->
-  <section class="py-16 bg-neutral-50 dark:bg-neutral-900 rounded-2xl">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
-        {nostrArticles.map((article) => (
-          <article class="group bg-white dark:bg-neutral-800 rounded-2xl shadow-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300">
-            <!-- Article Header -->
-            <div class="p-8 pb-6">
-              <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center space-x-2">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#086c81]/10 text-[#086c81] dark:bg-[#cbdde1]/10 dark:text-[#cbdde1]">
-                    Nostr
-                  </span>
-                  <span class="text-sm text-neutral-500 dark:text-neutral-400">
-                    {article.readTime} de lecture
-                  </span>
-                </div>
-                <time class="text-sm text-neutral-500 dark:text-neutral-400">
-                  {new Date(article.publishedAt).toLocaleDateString("fr-FR", { 
-                    year: "numeric", 
-                    month: "short", 
-                    day: "numeric" 
-                  })}
-                </time>
-              </div>
-              
-              <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4 group-hover:text-[#086c81] dark:group-hover:text-[#cbdde1] transition-colors duration-200">
-                {article.title}
-              </h2>
-              
-              <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
-                {article.description}
-              </p>
-
-              <!-- Tags -->
-              <div class="flex flex-wrap gap-2 mb-6">
-                {article.tags.map((tag) => (
-                  <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-neutral-100 text-neutral-700 dark:bg-neutral-700 dark:text-neutral-300">
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <!-- Nostr Metadata -->
-            <div class="px-8 py-6 bg-neutral-50 dark:bg-neutral-800/50 border-t border-neutral-200 dark:border-neutral-700">
-              <div class="space-y-3">
-                <!-- Author -->
-                <div class="flex items-center justify-between">
-                  <span class="text-sm text-neutral-600 dark:text-neutral-400">Auteur :</span>
-                  <span class="text-sm font-medium text-neutral-900 dark:text-white">{article.author}</span>
-                </div>
-                
-                <!-- Nostr Event ID -->
-                <div class="flex items-center justify-between">
-                  <span class="text-sm text-neutral-600 dark:text-neutral-400">ID d'événement :</span>
-                  <code class="text-xs font-mono text-[#086c81] dark:text-[#cbdde1] bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">
-                    {article.eventId}
-                  </code>
-                </div>
-                
-                <!-- Relays -->
-                <div class="flex flex-col space-y-1">
-                  <span class="text-sm text-neutral-600 dark:text-neutral-400">Publié sur les relais :</span>
-                  <div class="flex flex-wrap gap-1">
-                    {article.relays.map((relay) => (
-                      <code class="text-xs font-mono text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">
-                        {relay}
-                      </code>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Read on Nostr Button -->
-              <div class="mt-6">
-                <button class="w-full inline-flex items-center justify-center px-4 py-2 bg-[#086c81] hover:bg-[#022229] text-white text-sm font-medium rounded-lg transition-colors duration-200">
-                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                  </svg>
-                  Lire sur Nostr
-                </button>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
+  <!-- Client-side Nostr Articles Component -->
+  <NostrArticlesClient />
 
   <!-- About Nostr Section -->
   <section class="py-16">
@@ -168,11 +48,11 @@ const pageTitle: string = `Articles Nostr | ${SITE.title}`;
           Qu'est-ce que Nostr ?
         </h2>
         <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-8">
-          Nostr (Notes et Autres Trucs Transmis par des Relais) est un protocole simple et ouvert qui 
-          permet un réseau social véritablement résistant à la censure et global. Ces articles sont 
-          originellement publiés par Angor sur le réseau Nostr et sont également partagés ici pour 
-          une accessibilité plus large.
-        </p>        <div class="flex items-center justify-center gap-x-6">
+          Nostr (Notes et Autres Trucs Transmis par des Relais) est un protocole simple et ouvert qui permet 
+          un réseau social véritablement résistant à la censure et global. Ces articles sont originalement publiés 
+          par Angor sur le réseau Nostr et sont également partagés ici pour une accessibilité plus large.
+        </p>
+        <div class="flex items-center justify-center gap-x-6">
           <a 
             href="https://nostr.com" 
             target="_blank"
@@ -183,12 +63,6 @@ const pageTitle: string = `Articles Nostr | ${SITE.title}`;
             <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
             </svg>
-          </a>
-          <a 
-            href="/fr/contact" 
-            class="text-base font-medium text-neutral-900 dark:text-white hover:text-[#086c81] dark:hover:text-[#cbdde1] transition-colors duration-200"
-          >
-            Nous contacter →
           </a>
         </div>
       </div>

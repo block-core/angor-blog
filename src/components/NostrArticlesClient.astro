@@ -1,0 +1,345 @@
+---
+// Component for client-side Nostr article fetching
+---
+
+<div id="nostr-articles-container">
+  <!-- Loading State -->
+  <section id="loading-state" class="py-16">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="text-center">
+        <div class="inline-flex items-center px-4 py-2 text-sm text-neutral-600 dark:text-neutral-400">
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Loading articles from Nostr network...
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Error State -->
+  <section id="error-state" class="py-16 hidden">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="text-center">
+        <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-8">
+          <div class="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-red-100 dark:bg-red-900/40 rounded-full">
+            <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-red-800 dark:text-red-200 mb-2">Unable to Load Articles</h3>
+          <p id="error-message" class="text-red-600 dark:text-red-300">Failed to load articles from Nostr network</p>
+          <button 
+            id="retry-button"
+            class="mt-4 inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- No Articles State -->
+  <section id="no-articles-state" class="py-16 hidden">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="text-center">
+        <div class="bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg p-8">
+          <div class="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-neutral-100 dark:bg-neutral-700 rounded-full">
+            <svg class="w-6 h-6 text-neutral-600 dark:text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-neutral-900 dark:text-white mb-2">No Articles Found</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">No articles have been published on the Nostr network yet.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Articles Grid -->
+  <section id="articles-grid" class="py-16 bg-neutral-50 dark:bg-neutral-900 rounded-2xl hidden">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div id="articles-container" class="grid grid-cols-1 gap-12 lg:grid-cols-2">
+        <!-- Articles will be inserted here by JavaScript -->
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  import { nostrService } from '@/utils/nostr';
+  import { parseNostrContent, extractFirstImage } from '@/utils/parseContent';
+
+  // Configuration - Make sure this matches your actual npub
+  const ANGOR_NPUB = "npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02";
+
+  // DOM elements
+  const loadingState = document.getElementById('loading-state');
+  const errorState = document.getElementById('error-state');
+  const noArticlesState = document.getElementById('no-articles-state');
+  const articlesGrid = document.getElementById('articles-grid');
+  const articlesContainer = document.getElementById('articles-container');
+  const errorMessage = document.getElementById('error-message');
+  const retryButton = document.getElementById('retry-button');
+  // Function to show different states
+  function showState(state: string) {
+    // Hide all states
+    loadingState?.classList.add('hidden');
+    errorState?.classList.add('hidden');
+    noArticlesState?.classList.add('hidden');
+    articlesGrid?.classList.add('hidden');
+
+    // Show the requested state
+    switch (state) {
+      case 'loading':
+        loadingState?.classList.remove('hidden');
+        break;
+      case 'error':
+        errorState?.classList.remove('hidden');
+        break;
+      case 'no-articles':
+        noArticlesState?.classList.remove('hidden');
+        break;
+      case 'articles':
+        articlesGrid?.classList.remove('hidden');
+        break;
+    }
+  }
+  // Function to render parsed content
+  function renderParsedContent(tokens: any[]): string {
+    return tokens.map((token: any) => {
+      if (typeof token === 'string') {
+        return token;
+      }
+      
+      switch (token.token) {
+        case 'image':
+          return `<img src="${token.safeWord}" alt="Content image" class="max-w-full h-auto rounded-lg my-4" loading="lazy" />`;
+        case 'video':
+          return `<video controls class="max-w-full h-auto rounded-lg my-4"><source src="${token.safeWord}" /></video>`;
+        case 'youtube':
+          return `<iframe src="${token.safeWord}" class="w-full aspect-video rounded-lg my-4" frameborder="0" allowfullscreen></iframe>`;
+        case 'spotify':
+          return `<iframe src="${token.safeWord}" width="100%" height="352" frameborder="0" class="rounded-lg my-4"></iframe>`;
+        case 'link':
+          return `<a href="${token.word}" target="_blank" rel="noopener noreferrer" class="text-[#086c81] hover:underline">${token.word}</a>`;
+        case 'npub':
+          return `<span class="text-[#086c81] font-mono text-sm">@${token.word.slice(0, 16)}...</span>`;
+        default:
+          return token.word;
+      }
+    }).join('');
+  }  // Function to render articles
+  function renderArticles(articles: any[]) {
+    if (!articlesContainer) return;
+
+    articlesContainer.innerHTML = '';
+
+    articles.forEach((article: any) => {
+      console.log('Rendering article:', article); // Debug log
+      
+      const firstImage = extractFirstImage(article.content) || article.image;
+      const contentPreview = article.summary || article.content.slice(0, 300) + '...';
+      const readTimeMinutes = Math.ceil(article.content.length / 1000);
+      
+      // Parse content for better rendering
+      const parsedContent = parseNostrContent(contentPreview);
+      const renderedContent = renderParsedContent(parsedContent);      // Detailed logging for debugging metadata
+      console.log('Article data:', {
+        author: article.author,
+        authorProfile: article.authorProfile,
+        tags: article.tags,
+        relays: article.relays,
+        eventId: article.eventId
+      });
+
+      // Ensure we have proper fallbacks for metadata
+      const authorName = article.authorProfile?.display_name || 
+                        article.authorProfile?.name || 
+                        article.author || 
+                        'Anonymous';
+      const authorPicture = article.authorProfile?.picture;
+      const articleTags = Array.isArray(article.tags) ? article.tags : [];
+      const articleRelays = Array.isArray(article.relays) ? article.relays : [];
+      
+      console.log('Processed metadata:', {
+        authorName,
+        authorPicture,
+        articleTags,
+        articleRelays
+      });
+
+      const articleElement = document.createElement('article');
+      articleElement.className = 'group bg-white dark:bg-neutral-800 rounded-2xl shadow-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden hover:shadow-xl transition-all duration-300';
+        articleElement.innerHTML = `
+        ${firstImage ? `
+          <div class="aspect-video overflow-hidden">
+            <img 
+              src="${firstImage}" 
+              alt="${article.title}" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+        ` : ''}
+        
+        <div class="p-8">
+          <div class="flex items-center justify-between mb-4">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#086c81]/10 text-[#086c81] dark:bg-[#cbdde1]/10 dark:text-[#cbdde1]">
+              Nostr Article
+            </span>
+            <time class="text-sm text-neutral-500 dark:text-neutral-400">
+              ${new Date(article.publishedAt * 1000).toLocaleDateString()}
+            </time>
+          </div>
+          
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-4 group-hover:text-[#086c81] dark:group-hover:text-[#cbdde1] transition-colors duration-200">
+            ${article.title}
+          </h3>
+          
+          <div class="text-neutral-600 dark:text-neutral-400 mb-6 line-clamp-4">
+            ${renderedContent}
+          </div>
+          
+          <!-- Article metadata -->
+          <div class="space-y-4">
+            <!-- Author and read time -->
+            <div class="flex items-center justify-between text-sm text-neutral-600 dark:text-neutral-400">
+              <div class="flex items-center gap-3">
+                ${authorPicture ? `
+                  <img 
+                    src="${authorPicture}" 
+                    alt="${authorName}" 
+                    class="w-8 h-8 rounded-full"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                  />
+                  <div class="w-8 h-8 rounded-full bg-[#086c81]/10 dark:bg-[#cbdde1]/10 flex items-center justify-center" style="display: none;">
+                    <span class="text-xs font-medium text-[#086c81] dark:text-[#cbdde1]">
+                      ${authorName.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                ` : `
+                  <div class="w-8 h-8 rounded-full bg-[#086c81]/10 dark:bg-[#cbdde1]/10 flex items-center justify-center">
+                    <span class="text-xs font-medium text-[#086c81] dark:text-[#cbdde1]">
+                      ${authorName.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                `}
+                <span class="font-medium">${authorName}</span>
+              </div>
+              <span>${readTimeMinutes} min read</span>
+            </div>
+            
+            <!-- Tags -->
+            ${articleTags.length > 0 ? `
+              <div class="flex flex-wrap gap-2">
+                ${articleTags.map((tag: any) => `
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-neutral-100 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200">
+                    #${tag}
+                  </span>
+                `).join('')}
+              </div>
+            ` : `
+              <div class="text-xs text-neutral-500 dark:text-neutral-400">
+                No tags available
+              </div>
+            `}
+            
+            <!-- Relays -->
+            ${articleRelays.length > 0 ? `
+              <div class="flex flex-col space-y-1">
+                <span class="text-sm text-neutral-600 dark:text-neutral-400">Published on relays:</span>
+                <div class="flex flex-wrap gap-1">
+                  ${articleRelays.slice(0, 3).map((relay: any) => `
+                    <code class="text-xs font-mono text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">
+                      ${relay.replace('wss://', '').replace('ws://', '')}
+                    </code>
+                  `).join('')}
+                  ${articleRelays.length > 3 ? `
+                    <span class="text-xs text-neutral-500 dark:text-neutral-400">
+                      +${articleRelays.length - 3} more
+                    </span>
+                  ` : ''}
+                </div>
+              </div>
+            ` : `
+              <div class="text-xs text-neutral-500 dark:text-neutral-400">
+                Relay information not available
+              </div>
+            `}
+            
+            <!-- Event ID -->
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-neutral-600 dark:text-neutral-400">Event ID:</span>
+              <code class="text-xs font-mono text-[#086c81] dark:text-[#cbdde1] bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">
+                ${article.eventId ? article.eventId.slice(0, 16) + '...' : 'N/A'}
+              </code>
+            </div>
+          </div>
+          
+          <!-- Read on Nostr Button -->
+          <div class="mt-6">
+            <a 
+              href="https://njump.me/${article.eventId || article.id}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full inline-flex items-center justify-center px-4 py-2 bg-[#086c81] hover:bg-[#022229] text-white text-sm font-medium rounded-lg transition-colors duration-200"
+            >
+              <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+              Read on Nostr
+            </a>
+          </div>
+        </div>
+      `;
+
+      articlesContainer.appendChild(articleElement);
+    });
+  }
+  // Function to fetch articles
+  async function fetchNostrArticles() {
+    try {
+      showState('loading');
+      console.log('Starting to fetch Nostr articles...'); // Debug log
+      
+      const articles = await nostrService.fetchArticles(ANGOR_NPUB, 10);
+      console.log('Fetched articles:', articles); // Debug log
+      
+      if (articles.length === 0) {
+        console.log('No articles found'); // Debug log
+        showState('no-articles');
+      } else {
+        console.log(`Found ${articles.length} articles, rendering...`); // Debug log
+        renderArticles(articles);
+        showState('articles');
+      }
+    } catch (error: any) {
+      console.error('Error fetching Nostr articles:', error);
+      if (errorMessage) {
+        errorMessage.textContent = error.message || 'Failed to load articles from Nostr network';
+      }
+      showState('error');
+    }
+  }
+
+  // Retry button event listener
+  retryButton?.addEventListener('click', fetchNostrArticles);
+
+  // Start fetching articles when the page loads
+  document.addEventListener('DOMContentLoaded', fetchNostrArticles);
+
+  // Also try to fetch when the component loads (for SPA-like behavior)
+  fetchNostrArticles();
+</script>
+
+<style>
+  .line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
