@@ -1,11 +1,11 @@
 ---
 // Import necessary components and utilities
-import NostrAvatarBlog from "@components/ui/avatars/NostrAvatarBlog.astro";
 import { Image } from "astro:assets";
 import { formatDate } from "@utils/utils";
 import { generateBlogPostUrl } from "@utils/linkManager";
 import type { CollectionEntry } from "astro:content";
 import type { SupportedLocale } from "@utils/linkManager";
+import NostrAuthorBlogLarge from "../avatars/NostrAuthorBlogLarge.astro";
 
 const { blogEntry, blogLocale = "" } = Astro.props;
 
@@ -49,7 +49,7 @@ const blogPostUrl = generateBlogPostUrl(blogEntry, blogLocale as SupportedLocale
   <div class="absolute inset-x-0 top-0 z-10">
     <div class="flex h-full flex-col p-4 sm:p-6">
       <div class="flex items-center">
-        <NostrAvatarBlog blogEntry={blogEntry} />
+        <NostrAuthorBlogLarge blogEntry={blogEntry} />
 
         <div class="ms-2.5 sm:ms-4">
           <h4 class="font-bold text-neutral-50" data-author-name>
