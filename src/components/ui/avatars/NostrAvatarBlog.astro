@@ -1,0 +1,184 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatDate } from "@utils/utils";
+
+interface Props {
+  blogEntry: CollectionEntry<"blog">;
+  lang?: string;
+}
+
+const { blogEntry, lang = "en" } = Astro.props;
+
+// Use fallback data initially
+const authorName = blogEntry.data.author;
+const authorImage = blogEntry.data.authorImage;
+
+// Date formatting based on language
+const formatDateByLang = (date: Date, language: string) => {
+  switch (language) {
+    case 'fa':
+      return new Intl.DateTimeFormat('fa-IR', {
+        year: 'numeric',
+        month: 'long', 
+        day: 'numeric'
+      }).format(date);
+    case 'ar':
+      return new Intl.DateTimeFormat('ar-SA', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).format(date);
+    case 'fr':
+      return new Intl.DateTimeFormat('fr-FR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).format(date);
+    default:
+      return formatDate(date);
+  }
+};
+
+// Generate default avatar with initials and color
+const getInitials = (name: string) => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .substring(0, 2)
+    .toUpperCase();
+};
+
+const getAvatarColor = (name: string) => {
+  const colors = [
+    'bg-[#086c81]', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500',
+    'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-orange-500'
+  ];
+  const hash = name.split('').reduce((a, b) => {
+    a = ((a << 5) - a) + b.charCodeAt(0);
+    return a & a;
+  }, 0);
+  return colors[Math.abs(hash) % colors.length];
+};
+
+const authorInitials = getInitials(authorName);
+const avatarColor = getAvatarColor(authorName);
+---
+
+<div class="flex w-full gap-x-5 sm:items-center sm:gap-x-3" data-nostr-author-large data-nostr-pubkey={blogEntry.data.nostrPublicKey} data-lang={lang}>
+  <!-- Author Avatar -->
+  <div class="shrink-0">
+    <!-- Default Avatar with Initials -->
+    <div 
+      class={`size-8 rounded-full flex items-center justify-center text-white font-bold text-sm ${avatarColor}`}
+      data-default-avatar
+    >
+      {authorInitials}
+    </div>
+    <!-- Nostr Profile Image (initially hidden) -->
+    <img
+      class="size-8 rounded-full hidden"
+      src={typeof authorImage === 'string' ? authorImage : authorImage.src}
+      alt={authorName}
+      loading="lazy"
+      data-author-image
+    />
+  </div>
+  
+  <!-- Author Info -->
+  <div class="grow">
+    <div class="flex items-center justify-between gap-x-2">
+      <div>
+        <!-- Author Name -->
+        <div class="hs-tooltip inline-block [--placement:bottom] [--trigger:hover]">
+          <span class="font-bold text-neutral-700 dark:text-neutral-300" data-author-name>
+            {authorName}
+          </span>
+          {/* Tooltip for Nostr info - initially hidden */}
+          <span
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-sm transition-opacity dark:bg-slate-700"
+            role="tooltip"
+            data-nostr-tooltip
+            style="display: none;"
+          >
+          </span>
+        </div>
+        
+        <!-- Metadata -->
+        <ul class="text-xs text-neutral-500">
+          <li class="relative inline-block pe-6 before:absolute before:end-2 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-300 last:pe-0 last-of-type:before:hidden dark:text-neutral-400 dark:before:bg-neutral-600">
+            {formatDateByLang(blogEntry.data.pubDate, lang)}
+          </li>
+          <li class="relative inline-block pe-6 before:absolute before:end-2 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-300 last:pe-0 last-of-type:before:hidden dark:text-neutral-400 dark:before:bg-neutral-600">
+            {blogEntry.data.readTime} {
+              lang === 'fa' ? 'دقیقه مطالعه' :
+              lang === 'ar' ? 'دقيقة قراءة' :
+              lang === 'fr' ? 'min de lecture' :
+              'min read'
+            }
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { getAuthorProfile } from "@utils/nostr";
+
+  async function loadNostrProfile() {
+    const containers = document.querySelectorAll('[data-nostr-author-large]');
+    
+    for (const container of containers) {
+      const pubkey = container.getAttribute('data-nostr-pubkey');
+      const lang = container.getAttribute('data-lang') || 'en';
+      
+      if (!pubkey) continue;
+      
+      try {
+        const profile = await getAuthorProfile(pubkey);
+        
+        if (profile) {
+          // Update author name
+          const nameEl = container.querySelector('[data-author-name]');
+          if (nameEl && (profile.display_name || profile.name)) {
+            nameEl.textContent = profile.display_name || profile.name || '';
+          }
+          
+          // Update author image - show profile image and hide default avatar
+          const imageEl = container.querySelector('[data-author-image]') as HTMLImageElement;
+          const defaultAvatarEl = container.querySelector('[data-default-avatar]') as HTMLElement;
+          
+          if (imageEl && profile.picture) {
+            imageEl.src = profile.picture;
+            imageEl.alt = profile.display_name || profile.name || imageEl.alt;
+            imageEl.classList.remove('hidden');
+            if (defaultAvatarEl) {
+              defaultAvatarEl.classList.add('hidden');
+            }
+          }
+          
+          // Show and update tooltip
+          const tooltipEl = container.querySelector('[data-nostr-tooltip]') as HTMLElement;
+          if (tooltipEl && profile.npub) {
+            const tooltipText = lang === 'fa' ? 'پروفایل نوستر' : 
+                               lang === 'ar' ? 'ملف نوستر' :
+                               lang === 'fr' ? 'Profil Nostr' : 
+                               'Nostr Profile';
+            tooltipEl.textContent = `${tooltipText}: ${profile.npub.slice(0, 16)}...`;
+            tooltipEl.style.display = 'inline-block';
+          }
+        }
+      } catch (error) {
+        console.error('Error loading Nostr profile:', error);
+      }
+    }
+  }
+
+  // Load profiles when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadNostrProfile);
+  } else {
+    loadNostrProfile();
+  }
+</script>
