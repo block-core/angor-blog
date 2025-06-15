@@ -7,7 +7,7 @@ authorImage: ""
 authorImageAlt: "Angor Team member"
 pubDate: 2024-05-15
 cardImage: "@/images/bitcoin-full-node.webp"
-cardImageAlt: "Bitcoin Full Node setup illustration"
+cardImageAlt: "Bitcoin Full Node setup"
 readTime: 8
 tags: [Bitcoin, Cryptocurrency]
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'

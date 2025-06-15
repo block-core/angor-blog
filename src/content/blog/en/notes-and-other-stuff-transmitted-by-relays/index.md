@@ -7,7 +7,7 @@ authorImage: ""
 authorImageAlt: "Angor Team member"
 pubDate: 2024-05-10
 cardImage: "@/images/notes-and-other-stuff-transmitted-by-relays.webp"
-cardImageAlt: "Nostr decentralized social networking illustration"
+cardImageAlt: "Nostr decentralized social networking"
 readTime: 4
 tags: ['nostr', 'decentralization']
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'

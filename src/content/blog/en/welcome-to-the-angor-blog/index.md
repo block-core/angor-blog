@@ -7,7 +7,7 @@ authorImage: ""
 authorImageAlt: "Angor Team member"
 pubDate: 2024-05-09
 cardImage: "@/images/welcome-to-the-angor-blog.webp"
-cardImageAlt: "Welcome to Angor Blog illustration"
+cardImageAlt: "Welcome to Angor Blog"
 readTime: 3
 tags: [Bitcoin, Technology, Education]
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'

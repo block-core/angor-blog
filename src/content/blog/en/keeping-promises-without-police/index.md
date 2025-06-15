@@ -7,7 +7,7 @@ authorImage: ""
 authorImageAlt: "Paco de la India"
 pubDate: 2025-05-22
 cardImage: "@/images/keeping-promises-without-police.webp"
-cardImageAlt: "Keeping promises without police illustration"
+cardImageAlt: "Keeping promises without police"
 readTime: 7
 tags: [bitcoin]
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'

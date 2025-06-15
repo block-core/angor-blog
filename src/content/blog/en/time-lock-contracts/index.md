@@ -7,7 +7,7 @@ authorImage: ""
 authorImageAlt: "Angor Team member"
 pubDate: 2024-05-20
 cardImage: "@/images/time-lock-contracts.webp"
-cardImageAlt: "Time-lock contracts illustration"
+cardImageAlt: "Time-lock contracts"
 readTime: 5
 tags: [Time-Lock-Contracts, Smart-Contracts]
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
