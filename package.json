@@ -3,7 +3,15 @@
   "type": "module",
   "version": "1.0.0",
   "description": "Official blog for Angor - A decentralized Bitcoin-powered crowdfunding platform with Nostr integration",
-  "keywords": ["angor", "bitcoin", "nostr", "decentralized", "crowdfunding", "blockchain", "blog"],
+  "keywords": [
+    "angor",
+    "bitcoin",
+    "nostr",
+    "decentralized",
+    "crowdfunding",
+    "blockchain",
+    "blog"
+  ],
   "homepage": "https://blog.angor.io",
   "repository": {
     "type": "git",
@@ -16,7 +24,7 @@
   "author": {
     "name": "Angor Team",
     "email": "team@angor.io",
-    "url": "https://angor.io"
+    "url": "https://blog.angor.io"
   },
   "scripts": {
     "dev": "astro dev",
@@ -28,10 +36,11 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "type-check": "astro check"
-  },  
+  },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^4.3.0",
+    "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.4.0",
     "@tailwindcss/vite": "^4.1.7",
     "astro": "^5.8.0",

@@ -6,7 +6,7 @@ import compressor from "astro-compressor";
 import mdx from "@astrojs/mdx";
 
 export default defineConfig({
-  site: "https://angor.io",
+  site: "https://blog.angor.io",
   image: {
     domains: ["images.unsplash.com"],
   },

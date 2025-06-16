@@ -15,10 +15,9 @@ const arabicBlogEntries = await getCollection("blog", ({ id }) => {
 
 const blogPosts: CollectionEntry<"blog">[] = arabicBlogEntries.sort(
   (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
-    b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
- 
 // Define variables for page content
 const title: string = "مدونة Angor";
 const subTitle: string = "آخر الرؤى حول البيتكوين ونوستر والتقنيات اللامركزية.";
@@ -42,13 +41,13 @@ const discoverPostsText = getTranslation("ar", "discover_posts");
   structuredData={{
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "@id": "https://angor.io/ar/blog",
-    url: "https://angor.io/ar/blog",
+    "@id": "https://blog.angor.io/ar/blog",
+    url: "https://blog.angor.io/ar/blog",
     name: "المدونة | Angor",
     description: metaDescription,
     isPartOf: {
       "@type": "WebSite",
-      url: "https://angor.io",
+      url: "https://blog.angor.io",
       name: "Angor",
       description:
         "Angor يقدم أدوات وخدمات التقنيات اللامركزية عالية المستوى لتلبية جميع احتياجات مشاريعك.",
@@ -56,7 +55,7 @@ const discoverPostsText = getTranslation("ar", "discover_posts");
     inLanguage: "ar-SA",
   }}
 >
->  <section
+  <section
     class="mx-auto max-w-[85rem] space-y-8 px-4 pt-16 sm:px-6 lg:px-8 2xl:max-w-full"
   >
     {/* Page header */}
@@ -75,40 +74,97 @@ const discoverPostsText = getTranslation("ar", "discover_posts");
     </div>
   </section>
   {/* All Posts Grid */}
-  {blogPosts.length > 0 && (
-    <section
-      class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
-    >
-      <div class="mb-8">
-        <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 lg:text-3xl">
-          {latestArticlesText}
-        </h2>
-        <p class="mt-2 text-neutral-600 dark:text-neutral-400">
-          {discoverPostsText}
-        </p>
-      </div>
+  {
+    blogPosts.length > 0 && (
+      <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
+        <div class="mb-8">
+          <h2 class="text-2xl font-bold text-neutral-800 lg:text-3xl dark:text-neutral-200">
+            {latestArticlesText}
+          </h2>
+          <p class="mt-2 text-neutral-600 dark:text-neutral-400">
+            {discoverPostsText}
+          </p>
+        </div>
         {/* 3-Column Responsive Grid */}
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {blogPosts.map((blogEntry) => (
-          <BlogCardProfessional blogEntry={blogEntry} locale="ar" />
-        ))}
-      </div>
-    </section>
-  )}
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {blogPosts.map((blogEntry) => (
+            <BlogCardProfessional blogEntry={blogEntry} locale="ar" />
+          ))}{" "}
+        </div>
+      </section>
+    )
+  }
+
+  {/* RSS Feed Section */}
+  <section
+    class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 2xl:max-w-full"
+  >
+    <div
+      class="border-t border-neutral-300 pt-8 text-center dark:border-neutral-700"
+    >
+      <h3
+        class="mb-4 text-lg font-semibold text-neutral-800 dark:text-neutral-200"
+      >
+        اشترك في تحديثات المدونة
+      </h3>
+      <p class="mb-6 text-neutral-600 dark:text-neutral-400">
+        احصل على آخر المقالات والتحديثات مباشرة في قارئ الخلاصات المفضل لديك
+      </p>
+      <a
+        href="/ar/rss.xml"
+        class="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-6 py-3 font-medium text-neutral-800 transition-colors duration-200 hover:bg-orange-600 dark:text-neutral-200"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg
+          class="h-5 w-5"
+          version="1.1"
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 512 512"
+          xml:space="preserve"
+        >
+          <g>
+            <path
+              style="fill:#D5851F;"
+              d="M149.047,437.393c0-40.825-33.206-74.039-74.02-74.039c-40.82,0-74.029,33.214-74.029,74.039
+		c0,40.818,33.209,74.025,74.029,74.025C115.842,511.419,149.047,478.211,149.047,437.393z"
+            ></path>
+            <path
+              style="fill:#D5851F;"
+              d="M9.327,279.833c59.394,0,115.253,23.232,157.285,65.412c42.034,42.253,65.184,98.515,65.184,158.423
+		c0,4.562,3.696,8.258,8.258,8.258h94.945c4.562,0,8.258-3.696,8.258-8.258c0-184.901-149.8-335.329-333.931-335.329
+		c-4.562,0-8.258,3.696-8.258,8.258v94.976C1.069,276.135,4.767,279.833,9.327,279.833z"
+            ></path>
+            <path
+              style="fill:#D5851F;"
+              d="M9.456,0C4.895,0,1.198,3.696,1.198,8.258v94.959c0,4.562,3.696,8.258,8.258,8.258
+		c215.106,0,390.109,175.969,390.109,392.266c0,4.562,3.696,8.258,8.258,8.258h94.92c4.562,0,8.258-3.696,8.258-8.258
+		C511.002,225.977,286.009,0,9.456,0z"
+            ></path>
+          </g>
+        </svg>
+
+        خلاصة RSS
+      </a>
+    </div>
+  </section>
 
   {/* Empty State */}
-  {blogPosts.length === 0 && (
-    <section
-      class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
-    >
-      <div class="text-center py-12">
-        <h3 class="text-2xl font-semibold text-neutral-800 dark:text-neutral-200">
-          به‌زودی
-        </h3>
-        <p class="mt-3 text-neutral-600 dark:text-neutral-400">
-          ما در حال اضافه کردن محتوای بیشتری به زبان فارسی هستیم. برای دریافت به‌روزرسانی‌ها با ما همراه باشید.
-        </p>
-      </div>
-    </section>
-  )}
+  {
+    blogPosts.length === 0 && (
+      <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
+        <div class="py-12 text-center">
+          <h3 class="text-2xl font-semibold text-neutral-800 dark:text-neutral-200">
+            به‌زودی
+          </h3>
+          <p class="mt-3 text-neutral-600 dark:text-neutral-400">
+            ما در حال اضافه کردن محتوای بیشتری به زبان فارسی هستیم. برای دریافت
+            به‌روزرسانی‌ها با ما همراه باشید.
+          </p>
+        </div>
+      </section>
+    )
+  }
 </MainLayout>
