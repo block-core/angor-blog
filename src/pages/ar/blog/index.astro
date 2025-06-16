@@ -25,13 +25,13 @@ const latestPosts: CollectionEntry<"blog">[] = blogPosts.slice(0, 3);
 const allPosts: CollectionEntry<"blog">[] = blogPosts;
 
 // Define variables for page content
-const title: string = "مدونة أنجور";
+const title: string = "مدونة Angor";
 const subTitle: string = "آخر الرؤى حول البيتكوين ونوستر والتقنيات اللامركزية.";
 
 const pageTitle: string = `المدونة | ${SITE.title}`;
 const metaDescription =
-  "ابق على اطلاع بأحدث الاتجاهات والتطورات في صناعة التقنيات اللامركزية مع رؤى من فريق خبراء أنجور.";
-const ogTitle = "مدونة صناعة التقنيات اللامركزية | أنجور";
+  "ابق على اطلاع بأحدث الاتجاهات والتطورات في صناعة التقنيات اللامركزية مع رؤى من فريق خبراء Angor.";
+const ogTitle = "مدونة صناعة التقنيات اللامركزية | Angor";
 
 // Get localized text
 const latestArticlesText = getTranslation("ar", "latest_articles");
@@ -50,14 +50,14 @@ const discoverPostsText = getTranslation("ar", "discover_posts");
     "@type": "WebPage",
     "@id": "https://angor.io/ar/blog",
     url: "https://angor.io/ar/blog",
-    name: "المدونة | أنجور",
+    name: "المدونة | Angor",
     description: metaDescription,
     isPartOf: {
       "@type": "WebSite",
       url: "https://angor.io",
-      name: "أنجور",
+      name: "Angor",
       description:
-        "أنجور يقدم أدوات وخدمات التقنيات اللامركزية عالية المستوى لتلبية جميع احتياجات مشاريعك.",
+        "Angor يقدم أدوات وخدمات التقنيات اللامركزية عالية المستوى لتلبية جميع احتياجات مشاريعك.",
     },
     inLanguage: "ar-SA",
   }}
@@ -66,7 +66,7 @@ const discoverPostsText = getTranslation("ar", "discover_posts");
     class="mx-auto max-w-[85rem] space-y-8 px-4 pt-16 sm:px-6 lg:px-8 2xl:max-w-full"
   >
     {/* Page header */}
-    <div class="mx-auto max-w-3xl text-left sm:text-center">
+    <div class="mx-auto max-w-3xl text-center sm:text-center">
       <h1
         class="block text-4xl font-bold tracking-tight text-balance text-neutral-800 md:text-5xl lg:text-6xl dark:text-neutral-200"
       >

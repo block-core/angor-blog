@@ -14,7 +14,7 @@ export function getTranslation(locale: string | undefined, key: string): string 
       "fa": "خواندن"
     },
     "latest_articles": {
-      "en": "Latest Articles",
+      "en": "Latest Posts",
       "fr": "Derniers Articles",
       "ar": "أحدث المقالات",
       "fa": "آخرین مطالب"
