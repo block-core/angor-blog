@@ -1,6 +1,6 @@
 ---
 title: Bienvenue sur le Blog Angor !
-description: 'Découvrez le nouveau Blog Angor, votre ressource ultime pour les insights d\'investissement Bitcoin et les mises à jour sur la plateforme Angor.'
+description: "Découvrez le nouveau Blog Angor, votre ressource ultime pour les insights d'investissement Bitcoin et les mises à jour sur la plateforme Angor."
 author: 'Équipe Angor'
 role: 'Équipe de développement'
 authorImage: ""

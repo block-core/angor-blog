@@ -1,6 +1,6 @@
 ---
 title: Comment Investir en Utilisant Angor
-description: 'Angor vous permet de parcourir divers projets et d'investir en toute sécurité en utilisant Bitcoin. Créez un portefeuille, sélectionnez un projet, soumettez votre investissement pour approbation et gérez vos fonds facilement.'
+description: "Angor vous permet de parcourir divers projets et d'investir en toute sécurité en utilisant Bitcoin. Créez un portefeuille, sélectionnez un projet, soumettez votre investissement pour approbation et gérez vos fonds facilement."
 author: 'Équipe Angor'
 role: 'Équipe de développement'
 authorImage: ""

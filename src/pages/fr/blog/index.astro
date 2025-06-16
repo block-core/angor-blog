@@ -1,7 +1,6 @@
 ---
 // Import necessary components, modules and types
 import MainLayout from "@/layouts/MainLayout.astro";
-import BlogSlideshow from "@components/ui/cards/BlogSlideshow.astro";
 import BlogCardProfessional from "@components/ui/cards/BlogCardProfessional.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
@@ -19,11 +18,6 @@ const blogPosts: CollectionEntry<"blog">[] = frenchBlogEntries.sort(
     b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// Separate the latest 3 posts for slideshow (they will also appear in the main list)
-const latestPosts: CollectionEntry<"blog">[] = blogPosts.slice(0, 3);
-// All posts will be displayed in the grid
-const allPosts: CollectionEntry<"blog">[] = blogPosts;
-
 // Define variables for page content
 const title: string = "Blog Angor";
 const subTitle: string = "Dernières analyses sur Bitcoin, Nostr et les technologies décentralisées.";
@@ -35,7 +29,6 @@ const ogTitle = "Blog Technologie Décentralisée | Angor";
 
 // Get localized text
 const latestArticlesText = getTranslation("fr", "latest_articles");
-const moreArticlesText = getTranslation("fr", "more_articles");
 const discoverPostsText = getTranslation("fr", "discover_posts");
 ---
 
