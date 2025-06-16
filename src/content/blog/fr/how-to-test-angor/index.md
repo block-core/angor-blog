@@ -1,131 +1,131 @@
 ---
-title: "How to Test Angor: A Step-by-Step Guide"
-description: "Angor is a decentralized crowdfunding project leveraging the security of Bitcoin and the transparency of Nostr."
-author: 'Angor Team'
-role: 'Development Team'
+title: "Comment Tester Angor : Un Guide Étape par Étape"
+description: "Angor est un projet de financement participatif décentralisé tirant parti de la sécurité de Bitcoin et de la transparence de Nostr."
+author: 'Équipe Angor'
+role: 'Équipe de développement'
 authorImage: ""
-authorImageAlt: "Angor Team member"
+authorImageAlt: "Membre de l'équipe Angor"
 pubDate: 2024-06-20
 cardImage: "@/images/how-to-test-angor.webp"
-cardImageAlt: "How to test Angor platform guide"
+cardImageAlt: "Guide pour tester la plateforme Angor"
 readTime: 6
-tags: ['Crowdfunding', 'Bitcoin' ,'Nostr','Angor']
+tags: ['Financement participatif', 'Bitcoin' ,'Nostr','Angor']
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
 ---
 
-## Introduction to Angor Testing
+## Introduction au Test d'Angor
  
-Angor is a decentralized crowdfunding project leveraging the security of Bitcoin and the transparency of Nostr. Investors' funds are released in stages through time-lock contracts, and unspent funds can be recovered at any point (recovered funds may incur a penalty). Testing Angor involves verifying these processes and ensuring the platform works as intended.
+Angor est un projet de financement participatif décentralisé tirant parti de la sécurité de Bitcoin et de la transparence de Nostr. Les fonds des investisseurs sont libérés par étapes à travers des contrats de verrouillage temporel, et les fonds non dépensés peuvent être récupérés à tout moment (les fonds récupérés peuvent encourir une pénalité). Tester Angor implique de vérifier ces processus et de s'assurer que la plateforme fonctionne comme prévu.
 
-## Step-by-Step Guide to Testing Angor
+## Guide Étape par Étape pour Tester Angor
 
-### Step 1: Initial Setup
+### Étape 1 : Configuration Initiale
 
-#### 1. Create a Wallet on Angor
-Steps: 
-- Sign up on the Angor platform.
-- Navigate to the wallet creation section.
-- Click on "Create Wallet."
-- Angor will automatically set up the wallet for you.
+#### 1. Créer un Portefeuille sur Angor
+Étapes : 
+- Inscrivez-vous sur la plateforme Angor.
+- Naviguez vers la section de création de portefeuille.
+- Cliquez sur "Créer un Portefeuille."
+- Angor configurera automatiquement le portefeuille pour vous.
 
-#### 2. Obtain Test Coins
-Steps:
-- Go to the test coins section.
-- Click on "Get Test Coins."
-- The test coins will be added to your newly created wallet.
+#### 2. Obtenir des Pièces de Test
+Étapes :
+- Allez à la section des pièces de test.
+- Cliquez sur "Obtenir des Pièces de Test."
+- Les pièces de test seront ajoutées à votre portefeuille nouvellement créé.
 
-### Step 2: Testing the Investment Process
+### Étape 2 : Tester le Processus d'Investissement
 
-#### 1. Choose a Project
-Steps:
-- Browse the available projects on Angor.
-- Select a project to invest in.
-- Review the project details and milestones.
+#### 1. Choisir un Projet
+Étapes :
+- Parcourez les projets disponibles sur Angor.
+- Sélectionnez un projet dans lequel investir.
+- Examinez les détails du projet et les jalons.
 
-#### 2. Make an Investment
-Steps:
-- Navigate to the chosen project’s page.
-- Click on the "Invest" button.
-- Enter the amount you wish to invest in the provided field.
-- Click "Submit" to confirm the transaction.
-- Wait for the founder to approve (this is a manual process by the founder).
-- Wait for the transaction to be confirmed on the blockchain. This may take a few minutes.
+#### 2. Faire un Investissement
+Étapes :
+- Naviguez vers la page du projet choisi.
+- Cliquez sur le bouton "Investir".
+- Entrez le montant que vous souhaitez investir dans le champ fourni.
+- Cliquez sur "Soumettre" pour confirmer la transaction.
+- Attendez que le fondateur approuve (c'est un processus manuel par le fondateur).
+- Attendez que la transaction soit confirmée sur la blockchain. Cela peut prendre quelques minutes.
 
-#### 3. If you are testing as the founder and investor
-- Go to the project page and approve the investment.
+#### 3. Si vous testez en tant que fondateur et investisseur
+- Allez à la page du projet et approuvez l'investissement.
 
-### Step 3: Creating and Managing a Project (For Founders)
+### Étape 3 : Créer et Gérer un Projet (Pour les Fondateurs)
 
-#### Create a New Project
-Steps:
-- Navigate to the "Create Project" section on Angor.
-- Enter the project name, description, and goals.
-- Define the project milestones and the corresponding time-lock contracts.
-- Upload a banner image to make the project page more appealing.
-- Click "Submit" to create the project.
+#### Créer un Nouveau Projet
+Étapes :
+- Naviguez vers la section "Créer un Projet" sur Angor.
+- Entrez le nom du projet, la description, et les objectifs.
+- Définissez les jalons du projet et les contrats de verrouillage temporel correspondants.
+- Téléchargez une image de bannière pour rendre la page du projet plus attrayante.
+- Cliquez sur "Soumettre" pour créer le projet.
 
-#### Post Project Updates on Nostr
-Steps:
-- Export the private key from Angor.
-- Import the private key into a Nostr client.
-- Post updates on project progress and milestone completion on Nostr.
-- Ensure updates are clear and informative for investors.
+#### Publier les Mises à Jour du Projet sur Nostr
+Étapes :
+- Exportez la clé privée depuis Angor.
+- Importez la clé privée dans un client Nostr.
+- Publiez des mises à jour sur les progrès du projet et l'achèvement des jalons sur Nostr.
+- Assurez-vous que les mises à jour sont claires et informatives pour les investisseurs.
 
-#### Spend Funds for Milestones
-Steps:
-- As a founder, once a milestone is reached, sign the transaction to spend the funds for that milestone.
-- Ensure the spending aligns with the milestone requirements and project goals.
+#### Dépenser les Fonds pour les Jalons
+Étapes :
+- En tant que fondateur, une fois qu'un jalon est atteint, signez la transaction pour dépenser les fonds pour ce jalon.
+- Assurez-vous que la dépense s'aligne avec les exigences du jalon et les objectifs du projet.
 
-### Step 4: Testing Milestone Verification and Fund Release
+### Étape 4 : Tester la Vérification des Jalons et la Libération des Fonds
 
-#### 1. Monitor Project Progress
-Steps:
-- Regularly check the project updates on Angor.
-- Monitor the project's progress and milestone completion status as reported by the project owner.
+#### 1. Surveiller les Progrès du Projet
+Étapes :
+- Vérifiez régulièrement les mises à jour du projet sur Angor.
+- Surveillez les progrès du projet et le statut d'achèvement des jalons comme rapporté par le propriétaire du projet.
 
-#### 2. Review Milestone Status
-Steps:
-- When a milestone is due, check the milestone status update provided by the project owner on Angor.
-- Ensure the reported progress aligns with the expected timeline and requirements for the milestone.
+#### 2. Examiner le Statut des Jalons
+Étapes :
+- Quand un jalon est dû, vérifiez la mise à jour du statut du jalon fournie par le propriétaire du projet sur Angor.
+- Assurez-vous que les progrès rapportés s'alignent avec la chronologie attendue et les exigences pour le jalon.
 
-#### 3. Release of Funds
-**If You Are the Founder**:
-- As the project founder, spend the first milestone funds by signing the transaction.
-- Verify that the funds are released according to the time-lock contract once a milestone is reached.
+#### 3. Libération des Fonds
+**Si Vous Êtes le Fondateur** :
+- En tant que fondateur du projet, dépensez les fonds du premier jalon en signant la transaction.
+- Vérifiez que les fonds sont libérés selon le contrat de verrouillage temporel une fois qu'un jalon est atteint.
 
-**As the Investor**:
-- Wait for the project founder to approve the investment and release the milestone funds.
-- Verify that subsequent milestone funds are released according to the time-lock contract as each milestone is reached.
+**En Tant qu'Investisseur** :
+- Attendez que le fondateur du projet approuve l'investissement et libère les fonds du jalon.
+- Vérifiez que les fonds des jalons suivants sont libérés selon le contrat de verrouillage temporel à mesure que chaque jalon est atteint.
 
-### Step 5: Testing Fund Recovery
+### Étape 5 : Tester la Récupération des Fonds
 
-#### 1. Initiate Fund Recovery
-Steps:
-- If a project fails to meet its milestones, go to your project dashboard.
-- Click on the recovery option.
-- Initiate the fund recovery process.
+#### 1. Initier la Récupération des Fonds
+Étapes :
+- Si un projet ne parvient pas à atteindre ses jalons, allez à votre tableau de bord de projet.
+- Cliquez sur l'option de récupération.
+- Initiez le processus de récupération des fonds.
 
-#### 2. Receive Recovered Funds into Penalty
-Steps:
-- Confirm the recovery transaction.
-- Check your funds are locked in the penalty (it will show how many days are left to recover the funds).
+#### 2. Recevoir les Fonds Récupérés dans la Pénalité
+Étapes :
+- Confirmez la transaction de récupération.
+- Vérifiez que vos fonds sont verrouillés dans la pénalité (cela montrera combien de jours restent pour récupérer les fonds).
 
-#### 3. Receive Funds out of Penalty
-Steps:
-- Wait till the penalty expires.
-- Move your funds out of penalty to your wallet.
+#### 3. Recevoir les Fonds Hors de la Pénalité
+Étapes :
+- Attendez jusqu'à ce que la pénalité expire.
+- Déplacez vos fonds hors de la pénalité vers votre portefeuille.
 
-### Step 6: User Experience and Feedback
+### Étape 6 : Expérience Utilisateur et Commentaires
 
-#### 1. Evaluate User Interface
-Steps:
-- Navigate through the Angor platform.
-- Assess the user interface for ease of use, design, and functionality.
-- Ensure all features are accessible and intuitive.
+#### 1. Évaluer l'Interface Utilisateur
+Étapes :
+- Naviguez à travers la plateforme Angor.
+- Évaluez l'interface utilisateur pour la facilité d'utilisation, le design, et la fonctionnalité.
+- Assurez-vous que toutes les fonctionnalités sont accessibles et intuitives.
 
-#### 2. Submit Feedback
-Steps:
-- Use the Angor repository on GitHub to submit your feedback as issues.
-- Suggest improvements or provide general feedback.
-- Check for a response or acknowledgment from the Angor team.
-- Join our Discord or Telegram to discuss more and ask questions.
+#### 2. Soumettre des Commentaires
+Étapes :
+- Utilisez le référentiel Angor sur GitHub pour soumettre vos commentaires comme problèmes.
+- Suggérez des améliorations ou fournissez des commentaires généraux.
+- Vérifiez une réponse ou un accusé de réception de l'équipe Angor.
+- Rejoignez notre Discord ou Telegram pour discuter davantage et poser des questions.

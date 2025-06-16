@@ -1,141 +1,141 @@
 ---
-title: Keeping Promises Without Police
-description: 'Stateless funding, enforced by Bitcoin. No courts. No police. Just code and trust.'
+title: Tenir les Promesses Sans Police
+description: 'Financement sans État, appliqué par Bitcoin. Pas de tribunaux. Pas de police. Juste du code et de la confiance.'
 author: 'paco de la india'
-role: 'Angor Contributor'
+role: 'Contributeur Angor'
 authorImage: ""
 authorImageAlt: "Paco de la India"
 pubDate: 2025-05-22
 cardImage: "@/images/keeping-promises-without-police.webp"
-cardImageAlt: "Keeping promises without police"
+cardImageAlt: "Tenir les promesses sans police"
 readTime: 7
 tags: [bitcoin]
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
 ---
 
-## Ensuring Fair Revenue Sharing in a Stateless System
+## Assurer un Partage Équitable des Revenus dans un Système Sans État
 
-**Dear readers,**  
-> “The direct use of force is such a poor solution to any problem, it is generally employed only by small children and large nations.” — *David Friedman*
+**Chers lecteurs,**  
+> "L'utilisation directe de la force est une si pauvre solution à tout problème, qu'elle n'est généralement employée que par les petits enfants et les grandes nations." — *David Friedman*
 
-### What if we could enforce promises without force?
+### Et si nous pouvions faire respecter les promesses sans force ?
 
-David Friedman, in his book *The Machinery of Freedom*, tosses out a pretty wild idea: that people can build systems of cooperation and justice without needing a government at all. These systems rely on voluntary agreements, social reputation, and mutual incentives. In such a world, contracts hold value because honoring a promise brings greater rewards than breaking it.
-
----
-
-### From Friedman to Bitcoin
-
-This vision shaped the thinking behind **Angor**, a funding tool built on Bitcoin. Friedman’s ideas showed that systems of cooperation could work without central authority, and Bitcoin now provides the foundation to build them. It records transactions in a public and tamper-proof way. With features like **Taproot**, people can set clear rules for funding and accountability. Angor uses these tools to help founders and backers create agreements that are transparent and easy to verify.
-
-The result is a new kind of marketplace where follow-through is visible, and reputation becomes a real asset. Instead of relying on enforcement from above, **trust is earned through action and built into the system itself**.
+David Friedman, dans son livre *The Machinery of Freedom*, lance une idée plutôt audacieuse : que les gens peuvent construire des systèmes de coopération et de justice sans avoir besoin d'un gouvernement du tout. Ces systèmes s'appuient sur des accords volontaires, la réputation sociale, et les incitations mutuelles. Dans un tel monde, les contrats ont de la valeur parce qu'honorer une promesse apporte de plus grandes récompenses que de la briser.
 
 ---
 
-## What Happens After the Project Succeeds?
+### De Friedman à Bitcoin
 
-One important question kept returning throughout our work:  
-**What happens after a project succeeds?**  
-The founder raises the funds, delivers the product, and begins earning revenue.  
-- What mechanism ensures that revenue is shared as promised?  
-- How can investors protect their interests in an environment that relies on voluntary structure rather than external authority?
+Cette vision a façonné la pensée derrière **Angor**, un outil de financement construit sur Bitcoin. Les idées de Friedman ont montré que les systèmes de coopération pouvaient fonctionner sans autorité centrale, et Bitcoin fournit maintenant la fondation pour les construire. Il enregistre les transactions de manière publique et inviolable. Avec des fonctionnalités comme **Taproot**, les gens peuvent établir des règles claires pour le financement et la responsabilité. Angor utilise ces outils pour aider les fondateurs et les contributeurs à créer des accords qui sont transparents et faciles à vérifier.
 
-To explore possible answers, we looked at how libertarian thinkers approach contracts in stateless systems.
+Le résultat est un nouveau type de marché où le suivi est visible, et la réputation devient un vrai actif. Au lieu de s'appuyer sur l'application d'en haut, **la confiance est gagnée par l'action et intégrée dans le système lui-même**.
 
 ---
 
-## How Libertarian Thinkers Approach Contracts Without the State
+## Que Se Passe-t-il Après que le Projet Réussisse ?
 
-Friedman, along with other libertarian thinkers like **Murray Rothbard** and **Bruce Benson**, describes voluntarily created legal systems where people make binding agreements and use private mechanisms to enforce them. These mechanisms include:
+Une question importante continuait de revenir tout au long de notre travail :  
+**Que se passe-t-il après qu'un projet réussisse ?**  
+Le fondateur lève les fonds, livre le produit, et commence à gagner des revenus.  
+- Quel mécanisme assure que les revenus sont partagés comme promis ?  
+- Comment les investisseurs peuvent-ils protéger leurs intérêts dans un environnement qui s'appuie sur une structure volontaire plutôt que sur une autorité externe ?
 
-- ✅ Reputational risk  
-- ✅ Collateralized performance  
-- ✅ Community arbitration  
-- ✅ Decentralized insurance  
-
-Such tools can replace state-backed enforcement when trust is earned and incentives are aligned.
-
----
-
-## If Founders Are Anonymous
-
-When a founder chooses to remain pseudonymous, legal enforcement is not available. In this case, the agreement between the founder and investor can rely on **cryptographic mechanisms** such as:
-
-### 1. Performance Bonds
-- Founders deposit additional Bitcoin into a separate, time-locked contract.  
-- As they meet revenue-sharing milestones, they unlock portions of this bond.  
-- If a revenue allocation is missed or a deadline passes, the contract **redirects the bond to investors** via a Taproot clause.  
-  > Taproot lets you set up ‘if-this-then-that’ rules directly in Bitcoin transactions—privately.  
-
-### 2. Revenue Proofs and Oracles
-- Most founders earn in fiat (Stripe, Revolut, POS). So they:
-  - Export a sales report.
-  - Hash the report.
-  - Post the hash to the Bitcoin blockchain (as timestamped proof).  
-- An **oracle** (e.g., accountant or investor-nominated verifier) checks if the report matches the on-chain hash.  
-- If so, the oracle **triggers a revenue-share payout** via a **Discreet Log Contract (DLC)**.
-
-> A DLC is like a smart contract for Bitcoin. It only executes if the oracle confirms a specific outcome.
-
-### 3. Reputation as Collateral
-- Every payout is recorded on Bitcoin’s blockchain—**public and verifiable**.  
-- Community-run indexers track contract streaks (consecutive, on-time payouts).  
-- Streaks are posted on **Nostr**, signed and public.  
-  > A strong streak = trust & future funding.  
-  > A broken streak = risk & reduced access to community support.
+Pour explorer les réponses possibles, nous avons regardé comment les penseurs libertariens abordent les contrats dans les systèmes sans état.
 
 ---
 
-## If Founders Are Public
+## Comment les Penseurs Libertariens Abordent les Contrats Sans l'État
 
-When a founder uses a real identity, legal agreements can combine with on-chain contracts:
+Friedman, avec d'autres penseurs libertariens comme **Murray Rothbard** et **Bruce Benson**, décrit des systèmes légaux créés volontairement où les gens font des accords contraignants et utilisent des mécanismes privés pour les faire respecter. Ces mécanismes incluent :
 
-### 1. Legally Binding Smart Contracts
-- Formal agreement links legal entity to specific Taproot addresses.  
-- Revenue rules and breach clauses are written in legal language.  
-- Enforceable in any jurisdiction the founder operates in.
+- ✅ Risque de réputation  
+- ✅ Performance avec garantie  
+- ✅ Arbitrage communautaire  
+- ✅ Assurance décentralisée  
 
-### 2. Private Arbitration
-- Both parties agree on a neutral arbitrator at contract setup.  
-- If revenue payouts are missed, the arbitrator reviews:  
-  - On-chain records  
-  - Oracle confirmations  
-  - Supporting documents  
-- Then issues a fair decision—release, hold, or redirect funds.
-
-### 3. Equity Sharing & Traditional Securities
-- Public founders can offer **equity** (e.g., shares, tokens, convertible notes).  
-- On-chain contracts can reference these equity arrangements.  
-- Legal documents outline dividend rights, voting power, exit terms, etc.  
-
-> This hybrid model balances **transparency** with **long-term value**.
+De tels outils peuvent remplacer l'application soutenue par l'état quand la confiance est gagnée et les incitations sont alignées.
 
 ---
 
-## Final Thought: Alignment Over Authority
+## Si les Fondateurs Sont Anonymes
 
-The ideas in *The Machinery of Freedom* show how people can build **cooperative systems** without centralized authority.  
-**Angor puts those ideas into action** by applying them to decentralized crowdfunding.  
-Each campaign becomes a **contract**.  
-Each payout becomes a **signal of integrity**.  
-**Reputation is built over time, through visible, verifiable performance.**
+Quand un fondateur choisit de rester pseudonyme, l'application légale n'est pas disponible. Dans ce cas, l'accord entre le fondateur et l'investisseur peut s'appuyer sur des **mécanismes cryptographiques** tels que :
 
-This model:
-- Shifts enforcement from **force** to **alignment**
-- Rewards **honesty** and **transparency**
-- Makes misuse **costly by design**
+### 1. Cautions de Performance
+- Les fondateurs déposent du Bitcoin supplémentaire dans un contrat séparé, verrouillé dans le temps.  
+- En atteignant les jalons de partage de revenus, ils déverrouillent des portions de cette caution.  
+- Si une allocation de revenus est manquée ou qu'une échéance passe, le contrat **redirige la caution vers les investisseurs** via une clause Taproot.  
+  > Taproot vous permet de configurer des règles 'si-ceci-alors-cela' directement dans les transactions Bitcoin—privément.  
 
-By embedding trust directly into the protocol, Angor echoes the logic of **Bitcoin**:
+### 2. Preuves de Revenus et Oracles
+- La plupart des fondateurs gagnent en fiat (Stripe, Revolut, POS). Donc ils :
+  - Exportent un rapport de ventes.
+  - Hachent le rapport.
+  - Postent le hash sur la blockchain Bitcoin (comme preuve horodatée).  
+- Un **oracle** (ex. comptable ou vérificateur nommé par l'investisseur) vérifie si le rapport correspond au hash on-chain.  
+- Si oui, l'oracle **déclenche un paiement de partage de revenus** via un **Contrat de Log Discret (DLC)**.
 
-> Bitcoin miners follow the rules not because they’re forced to, but because cheating costs energy and profit. The system self-regulates. Angor does the same.
+> Un DLC est comme un contrat intelligent pour Bitcoin. Il s'exécute seulement si l'oracle confirme un résultat spécifique.
+
+### 3. Réputation comme Garantie
+- Chaque paiement est enregistré sur la blockchain de Bitcoin—**public et vérifiable**.  
+- Les indexeurs gérés par la communauté suivent les séries de contrats (paiements consécutifs, à temps).  
+- Les séries sont postées sur **Nostr**, signées et publiques.  
+  > Une forte série = confiance & financement futur.  
+  > Une série brisée = risque & accès réduit au soutien communautaire.
 
 ---
 
-## 🚀 If You’re Building on Angor…
+## Si les Fondateurs Sont Publics
 
-If you’re building on Angor or exploring similar ideas, **reach out**.  
-The tools are evolving.  
-The community is growing.
+Quand un fondateur utilise une vraie identité, les accords légaux peuvent se combiner avec les contrats on-chain :
 
-Have you tried Angor yet?  
-**See y’all next week. Thank you & Ciao.**
+### 1. Contrats Intelligents Légalement Contraignants
+- L'accord formel lie l'entité légale à des adresses Taproot spécifiques.  
+- Les règles de revenus et les clauses de violation sont écrites en langage légal.  
+- Applicables dans toute juridiction où le fondateur opère.
+
+### 2. Arbitrage Privé
+- Les deux parties s'accordent sur un arbitre neutre lors de la configuration du contrat.  
+- Si les paiements de revenus sont manqués, l'arbitre examine :  
+  - Les enregistrements on-chain  
+  - Les confirmations d'oracle  
+  - Les documents de soutien  
+- Puis émet une décision équitable—libérer, tenir, ou rediriger les fonds.
+
+### 3. Partage d'Actions & Titres Traditionnels
+- Les fondateurs publics peuvent offrir des **actions** (ex. parts, tokens, notes convertibles).  
+- Les contrats on-chain peuvent référencer ces arrangements d'actions.  
+- Les documents légaux décrivent les droits de dividendes, le pouvoir de vote, les termes de sortie, etc.  
+
+> Ce modèle hybride équilibre **transparence** avec **valeur à long terme**.
+
+---
+
+## Pensée Finale : Alignement Plutôt qu'Autorité
+
+Les idées dans *The Machinery of Freedom* montrent comment les gens peuvent construire des **systèmes coopératifs** sans autorité centralisée.  
+**Angor met ces idées en action** en les appliquant au financement participatif décentralisé.  
+Chaque campagne devient un **contrat**.  
+Chaque paiement devient un **signal d'intégrité**.  
+**La réputation est construite au fil du temps, à travers une performance visible et vérifiable.**
+
+Ce modèle :
+- Déplace l'application de la **force** vers l'**alignement**
+- Récompense l'**honnêteté** et la **transparence**
+- Rend la mauvaise utilisation **coûteuse par conception**
+
+En intégrant la confiance directement dans le protocole, Angor fait écho à la logique de **Bitcoin** :
+
+> Les mineurs Bitcoin suivent les règles non pas parce qu'ils y sont forcés, mais parce que tricher coûte de l'énergie et du profit. Le système s'autorégule. Angor fait pareil.
+
+---
+
+## 🚀 Si Vous Construisez sur Angor…
+
+Si vous construisez sur Angor ou explorez des idées similaires, **contactez-nous**.  
+Les outils évoluent.  
+La communauté grandit.
+
+Avez-vous essayé Angor ?  
+**À la semaine prochaine. Merci & Ciao.**

@@ -1,108 +1,108 @@
 ---
-title: "Angor Hub & Angor Protocol"
-description: "Understanding the differences between Angor Hub and Angor Protocol, and how they work together in decentralized crowdfunding"
+title: "Angor Hub & Protocole Angor"
+description: "Comprendre les différences entre Angor Hub et le Protocole Angor, et comment ils fonctionnent ensemble dans le financement participatif décentralisé"
 author: 'paco de la india'
-role: 'Angor Contributor'
+role: 'Contributeur Angor'
 authorImage: ""
 authorImageAlt: "Paco de la India"
 pubDate: 2025-02-20
 cardImage: "@/images/angor-hub-vs-angor-protocol.webp"
-cardImageAlt: "Angor Hub vs Angor Protocol comparison"
+cardImageAlt: "Comparaison Angor Hub vs Protocole Angor"
 readTime: 5
-tags: ['Angor', 'Angor-Hub', 'Angor-Protocol', 'Bitcoin', 'Crowdfunding']
+tags: ['Angor', 'Angor-Hub', 'Angor-Protocol', 'Bitcoin', 'Financement participatif']
 nostrPublicKey: 'npub1v67clmf4jrezn8hsz28434nc0y5fu65e5esws04djnl2kasxl5tskjmjjk'
 ---
 
-## Same Same but Different
+## Pareil Pareil mais Différent
 
-## What Does Angor Mean?
+## Que Signifie Angor ?
 
-Angor is a Latin word that means "anguish" or "distress."
-And that's exactly what we're trying to get rid of in crowdfunding.
-For this, We have created Angor Protocol and  Angor Hub.
-They might sound like the same thing, but they serve different purposes , so let me break it down for you -
+Angor est un mot latin qui signifie "angoisse" ou "détresse".
+Et c'est exactement ce dont nous essayons de nous débarrasser dans le financement participatif.
+Pour cela, nous avons créé le Protocole Angor et Angor Hub.
+Ils peuvent sembler être la même chose, mais ils servent des objectifs différents, alors laissez-moi vous l'expliquer -
 
-## 1. What is Angor Hub?
+## 1. Qu'est-ce qu'Angor Hub ?
 
-Think of Angor Hub like a farmer's market, where as a founder, you set up your own stall with your own produce(projects). And just like you, others have their stalls too, offering different opportunities.
-Angor Hub is a marketplace where investors can find and invest in projects using Nostr and Bitcoin technology for security and transparency.
-A safe haven for Investors & Founders.
+Pensez à Angor Hub comme un marché de producteurs, où en tant que fondateur, vous installez votre propre stand avec vos propres produits (projets). Et tout comme vous, d'autres ont leurs stands aussi, offrant différentes opportunités.
+Angor Hub est un marché où les investisseurs peuvent trouver et investir dans des projets en utilisant la technologie Nostr et Bitcoin pour la sécurité et la transparence.
+Un havre de paix pour les Investisseurs et les Fondateurs.
 
-## 2. How investing works on Angor Hub?
+## 2. Comment fonctionne l'investissement sur Angor Hub ?
 
-Let's say Mr. Scrooge, a 50-year-old, with curly blonde hair from Switzerland, is looking for a project to invest in. He visits Angor Hub, browses through different projects (just like shopping on Amazon), and picks one that catches his interest.
+Disons que M. Scrooge, un homme de 50 ans, aux cheveux blonds bouclés de Suisse, cherche un projet dans lequel investir. Il visite Angor Hub, parcourt différents projets (comme faire du shopping sur Amazon), et en choisit un qui attire son intérêt.
 
-Here's how it works:
+Voici comment cela fonctionne :
 
-* Angor Hub is a view-only platform where investors can discover projects.
-* Once Mr. Scrooge finds a project he likes, he uses the inbuilt Angor wallet to invest.
-* All investments happen peer-to-peer between the founder and Mr. Scrooge, directly on the Bitcoin blockchain.
-* Angor does not hold Mr. Scrooge's Bitcoin.
-* A 1% fee is charged when using the Angor wallet to process the investment.
-* All projects listed on Angor Hub use Angor Protocol to raise Bitcoin securely.
+* Angor Hub est une plateforme en lecture seule où les investisseurs peuvent découvrir des projets.
+* Une fois que M. Scrooge trouve un projet qu'il aime, il utilise le portefeuille Angor intégré pour investir.
+* Tous les investissements se font de pair à pair entre le fondateur et M. Scrooge, directement sur la blockchain Bitcoin.
+* Angor ne détient pas le Bitcoin de M. Scrooge.
+* Un frais de 1% est facturé lors de l'utilisation du portefeuille Angor pour traiter l'investissement.
+* Tous les projets listés sur Angor Hub utilisent le Protocole Angor pour lever du Bitcoin en toute sécurité.
 
-## 3. What is Angor Protocol?
+## 3. Qu'est-ce que le Protocole Angor ?
 
-Angor Protocol is open-source software, free for anyone to use, modify, or rebrand.You can take the code, customize it, and put your own name on it.
+Le Protocole Angor est un logiciel open-source, gratuit pour quiconque à utiliser, modifier, ou renommer. Vous pouvez prendre le code, le personnaliser, et y mettre votre propre nom.
 
-> Good artists copy. Great artists steal. 😉- Old Saying
+> Les bons artistes copient. Les grands artistes volent. 😉- Vieux Dicton
 
-In simple terms, a protocol is a set of rules that define how data or transactions are processed. Here are some of the rules of Angor Protocol -
+En termes simples, un protocole est un ensemble de règles qui définissent comment les données ou les transactions sont traitées. Voici quelques-unes des règles du Protocole Angor -
 
-* Funds are locked with spending conditions that allow founders to spend only at pre-decided dates. Mr Scrooge (investor) does not need to take any action for this to happen.
-* If Mr Scrooge wants to exit the investment early, He must actively bail out, but this comes with a penalty. This ensures commitment while still giving investors an option to withdraw.
-* It allows for peer-to-peer, on-chain transactions without intermediaries.
-* It integrates Taproot for privacy and efficiency, making transactions more cost-effective.( More about this in the next blog)
+* Les fonds sont verrouillés avec des conditions de dépense qui permettent aux fondateurs de dépenser seulement aux dates pré-décidées. M. Scrooge (investisseur) n'a besoin de prendre aucune action pour que cela se produise.
+* Si M. Scrooge veut sortir de l'investissement tôt, il doit activement se retirer, mais cela vient avec une pénalité. Cela assure l'engagement tout en donnant encore aux investisseurs une option de se retirer.
+* Il permet des transactions pair-à-pair, sur chaîne sans intermédiaires.
+* Il intègre Taproot pour la confidentialité et l'efficacité, rendant les transactions plus rentables. (Plus à ce sujet dans le prochain blog)
 
-## 4. How Founders use Angor in Real Life?
+## 4. Comment les Fondateurs utilisent Angor dans la Vraie Vie ?
 
-### Scenario 1
+### Scénario 1
 
-Mr Piccolo, a 30-year-old father of two from Thailand, discovered gold beneath his home and now has a promising Gold Mining Project. Seeing great potential, he seeks investors to bring it to life.
-To attract backers, he lists his project on Angor Hub, making it visible to potential investors.
-Mr. Scrooge comes across this project, likes it, and signs a digital contract with Piccolo directly on the Bitcoin blockchain.
+M. Piccolo, un père de deux enfants de 30 ans de Thaïlande, a découvert de l'or sous sa maison et a maintenant un Projet d'Extraction d'Or prometteur. Voyant un grand potentiel, il cherche des investisseurs pour le concrétiser.
+Pour attirer des contributeurs, il liste son projet sur Angor Hub, le rendant visible aux investisseurs potentiels.
+M. Scrooge tombe sur ce projet, l'aime, et signe un contrat numérique avec Piccolo directement sur la blockchain Bitcoin.
 
-As milestone dates are surpassed (meaning the first spending condition is met), the founder can then spend the specified amount, following the rules set by the Angor Protocol. This ensures security and fairness without requiring manual approval from Mr. Scrooge.
-A 1% facilitation fee is charged by Angor Wallet.
-Simple, right?
+Comme les dates d'étapes sont dépassées (signifiant que la première condition de dépense est remplie), le fondateur peut alors dépenser le montant spécifié, suivant les règles définies par le Protocole Angor. Cela assure la sécurité et l'équité sans nécessiter d'approbation manuelle de M. Scrooge.
+Un frais de facilitation de 1% est facturé par le Portefeuille Angor.
+Simple, non ?
 
-### Scenario 2
+### Scénario 2
 
-Carlos, a 21-year-old from Cuba, has a great organic coffee export business and wants investors to help him grow. But because of international sanctions on Cuba, he can't use normal funding methods like bank loans, PayPal, or crowdfunding platforms.
+Carlos, un jeune de 21 ans de Cuba, a une excellente entreprise d'exportation de café biologique et veut des investisseurs pour l'aider à grandir. Mais à cause des sanctions internationales sur Cuba, il ne peut pas utiliser les méthodes de financement normales comme les prêts bancaires, PayPal, ou les plateformes de financement participatif.
 
-Carlos lists his project on AngorHub, but because we, as a company, must follow legal rules, we may have to delist his project due to sanctions and restrictions in his region
+Carlos liste son projet sur AngorHub, mais parce que nous, en tant qu'entreprise, devons suivre les règles légales, nous pourrions devoir retirer son projet de la liste à cause des sanctions et restrictions dans sa région.
 
-But here's the good part: Angor Protocol is open-source and runs on Bitcoin. This means Carlos can still use it to raise funds directly from investors like Mr. Scrooge. He gets the security and transparency of the protocol, even though Angor Hub can't officially list his project due to regulatory constraints.
+Mais voici la bonne partie : Le Protocole Angor est open-source et fonctionne sur Bitcoin. Cela signifie que Carlos peut encore l'utiliser pour lever des fonds directement des investisseurs comme M. Scrooge. Il obtient la sécurité et la transparence du protocole, même si Angor Hub ne peut pas officiellement lister son projet à cause des contraintes réglementaires.
 
-In short, while Angor Hub has to follow regulations, the Angor Protocol itself is open and permissionless—anyone, anywhere, can use it freely. This openness ensures that people like Carlos can still access its benefits, no matter where they are. All they have to do is find investors like Mr. Scrooge
+En bref, alors qu'Angor Hub doit suivre les réglementations, le Protocole Angor lui-même est ouvert et sans permission—quiconque, n'importe où, peut l'utiliser librement. Cette ouverture assure que les gens comme Carlos peuvent encore accéder à ses bénéfices, peu importe où ils sont. Tout ce qu'ils ont à faire est de trouver des investisseurs comme M. Scrooge
 
-## 5. Will We Filter Projects on Angor Hub?
+## 5. Allons-nous Filtrer les Projets sur Angor Hub ?
 
-Yes. As Angor Hub grows, we may refine our selection criteria to ensure quality and security. But for now, our main focus is on building a trustworthy space for both investors and founders.
+Oui. Alors qu'Angor Hub grandit, nous pourrions affiner nos critères de sélection pour assurer la qualité et la sécurité. Mais pour l'instant, notre focus principal est de construire un espace digne de confiance pour les investisseurs et les fondateurs.
 
-## 6. What happens if Mr. Piccolo (Founder) has started mining Gold, but Mr. Scrooge (Investor) doesn't release the next round of funds?
+## 6. Que se passe-t-il si M. Piccolo (Fondateur) a commencé à extraire de l'Or, mais M. Scrooge (Investisseur) ne libère pas le prochain tour de fonds ?
 
-This is a tricky situation. We don't have a central authority to step in and fix disputes.
+C'est une situation délicate. Nous n'avons pas d'autorité centrale pour intervenir et résoudre les disputes.
 
-Say Mr. Scrooge is feeling confident about his investment. He locks up 10 BTC for 10 months, with 1 BTC released each month to fund Mr. Piccolo's gold mining operation. Things start off well & after the first month, 1 BTC is unlocked, and Piccolo gets to work, pickaxe in hand.
+Disons que M. Scrooge se sent confiant dans son investissement. Il verrouille 10 BTC pour 10 mois, avec 1 BTC libéré chaque mois pour financer l'opération d'extraction d'or de M. Piccolo. Les choses commencent bien et après le premier mois, 1 BTC est déverrouillé, et Piccolo se met au travail, pioche à la main.
 
-But then, doubt creeps in. Maybe the gold mine isn't as promising as it seemed, or Scrooge just gets cold feet. What if he decides to pull out the remaining funds? He can do that, but at a cost. Bailing out early means paying a penalty. The penalty is a time duration after which the investor's remaining/unspent funds are unlocked, not a monetary penalty.
+Mais ensuite, le doute s'installe. Peut-être que la mine d'or n'est pas aussi prometteuse qu'elle semblait, ou Scrooge a juste des sueurs froides. Que se passe-t-il s'il décide de retirer les fonds restants ? Il peut le faire, mais à un coût. Se retirer plus tôt signifie payer une pénalité. La pénalité est une durée de temps après laquelle les fonds restants/non dépensés de l'investisseur sont déverrouillés, pas une pénalité monétaire.
 
-Here's the catch: The unlocked funds are meant for future work, but at the same time, Mr Scrooge is taking a gamble by trusting that Piccolo will deliver results before the next batch of BTC is released. To manage this risk, milestones are set in place.
+Voici le hic : Les fonds déverrouillés sont destinés au travail futur, mais en même temps, M. Scrooge prend un pari en faisant confiance que Piccolo livrera des résultats avant que le prochain lot de BTC soit libéré. Pour gérer ce risque, des jalons sont mis en place.
 
-These milestones are simply pre-set dates and block numbers. When a milestone is reached, the founder can access the allocated funds. For example, Piccolo receives the next 1 BTC only when the next milestone arrives, ensuring that investment is tied to progress, not just time.
+Ces jalons sont simplement des dates pré-définies et des numéros de blocs. Quand un jalon est atteint, le fondateur peut accéder aux fonds alloués. Par exemple, Piccolo reçoit le prochain 1 BTC seulement quand le prochain jalon arrive, assurant que l'investissement est lié au progrès, pas juste au temps.
 
-But without a neutral third party to enforce the agreement, trust remains key. Investors and founders need to be on the same page, setting clear expectations before shaking hands - virtually, of course.
+Mais sans une tierce partie neutre pour faire respecter l'accord, la confiance reste clé. Les investisseurs et fondateurs doivent être sur la même longueur d'onde, définissant des attentes claires avant de se serrer la main - virtuellement, bien sûr.
 
-One safeguard against bad actors is social pressure and reputation tracking.
-Since Angor uses Nostr for communication, Mr. Scrooge's reputation is visible to other investors and founders. ( more about NOSTR in next blog)
+Une sauvegarde contre les mauvais acteurs est la pression sociale et le suivi de réputation.
+Puisqu'Angor utilise Nostr pour la communication, la réputation de M. Scrooge est visible aux autres investisseurs et fondateurs. (plus sur NOSTR dans le prochain blog)
 
-* If Scrooge unfairly exits the project without a logical argument or statement, it will hurt his credibility, making it harder for him to invest in future projects.
-* Piccolo can also publicly call him out, discouraging unethical behavior.
+* Si Scrooge sort injustement du projet sans argument logique ou déclaration, cela nuira à sa crédibilité, rendant plus difficile pour lui d'investir dans de futurs projets.
+* Piccolo peut aussi le dénoncer publiquement, décourageant les comportements non éthiques.
 
-I hope you were able to understand the difference between Angor Hub & Angor Protocol. By removing middlemen and unnecessary fees, Angor creates a trustless funding system, where both investors and founders take responsibility for their agreements.
+J'espère que vous avez pu comprendre la différence entre Angor Hub et le Protocole Angor. En supprimant les intermédiaires et les frais inutiles, Angor crée un système de financement sans confiance, où les investisseurs et les fondateurs prennent la responsabilité de leurs accords.
 
-If you're ready to explore decentralized crowdfunding on Bitcoin, check out Angor Hub or use the Angor Protocol to raise funds for your next project.
+Si vous êtes prêt à explorer le financement participatif décentralisé sur Bitcoin, consultez Angor Hub ou utilisez le Protocole Angor pour lever des fonds pour votre prochain projet.
 
-Thank you and Good day y'all.
-See you soon.
+Merci et bonne journée à tous.
+À bientôt.

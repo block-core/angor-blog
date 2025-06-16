@@ -1,119 +1,114 @@
 ---
-title: How to Invest Using Angor
-description: 'Angor allows you to browse various projects and invest securely using Bitcoin. Create a wallet, select a project, submit your investment for approval, and manage your funds with ease.'
-author: 'Angor Team'
-role: 'Development Team'
+title: Comment Investir en Utilisant Angor
+description: 'Angor vous permet de parcourir divers projets et d'investir en toute sécurité en utilisant Bitcoin. Créez un portefeuille, sélectionnez un projet, soumettez votre investissement pour approbation et gérez vos fonds facilement.'
+author: 'Équipe Angor'
+role: 'Équipe de développement'
 authorImage: ""
-authorImageAlt: "Angor Team member"
+authorImageAlt: "Membre de l'équipe Angor"
 pubDate: 2024-06-17
 cardImage: "@/images/how-to-invest-using-angor.webp"
-cardImageAlt: "How to invest using Angor platform"
+cardImageAlt: "Comment investir en utilisant la plateforme Angor"
 readTime: 8
-tags: [Bitcoin, Technology, Education]
+tags: [Bitcoin, Technologie, Éducation]
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
 ---
-### Invest in Projects Securely with Angor: A Step-by-Step Guide
 
-Angor is a decentralized crowdfunding platform built on Bitcoin and uses Nostr for enhanced security and transparency. It allows investors to maintain control over their funds and supports direct communication between investors and founders. Here’s a step-by-step guide on how to invest using Angor.
+### Investir dans des Projets en Toute Sécurité avec Angor : Un Guide Étape par Étape
 
+Angor est une plateforme de financement participatif décentralisée construite sur Bitcoin et utilise Nostr pour une sécurité et une transparence accrues. Elle permet aux investisseurs de maintenir le contrôle sur leurs fonds et soutient la communication directe entre investisseurs et fondateurs. Voici un guide étape par étape sur comment investir en utilisant Angor.
 
-### How to invest using Angor: A Step-by-step guide to follow along:
+### Comment investir en utilisant Angor : Un guide étape par étape à suivre :
 
-### Browse for Projects
+### Parcourir les Projets
 
-To begin investing, you first need to find a project that interests you.
+Pour commencer à investir, vous devez d'abord trouver un projet qui vous intéresse.
 
-- **Visit the Angor Platform**: Start by going to the Angor website. If you don’t have a wallet yet, create a wallet to use Angor; otherwise, recover your wallet.
+- **Visitez la Plateforme Angor** : Commencez par aller sur le site web d'Angor. Si vous n'avez pas encore de portefeuille, créez un portefeuille pour utiliser Angor ; sinon, récupérez votre portefeuille.
 
-- **Navigate to the Projects Section**: Navigate to the 'Projects Browse' tab in the main menu. This will take you to the section where all available projects are listed.
+- **Naviguez vers la Section Projets** : Naviguez vers l'onglet 'Parcourir les Projets' dans le menu principal. Cela vous amènera à la section où tous les projets disponibles sont listés.
 
-    ![List of project will be here](./assets/project-list.svg)
+    ![La liste des projets sera ici](./assets/project-list.svg)
 
-- **Explore the Projects**
-1. **Review Details**: Each project listing includes a variety of details such as the project’s objectives, the team behind it, its funding goals, and timelines. Spend some time going through these details to understand the scope and purpose of each project.
+- **Explorez les Projets**
+1. **Examinez les Détails** : Chaque liste de projet inclut une variété de détails tels que les objectifs du projet, l'équipe derrière, ses objectifs de financement, et les échéanciers. Prenez du temps pour passer en revue ces détails pour comprendre la portée et le but de chaque projet.
 
-2. **Assess Goals**: Check the funding goals to see how much the project aims to raise. This will give you an idea of the scale of the project and its financial needs. The "Smart Farming Solutions" project has a target amount of 50 TBTC.
-3. **Understand Projects Timelines**: Look at the project timelines to see the expected milestones and deadlines. This helps you gauge how long your investment will be tied up and when you can expect to see progress or returns. <br>For instance, the stages of the "Smart Farming Solutions" project include 10% completion by 30/04/2024, 30% by 20/05/2024, and 60% by 30/05/2024.
+2. **Évaluez les Objectifs** : Vérifiez les objectifs de financement pour voir combien le projet vise à lever. Cela vous donnera une idée de l'ampleur du projet et de ses besoins financiers. Le projet "Solutions d'Agriculture Intelligente" a un montant cible de 50 TBTC.
+3. **Comprenez les Échéanciers des Projets** : Regardez les échéanciers du projet pour voir les jalons attendus et les échéances. Cela vous aide à évaluer combien de temps votre investissement sera immobilisé et quand vous pouvez espérer voir des progrès ou des retours. <br>Par exemple, les étapes du projet "Solutions d'Agriculture Intelligente" incluent 10% d'achèvement au 30/04/2024, 30% au 20/05/2024, et 60% au 30/05/2024.
 
-    
-    ![Project Insights Overview](./assets/project-insider.svg)
+    ![Aperçu des Insights du Projet](./assets/project-insider.svg)
 
-Taking the time to thoroughly explore the projects will help you make an informed decision about where to invest your funds.
+Prendre le temps d'explorer minutieusement les projets vous aidera à prendre une décision éclairée sur où investir vos fonds.
 
-### Create a Wallet
+### Créer un Portefeuille
 
-Before you can invest in any project, you need to set up a digital wallet on Angor. If you don’t have a wallet yet, create a wallet to use Angor.
+Avant de pouvoir investir dans tout projet, vous devez configurer un portefeuille numérique sur Angor. Si vous n'avez pas encore de portefeuille, créez un portefeuille pour utiliser Angor.
 
+- **Naviguez vers la Section Portefeuille** : Une fois connecté, trouvez et cliquez sur la section 'Portefeuille' depuis votre tableau de bord.
 
+- **Créez Votre Portefeuille** : Suivez les instructions à l'écran pour créer votre portefeuille numérique. Cela implique généralement :
 
-- **Navigate to the Wallet Section**: Once logged in, find and click on the 'Wallet' section from your dashboard.
+    - Inscrivez-vous sur la plateforme Angor.
+    - Naviguez vers la section de création de portefeuille.
+    - Cliquez sur "Créer un Portefeuille."
+    - Angor configurera automatiquement le portefeuille pour vous.
+    - Définissez un mot de passe fort pour protéger votre portefeuille.
 
-- **Create Your Wallet**: Follow the on-screen instructions to create your digital wallet. This typically involves:
+        ![Portefeuille après création](./assets/wallet-after-creation.svg)
 
-    - Sign up on the Angor platform.
-    - Navigate to the wallet creation section.
-    - Click on "Create Wallet."
-    - Angor will automatically set up the wallet for you.
-    - Set a strong password to protect your wallet.
+- **Sauvegardez les Phrases de Récupération** : Vous recevrez un ensemble de phrases de récupération. Stockez-les en sécurité, car elles sont essentielles pour accéder à votre portefeuille si vous oubliez votre mot de passe.
 
-        ![Wallet after creation](./assets/wallet-after-creation.svg)
+### Comment Investir dans un Projet sur Angor
 
-- **Back Up Recovery Phrases**: You’ll be given a set of recovery phrases. Store these securely, as they are essential for accessing your wallet if you forget your password.
+**Choisir un Projet**
 
-### How to Invest in a Project on Angor
+- **Parcourez les Projets Disponibles** : Explorez les projets listés sur Angor.
+- **Sélectionnez un Projet** : Choisissez un projet qui vous intéresse.
+- **Examinez les Détails et les Jalons** : Lisez attentivement les objectifs du projet, les objectifs de financement, et les jalons attendus.
 
-**Choose a Project**
+**Faire un Investissement**
 
-- **Browse Available Projects**: Explore the projects listed on Angor.
-- **Select a Project**: Choose a project that interests you.
-- **Review Details and Milestones**: Carefully read through the project’s objectives, funding goals, and expected milestones.
+- **Naviguez vers la Page du Projet** : Allez à la page du projet que vous avez sélectionné.
+- **Cliquez sur "Investir"** : Localisez et cliquez sur le bouton "Investir" sur la page du projet.
+- **Entrez le Montant d'Investissement** : Saisissez le montant de Bitcoin que vous souhaitez investir.
+- **Soumettez l'Investissement** : Confirmez la transaction en cliquant sur "Soumettre."
 
-**Make an Investment**
+    ![Page d'investissement](./assets/investment-page.svg)
 
-- **Navigate to Project Page**: Go to the page of the project you selected.
-- **Click "Invest"**: Locate and click the "Invest" button on the project page.
-- **Enter Investment Amount**: Input the amount of Bitcoin you wish to invest.
-- **Submit the Investment**: Confirm the transaction by clicking "Submit."
+- **Attendez l'Approbation** : Votre investissement doit être approuvé par le fondateur du projet. C'est un processus manuel.
 
-    ![Investment page](./assets/investment-page.svg)
+    ![Demande d'approbation du fondateur](./assets/founder-page.svg)
 
-- **Wait for Approval**: Your investment needs to be approved by the project founder. This is a manual process.
+    ![Page de signature en attente du fondateur](./assets/founder-pending-signature.svg)
 
-    ![Founder approval request](./assets/founder-page.svg)
+- **Confirmation de Transaction** : Attendez que la transaction soit confirmée sur la blockchain, ce qui peut prendre quelques minutes.
 
-    ![Founder pending signature page](./assets/founder-pending-signature.svg)
+### Récupérer les Fonds avec une Pénalité
 
+Si vous devez retirer votre investissement avant que le projet soit terminé, vous pouvez le faire, mais notez qu'il y aura une pénalité.
 
-- **Transaction Confirmation**: Wait for the transaction to be confirmed on the blockchain, which may take a few minutes.
+- **Naviguez vers Vos Investissements** : Depuis votre tableau de bord, allez à la section 'Investissements'.
+- **Sélectionnez le Projet** : Choisissez le projet duquel vous voulez retirer vos fonds.
+- **Demandez un Remboursement** : Cliquez sur l'option pour récupérer votre investissement et suivez les étapes guidées.
+- **Comprenez la Pénalité** : Soyez conscient que retirer votre investissement tôt entraînera une pénalité, déduite du montant remboursé. Les termes spécifiques de cette pénalité seront détaillés dans les informations du projet.
 
-### Claim Back Funds with a Penalty
+    ![Image du Portefeuille](./assets/invested-portfolio.svg)
 
-If you need to withdraw your investment before the project is completed, you can do so, but note that there will be a penalty.
+### 1. Initier la Récupération des Fonds
 
-- **Navigate to Your Investments**: From your dashboard, go to the 'Investments' section.
-- **Select the Project**: Choose the project from which you want to withdraw your funds.
-- **Request a Refund**: Click on the option to claim back your investment and follow the guided steps.
-- **Understand the Penalty**: Be aware that withdrawing your investment early will incur a penalty, deducted from the refunded amount. The specific terms of this penalty will be detailed in the project’s information.
+- Si un projet ne parvient pas à atteindre ses jalons, allez sur votre tableau de bord de projet.
+- Cliquez sur l'option de récupération.
+- Initiez le processus de récupération des fonds.
 
-    ![Portfolio Image](./assets/invested-portfolio.svg)
+### 2. Recevoir des Fonds Récupérés dans la Pénalité
 
-### 1. Initiate Fund Recovery
+- Confirmez la transaction de récupération.
+- Vérifiez que vos fonds sont bloqués dans la pénalité (il sera indiqué combien de jours restent pour récupérer les fonds).
 
-- If a project fails to meet its milestones, go to your project dashboard.
-- Click on the recovery option.
-- Initiate the fund recovery process.
+### 3. Recevoir des Fonds Hors de la Pénalité
 
-### 2. Receive Recovered Funds into Penalty
+- Attendez l'expiration de la pénalité.
+- Déplacez vos fonds hors de la pénalité vers votre portefeuille.
 
-- Confirm the recovery transaction.
-- Check your funds are locked in the penalty (it will show how many days are left to recover the funds).
+En suivant ces étapes, vous pouvez efficacement utiliser Angor pour découvrir des projets prometteurs, investir vos fonds, et gérer vos investissements efficacement.
 
-### 3. Receive Funds out of Penalty
-
-- Wait till the penalty expires.
-- Move your funds out of penalty to your wallet.
-
-
-By following these steps, you can effectively use Angor to discover promising projects, invest your funds, and manage your investments efficiently.
-
-Happy investing!
+Bon investissement !

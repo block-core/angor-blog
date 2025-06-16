@@ -2,54 +2,25 @@
 // Import necessary components
 import MainLayout from "@/layouts/MainLayout.astro";
 import { SITE } from "@data/constants";
-
-// Mock Nostr articles data for UI testing
-const nostrArticles = [
-  {
-    id: "nostr-article-1",
-    title: "شروع کار با پروتکل نوستر",
-    description: "راهنمای جامع برای درک پروتکل نوستر و چگونگی انقلاب آن در رسانه‌های اجتماعی غیرمتمرکز. مبانی، مفاهیم کلیدی و اینکه چرا نوستر برای آینده ارتباطات مقاوم در برابر سانسور مهم است را یاد بگیرید.",
-    content: "نوستر (یادداشت‌ها و سایر چیزهای منتقل شده توسط رله‌ها) یک پروتکل ساده و باز است که یک شبکه اجتماعی واقعاً مقاوم در برابر سانسور و جهانی را ممکن می‌سازد. برخلاف پلتفرم‌های رسانه‌های اجتماعی سنتی، نوستر به سرور مرکزی یا مقام متکی نیست...",
-    author: "تیم Angor",
-    publishedAt: "2024-12-15",
-    tags: ["نوستر", "پروتکل", "غیرمتمرکز", "آموزش"],
-    readTime: "8 دقیقه",
-    npub: "npub1angor5k8x7m2nwq3p4c6v9h8j1l0z3y5r4t6u8i9o0p2a1s3d4f5g6",
-    eventId: "note1angor5k8x7m2nwq3p4c6v9h8j1l0z3y5r4t6u8i9o0p2a1s3d4f5g6h7j8",
-    relays: ["wss://relay.angor.io", "wss://relay.damus.io", "wss://nos.lol"]
-  },
-  {
-    id: "nostr-article-2", 
-    title: "ساخت اپلیکیشن‌های غیرمتمرکز روی نوستر",
-    description: "کشف کنید که چگونه توسعه‌دهندگان می‌توانند اپلیکیشن‌های غیرمتمرکز قدرتمند با استفاده از پروتکل نوستر بسازند. از یادداشت‌های ساده تا اپلیکیشن‌های پیچیده، امکانات توسعه مقاوم در برابر سانسور را کشف کنید.",
-    content: "پروتکل نوستر امکانات بی‌نهایتی برای ساخت اپلیکیشن‌های غیرمتمرکز باز می‌کند. برخلاف اپلیکیشن‌های وب سنتی که به سرورهای متمرکز وابسته هستند، اپلیکیشن‌های نوستر می‌توانند در سراسر شبکه‌ای از رله‌ها عمل کنند...",
-    author: "جامعه توسعه‌دهندگان",
-    publishedAt: "2024-12-10",
-    tags: ["نوستر", "توسعه", "برنامه‌های-غیرمتمرکز", "برنامه‌نویسی"],
-    readTime: "12 دقیقه",
-    npub: "npub1devcom8h3k2m7n9p6q4w5e8r7t2y1u6i9o3p8a5s2d4f7g1h9j6k3",
-    eventId: "note1angor8h3k2m7n9p6q4w5e8r7t2y1u6i9o0p2a1s3d4f7g1h9j6k3l8m2",
-    relays: ["wss://relay.angor.io", "wss://relay.snort.social", "wss://relay.damus.io"]
-  }
-];
+import NostrArticlesClient from "@/components/NostrArticlesClient.astro";
 ---
 
 <MainLayout
-  title={`مقالات نوستر | ${SITE.title}`}
-  description="مقالات منتشر شده توسط Angor در شبکه نوستر نیز در اینجا به اشتراک گذاشته می‌شوند. رسانه‌های اجتماعی غیرمتمرکز، ارتباطات مقاوم در برابر سانسور و آینده پروتکل‌های باز را کاوش کنید."
   lang="fa"
   dir="rtl"
+  title={`مقالات نوستر | ${SITE.title}`}
+  description="مقالات منتشر شده توسط آنگور در شبکه نوستر. کاوش در رسانه‌های اجتماعی غیرمتمرکز، ارتباطات مقاوم در برابر سانسور و آینده پروتکل‌های باز."
   structuredData={{
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "@id": "https://angor.blog/fa/nostr-articles",
-    "url": "https://angor.blog/fa/nostr-articles", 
-    "name": "مقالات نوستر | وبلاگ Angor",
-    "description": "مقالات منتشر شده توسط Angor در شبکه نوستر نیز در اینجا به اشتراک گذاشته می‌شوند. رسانه‌های اجتماعی غیرمتمرکز، ارتباطات مقاوم در برابر سانسور و آینده پروتکل‌های باز را کاوش کنید.",
+    "@id": "https://angor.blog/nostr-articles",
+    "url": "https://angor.blog/nostr-articles", 
+    "name": "مقالات نوستر | وبلاگ آنگور",
+    "description": "مقالات منتشر شده توسط آنگور در شبکه نوستر. کاوش در رسانه‌های اجتماعی غیرمتمرکز و ارتباطات مقاوم در برابر سانسور.",
     "isPartOf": {
       "@type": "WebSite",
       "url": "https://angor.blog",
-      "name": "وبلاگ Angor"
+      "name": "وبلاگ آنگور"
     }
   }}
 >
@@ -62,101 +33,14 @@ const nostrArticles = [
           <span class="text-[#086c81] dark:text-[#cbdde1] font-normal">نوستر</span>
         </h1>
         <p class="mt-6 text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
-          مقالات منتشر شده توسط Angor در شبکه نوستر نیز در اینجا به اشتراک گذاشته می‌شوند. رسانه‌های اجتماعی غیرمتمرکز، ارتباطات مقاوم در برابر سانسور و آینده پروتکل‌های باز را کاوش کنید.
+          مقالات منتشر شده توسط آنگور در شبکه نوستر. کاوش در رسانه‌های اجتماعی غیرمتمرکز، ارتباطات مقاوم در برابر سانسور و آینده پروتکل‌های باز.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Nostr Articles Grid -->
-  <section class="py-16 bg-neutral-50 dark:bg-neutral-900 rounded-2xl">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
-        {nostrArticles.map((article) => (
-          <article class="group bg-white dark:bg-neutral-800 rounded-2xl shadow-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300">
-            <!-- Article Header -->
-            <div class="p-8 pb-6">
-              <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center space-x-2 space-x-reverse">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#086c81]/10 text-[#086c81] dark:bg-[#cbdde1]/10 dark:text-[#cbdde1]">
-                    نوستر
-                  </span>
-                  <span class="text-sm text-neutral-500 dark:text-neutral-400">
-                    خواندن {article.readTime}
-                  </span>
-                </div>
-                <time class="text-sm text-neutral-500 dark:text-neutral-400">
-                  {new Date(article.publishedAt).toLocaleDateString("fa-IR", { 
-                    year: "numeric", 
-                    month: "short", 
-                    day: "numeric" 
-                  })}
-                </time>
-              </div>
-              
-              <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4 group-hover:text-[#086c81] dark:group-hover:text-[#cbdde1] transition-colors duration-200">
-                {article.title}
-              </h2>
-              
-              <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
-                {article.description}
-              </p>
-
-              <!-- Tags -->
-              <div class="flex flex-wrap gap-2 mb-6">
-                {article.tags.map((tag) => (
-                  <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-neutral-100 text-neutral-700 dark:bg-neutral-700 dark:text-neutral-300">
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <!-- Nostr Metadata -->
-            <div class="px-8 py-6 bg-neutral-50 dark:bg-neutral-800/50 border-t border-neutral-200 dark:border-neutral-700">
-              <div class="space-y-3">
-                <!-- Author -->
-                <div class="flex items-center justify-between">
-                  <span class="text-sm text-neutral-600 dark:text-neutral-400">نویسنده:</span>
-                  <span class="text-sm font-medium text-neutral-900 dark:text-white">{article.author}</span>
-                </div>
-                
-                <!-- Nostr Event ID -->
-                <div class="flex items-center justify-between">
-                  <span class="text-sm text-neutral-600 dark:text-neutral-400">شناسه رویداد:</span>
-                  <code class="text-xs font-mono text-[#086c81] dark:text-[#cbdde1] bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">
-                    {article.eventId}
-                  </code>
-                </div>
-                
-                <!-- Relays -->
-                <div class="flex flex-col space-y-1">
-                  <span class="text-sm text-neutral-600 dark:text-neutral-400">منتشر شده در رله‌ها:</span>
-                  <div class="flex flex-wrap gap-1">
-                    {article.relays.map((relay) => (
-                      <code class="text-xs font-mono text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">
-                        {relay}
-                      </code>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Read on Nostr Button -->
-              <div class="mt-6">
-                <button class="w-full inline-flex items-center justify-center px-4 py-2 bg-[#086c81] hover:bg-[#022229] text-white text-sm font-medium rounded-lg transition-colors duration-200">
-                  <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                  </svg>
-                  مطالعه در نوستر
-                </button>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
+  <!-- Client-side Nostr Articles Component -->
+  <NostrArticlesClient />
 
   <!-- About Nostr Section -->
   <section class="py-16">
@@ -166,9 +50,9 @@ const nostrArticles = [
           نوستر چیست؟
         </h2>
         <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-8">
-          نوستر (یادداشت‌ها و سایر چیزهای منتقل شده توسط رله‌ها) یک پروتکل ساده و باز است که 
-          یک شبکه اجتماعی واقعاً مقاوم در برابر سانسور و جهانی را ممکن می‌سازد. این مقالات در ابتدا توسط 
-          Angor در شبکه نوستر منتشر شده و برای دسترسی گسترده‌تر در اینجا نیز به اشتراک گذاشته شده‌اند.
+          نوستر (یادداشت‌ها و چیزهای دیگر منتقل شده توسط رله‌ها) یک پروتکل ساده و باز است که 
+          یک شبکه اجتماعی واقعاً مقاوم در برابر سانسور و جهانی را امکان‌پذیر می‌کند. این مقالات در اصل توسط 
+          آنگور در شبکه نوستر منتشر شده‌اند و همچنین برای دسترسی گسترده‌تر در اینجا به اشتراک گذاشته شده‌اند.
         </p>
         <div class="flex items-center justify-center gap-x-6">
           <a 
@@ -177,12 +61,13 @@ const nostrArticles = [
             rel="noopener noreferrer"
             class="inline-flex items-center px-6 py-3 bg-[#086c81] hover:bg-[#022229] text-white text-sm font-medium rounded-lg transition-colors duration-200"
           >
-            درباره نوستر بیشتر بدانید
-            <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            بیشتر درباره نوستر بدانید
+            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
             </svg>
           </a>
         </div>
-      </div>    </div>
+      </div>
+    </div>
   </section>
 </MainLayout>

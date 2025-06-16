@@ -1,140 +1,141 @@
 ---
-title: How to Raise Funds Using Angor
-description: 'Angor is a decentralized crowdfunding platform on Bitcoin, offering secure fund management and direct investor engagement for transparent project funding.'
-author: 'Angor Team'
-role: 'Development Team'
+title: Comment Lever des Fonds en Utilisant Angor
+description: 'Angor est une plateforme de financement participatif décentralisée sur Bitcoin, offrant une gestion sécurisée des fonds et un engagement direct avec les investisseurs pour un financement de projet transparent.'
+author: 'Équipe Angor'
+role: 'Équipe de développement'
 authorImage: ""
-authorImageAlt: "Angor Team member"
+authorImageAlt: "Membre de l'équipe Angor"
 pubDate: 2024-06-17
 cardImage: "@/images/how-to-raise-funds.webp"
-cardImageAlt: "How to raise funds using Angor platform"
+cardImageAlt: "Comment lever des fonds en utilisant la plateforme Angor"
 readTime: 7
-tags: [Bitcoin, Technology, Education]
+tags: [Bitcoin, Technologie, Éducation]
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
 ---
-### Raise Funds Securely with Angor:  Step-by-Step Guide
 
-Angor is a decentralized crowdfunding platform built on Bitcoin and uses Nostr for enhanced security and transparency. It allows founders to raise funds for their projects while maintaining control over the funds and fostering direct communication with investors. Here’s a step-by-step guide on how to raise funds using Angor.
+### Lever des Fonds en Toute Sécurité avec Angor : Guide Étape par Étape
 
-### Create a Wallet
+Angor est une plateforme de financement participatif décentralisée construite sur Bitcoin et utilise Nostr pour une sécurité et une transparence accrues. Elle permet aux fondateurs de lever des fonds pour leurs projets tout en maintenant le contrôle sur les fonds et en favorisant la communication directe avec les investisseurs. Voici un guide étape par étape sur comment lever des fonds en utilisant Angor.
 
-Before you can start raising funds, you need to set up a digital wallet on Angor. If you don’t have a wallet yet, create a wallet to use Angor. Follow the on-screen instructions to create your wallet.
+### Créer un Portefeuille
 
-- Navigate to the wallet creation section.
-- Click on "Create Wallet."
-- Angor will automatically set up the wallet for you.
-- Set a strong password to protect your wallet.
+Avant de pouvoir commencer à lever des fonds, vous devez configurer un portefeuille numérique sur Angor. Si vous n'avez pas encore de portefeuille, créez un portefeuille pour utiliser Angor. Suivez les instructions à l'écran pour créer votre portefeuille.
 
-- **Back Up Recovery Phrases**: You’ll be given a set of recovery phrases. Store these securely, as they are essential for accessing your wallet if you forget your password.
+- Naviguez vers la section de création de portefeuille.
+- Cliquez sur "Créer un Portefeuille."
+- Angor configurera automatiquement le portefeuille pour vous.
+- Définissez un mot de passe fort pour protéger votre portefeuille.
 
-  ![Wallet after creation](./assets/wallet-intro.svg)
+- **Sauvegarder les Phrases de Récupération** : Vous recevrez un ensemble de phrases de récupération. Stockez-les en sécurité, car elles sont essentielles pour accéder à votre portefeuille si vous oubliez votre mot de passe.
 
-### Recovering a Wallet
+  ![Portefeuille après création](./assets/wallet-intro.svg)
 
-If you already have a wallet and need to recover it, follow these steps:
+### Récupérer un Portefeuille
 
-- Navigate to the Wallet Section.
-- Click on "Recover Wallet."
-- Enter Recovery Details: Paste your wallet words in the provided field.
-  Optionally, enter an extra word if you used one during the creation of your wallet.
-- Set a strong password for your recovered wallet.
-- Confirm Backup: Ensure you have backed up your wallet words and passphrase securely.
-  Check the box confirming you have backed up your wallet words and passphrase.
-- Complete Recovery:
-  Click on "Create Wallet" to complete the recovery process. Your wallet will be restored with the funds and transaction history intact.
+Si vous avez déjà un portefeuille et devez le récupérer, suivez ces étapes :
 
-  ![Wallet after creation](./assets/wallet-after-creation.svg)
+- Naviguez vers la Section Portefeuille.
+- Cliquez sur "Récupérer le Portefeuille."
+- Entrez les Détails de Récupération : Collez vos mots de portefeuille dans le champ fourni.
+  Optionnellement, entrez un mot supplémentaire si vous en avez utilisé un lors de la création de votre portefeuille.
+- Définissez un mot de passe fort pour votre portefeuille récupéré.
+- Confirmer la Sauvegarde : Assurez-vous d'avoir sauvegardé vos mots de portefeuille et votre phrase secrète en sécurité.
+  Cochez la case confirmant que vous avez sauvegardé vos mots de portefeuille et votre phrase secrète.
+- Compléter la Récupération :
+  Cliquez sur "Créer un Portefeuille" pour compléter le processus de récupération. Votre portefeuille sera restauré avec les fonds et l'historique des transactions intacts.
 
-### Create a Project
+  ![Portefeuille après création](./assets/wallet-after-creation.svg)
 
-Once your wallet is set up, you can create a project to start raising funds. Here are the steps involved, illustrated with images of the Angor platform interface.
+### Créer un Projet
 
-### Step 1: Fill in Project Metadata
+Une fois votre portefeuille configuré, vous pouvez créer un projet pour commencer à lever des fonds. Voici les étapes impliquées, illustrées avec des images de l'interface de la plateforme Angor.
 
-- **Navigate to the "Create Project" Section**: Navigate to the 'Founder' section and click on 'Create Project'.
+### Étape 1 : Remplir les Métadonnées du Projet
 
-- **Enter Project Metadata**:
-  - **Project Name**: Enter a clear and descriptive name for your project.
-  - **About**: Provide detailed information about your project, including its objectives and vision.
-  - **Project Website**: Enter the URL of your project’s website, if available.
-  - **Banner**: Enter the URL of your project’s banner image to make your project page visually appealing.
-  - **Nip 05 and Nip 57 (zaps)**: Fill these fields with the relevant information if applicable. Zaps are small, voluntary donations that supporters can give to your project. [Learn more about zaps](https://bitcoiner.guide/zap/)
-  - **Image**: Enter the URL of your project’s reference image.
+- **Naviguez vers la Section "Créer un Projet"** : Naviguez vers la section 'Fondateur' et cliquez sur 'Créer un Projet'.
 
-    ![Project Metadata](./assets/project-metadata.svg)
+- **Entrez les Métadonnées du Projet** :
+  - **Nom du Projet** : Entrez un nom clair et descriptif pour votre projet.
+  - **À Propos** : Fournissez des informations détaillées sur votre projet, incluant ses objectifs et sa vision.
+  - **Site Web du Projet** : Entrez l'URL du site web de votre projet, si disponible.
+  - **Bannière** : Entrez l'URL de l'image de bannière de votre projet pour rendre votre page de projet visuellement attrayante.
+  - **Nip 05 et Nip 57 (zaps)** : Remplissez ces champs avec les informations pertinentes si applicable. Les zaps sont de petits dons volontaires que les supporters peuvent donner à votre projet. [En savoir plus sur les zaps](https://bitcoiner.guide/zap/)
+  - **Image** : Entrez l'URL de l'image de référence de votre projet.
 
-  - Click "Next" to proceed to the next step.
+    ![Métadonnées du Projet](./assets/project-metadata.svg)
 
-### Step 2: Provide Project Info
+  - Cliquez sur "Suivant" pour passer à l'étape suivante.
 
-- **Enter Project Identifier and Founder Key**: These fields will be auto-generated by Angor.
-- **Start Date and Expiry Date**: Set the start date and the expiry date for your project.
-- **Penalty Days**: Define the number of penalty days.
-- **Target Amount**: Specify the total amount of funding you aim to raise.
-- **Define Project Stages**:
-  - Allocate a percentage of the total funds to each stage.
-  - Set the date for each stage.
-  - Click "Next" to proceed to the next step.
+### Étape 2 : Fournir les Informations du Projet
 
-    ![Project Info](./assets/project-info.svg)
+- **Entrez l'Identifiant du Projet et la Clé du Fondateur** : Ces champs seront auto-générés par Angor.
+- **Date de Début et Date d'Expiration** : Définissez la date de début et la date d'expiration pour votre projet.
+- **Jours de Pénalité** : Définissez le nombre de jours de pénalité.
+- **Montant Cible** : Spécifiez le montant total de financement que vous visez à lever.
+- **Définir les Étapes du Projet** :
+  - Allouez un pourcentage du total des fonds à chaque étape.
+  - Définissez la date pour chaque étape.
+  - Cliquez sur "Suivant" pour passer à l'étape suivante.
 
-### Step 3: On-Chain Confirmation
+    ![Informations du Projet](./assets/project-info.svg)
 
-- **Review Project Details**: Review all the details of your project.
-- **Confirm Project Creation**: Once all the information is verified, click on "Submit" to finalize the creation of your project on the blockchain.
+### Étape 3 : Confirmation On-Chain
 
-    ![On-Chain Confirmation](./assets/on-chain.svg)
+- **Examinez les Détails du Projet** : Examinez tous les détails de votre projet.
+- **Confirmez la Création du Projet** : Une fois toutes les informations vérifiées, cliquez sur "Soumettre" pour finaliser la création de votre projet sur la blockchain.
+
+    ![Confirmation On-Chain](./assets/on-chain.svg)
 
 
-### Proceeding to the Next Section
-After filling out all the required information in the Project Info section, click the "Next" button to move on to the On Chain section, where you will define blockchain-related parameters for your project.
+### Passer à la Section Suivante
+Après avoir rempli toutes les informations requises dans la section Informations du Projet, cliquez sur le bouton "Suivant" pour passer à la section On Chain, où vous définirez les paramètres liés à la blockchain pour votre projet.
 
-![Example Project View](./assets/view-project.svg)
+![Exemple Vue du Projet](./assets/view-project.svg)
 
-### Post Project Updates on Nostr
+### Publier des Mises à Jour du Projet sur Nostr
 
-- Export the private key from Angor.
-- Import the private key into a Nostr client.
-- Post updates on project progress and milestone completion on Nostr.
-- Ensure updates are clear and informative for investors.
+- Exportez la clé privée depuis Angor.
+- Importez la clé privée dans un client Nostr.
+- Publiez des mises à jour sur les progrès du projet et l'achèvement des jalons sur Nostr.
+- Assurez-vous que les mises à jour sont claires et informatives pour les investisseurs.
 
-### Approving Investment Requests
-- Once your project is live on Angor, you may start receiving investment requests from potential investors.
-- Review Requests: Navigate to the "Actions" section in your project dashboard to view all pending signatures.
+### Approuver les Demandes d'Investissement
+- Une fois votre projet en ligne sur Angor, vous pouvez commencer à recevoir des demandes d'investissement de la part d'investisseurs potentiels.
+- Examinez les Demandes : Naviguez vers la section "Actions" dans votre tableau de bord de projet pour voir toutes les signatures en attente.
 
-  ![Approve signature tab](./assets/approve-signature-tab.svg)
+  ![Onglet d'approbation de signature](./assets/approve-signature-tab.svg)
 
-- Approve Signatures: Approve the request through Angor. This action confirms acceptance of the investor’s contribution to your project.
+- Approuvez les Signatures : Approuvez la demande via Angor. Cette action confirme l'acceptation de la contribution de l'investisseur à votre projet.
 
-  ![Approving investment by founder](./assets/approving-investment.svg)
+  ![Approbation d'investissement par le fondateur](./assets/approving-investment.svg)
 
-### Spend Funds for Milestones
+### Dépenser les Fonds pour les Jalons
 
-- As a founder, once a milestone is reached, sign the transaction to spend the funds for that milestone.
-- Ensure the spending aligns with the milestone requirements and project goals.
+- En tant que fondateur, une fois qu'un jalon est atteint, signez la transaction pour dépenser les fonds pour ce jalon.
+- Assurez-vous que la dépense s'aligne avec les exigences du jalon et les objectifs du projet.
 
-  ![Founder stage funds claim](./assets/founder-stage-claim.svg)
+  ![Réclamation des fonds d'étape par le fondateur](./assets/founder-stage-claim.svg)
 
-### Claiming Funds 
-Easily monitor project progress, release milestone funds, and handle penalties directly from your Angor dashboard.
+### Réclamer les Fonds 
+Surveillez facilement les progrès du projet, libérez les fonds des jalons, et gérez les pénalités directement depuis votre tableau de bord Angor.
 
-#### 1. Monitor Project Progress
+#### 1. Surveiller les Progrès du Projet
 
-- Regularly check the project updates on Angor.
-- Ensure that the milestones are being met as planned.
+- Vérifiez régulièrement les mises à jour du projet sur Angor.
+- Assurez-vous que les jalons sont atteints comme prévu.
 
-  ![Project stats](./assets/project-stats.svg)
+  ![Statistiques du projet](./assets/project-stats.svg)
 
-#### 2. Initiate Fund Release for Milestones
+#### 2. Initier la Libération des Fonds pour les Jalons
 
-- Once a milestone is reached, navigate to your project dashboard.
-- Find the milestone that has been achieved and click on the "Claim Funds" button.
-- Sign the transaction to release the funds for that milestone.
+- Une fois qu'un jalon est atteint, naviguez vers votre tableau de bord de projet.
+- Trouvez le jalon qui a été accompli et cliquez sur le bouton "Réclamer les Fonds".
+- Signez la transaction pour libérer les fonds pour ce jalon.
 
-#### 3. Regular Fund Claim Process:
+#### 3. Processus Régulier de Réclamation des Fonds :
 
-- Navigate to the "Funds" section in your project dashboard.
-- Click on the "Claim Funds" button for the available milestone funds.
-- Sign the transaction to transfer the funds to your wallet.
+- Naviguez vers la section "Fonds" dans votre tableau de bord de projet.
+- Cliquez sur le bouton "Réclamer les Fonds" pour les fonds de jalons disponibles.
+- Signez la transaction pour transférer les fonds vers votre portefeuille.
 
-By following these steps, you can effectively use Angor to raise funds for your project, ensuring a smooth and transparent process from start to finish.
+En suivant ces étapes, vous pouvez efficacement utiliser Angor pour lever des fonds pour votre projet, assurant un processus fluide et transparent du début à la fin.
