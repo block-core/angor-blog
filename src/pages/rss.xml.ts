@@ -35,8 +35,8 @@ export async function GET(context: APIContext) {
         <role>${post.data.role || ''}</role>
         <authorImage>${post.data.authorImage ? createImageUrl(post.data.authorImage.src) : ''}</authorImage>
         <authorImageAlt>${post.data.authorImageAlt || ''}</authorImageAlt>
-        <cardImage>${post.data.cardImage ? createImageUrl(post.data.cardImage.src) : ''}</cardImage>
-        <cardImageAlt>${post.data.cardImageAlt || ''}</cardImageAlt>
+        <image>${post.data.cardImage ? createImageUrl(post.data.cardImage.src) : ''}</image>
+        <imageAlt>${post.data.cardImageAlt || ''}</imageAlt>
         <readTime>${post.data.readTime || 0}</readTime>
         <nostrPublicKey>${post.data.nostrPublicKey || ''}</nostrPublicKey>
       `,
