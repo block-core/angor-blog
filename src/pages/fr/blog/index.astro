@@ -61,10 +61,10 @@ const discoverPostsText = getTranslation("fr", "discover_posts");
     inLanguage: "fr",
   }}
 >
-  <section
+ <section
     class="mx-auto max-w-[85rem] space-y-8 px-4 pt-16 sm:px-6 lg:px-8 2xl:max-w-full"
   >
-    <!--Page header-->
+    {/* Page header */}
     <div class="mx-auto max-w-3xl text-center sm:text-center">
       <h1
         class="block text-4xl font-bold tracking-tight text-balance text-neutral-800 md:text-5xl lg:text-6xl dark:text-neutral-200"
@@ -78,8 +78,9 @@ const discoverPostsText = getTranslation("fr", "discover_posts");
         {subTitle}
       </p>
     </div>
-  </section>  {/* Latest 4 Posts Slideshow */}
-  {latestPosts.length > 0 && (
+  </section>
+  {/* All Posts Grid */}
+  {blogPosts.length > 0 && (
     <section
       class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
     >
@@ -91,28 +92,10 @@ const discoverPostsText = getTranslation("fr", "discover_posts");
           {discoverPostsText}
         </p>
       </div>
-        {/* Two-column layout: Slideshow + Sidebar */}
-      <div class="w-full">
-        {/* Slideshow - Full width */}
-        <BlogSlideshow blogPosts={latestPosts} locale="fr" />
-      </div>
-    </section>
-  )}
-  {/* All Posts Grid */}
-  {allPosts.length > 0 && (
-    <section
-      class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
-    >
-      <div class="mb-8">
-        <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 lg:text-3xl">
-          {moreArticlesText}
-        </h2>
-      </div>
-      
-      {/* 3-Column Responsive Grid */}
+        {/* 3-Column Responsive Grid */}
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {allPosts.map((blogEntry) => (
-          <BlogCardProfessional blogEntry={blogEntry} locale="fr" />
+        {blogPosts.map((blogEntry) => (
+          <BlogCardProfessional blogEntry={blogEntry} locale="en" />
         ))}
       </div>
     </section>
@@ -125,10 +108,10 @@ const discoverPostsText = getTranslation("fr", "discover_posts");
     >
       <div class="text-center py-12">
         <h3 class="text-2xl font-semibold text-neutral-800 dark:text-neutral-200">
-          Bientôt disponible
+          Coming Soon
         </h3>
         <p class="mt-3 text-neutral-600 dark:text-neutral-400">
-          Nous travaillons sur l'ajout de plus de contenu en français. Restez à l'écoute pour les mises à jour.
+          We're working on adding more content. Stay tuned for updates.
         </p>
       </div>
     </section>

@@ -62,7 +62,7 @@ const discoverPostsText = getTranslation("ar", "discover_posts");
     inLanguage: "ar-SA",
   }}
 >
-  <section
+>  <section
     class="mx-auto max-w-[85rem] space-y-8 px-4 pt-16 sm:px-6 lg:px-8 2xl:max-w-full"
   >
     {/* Page header */}
@@ -79,8 +79,9 @@ const discoverPostsText = getTranslation("ar", "discover_posts");
         {subTitle}
       </p>
     </div>
-  </section>  {/* Featured Content Section - Half width slideshow with sidebar */}
-  {latestPosts.length > 0 && (
+  </section>
+  {/* All Posts Grid */}
+  {blogPosts.length > 0 && (
     <section
       class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
     >
@@ -92,28 +93,9 @@ const discoverPostsText = getTranslation("ar", "discover_posts");
           {discoverPostsText}
         </p>
       </div>
-        {/* Two-column layout: Slideshow + Sidebar */}
-      <div class="w-full">
-        {/* Slideshow - Full width */}
-        <BlogSlideshow blogPosts={latestPosts} locale="ar" />
-      </div>
-    </section>
-  )}
-
-  {/* All Posts Grid */}
-  {allPosts.length > 0 && (
-    <section
-      class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
-    >
-      <div class="mb-8">
-        <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 lg:text-3xl">
-          {moreArticlesText}
-        </h2>
-      </div>
-      
-      {/* 3-Column Responsive Grid */}
+        {/* 3-Column Responsive Grid */}
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {allPosts.map((blogEntry) => (
+        {blogPosts.map((blogEntry) => (
           <BlogCardProfessional blogEntry={blogEntry} locale="ar" />
         ))}
       </div>
@@ -127,10 +109,10 @@ const discoverPostsText = getTranslation("ar", "discover_posts");
     >
       <div class="text-center py-12">
         <h3 class="text-2xl font-semibold text-neutral-800 dark:text-neutral-200">
-          قريباً
+          به‌زودی
         </h3>
         <p class="mt-3 text-neutral-600 dark:text-neutral-400">
-          نعمل على إضافة المزيد من المحتوى باللغة العربية. تابعونا للحصول على التحديثات.
+          ما در حال اضافه کردن محتوای بیشتری به زبان فارسی هستیم. برای دریافت به‌روزرسانی‌ها با ما همراه باشید.
         </p>
       </div>
     </section>
