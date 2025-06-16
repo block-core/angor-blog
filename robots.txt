@@ -16,4 +16,4 @@ Crawl-delay: 2
 User-agent: *
 Disallow: /
 
-Sitemap: https://angor.io/sitemap-index.xml
+Sitemap: https://blog.angor.io/sitemap-index.xml
