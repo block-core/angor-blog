@@ -111,9 +111,13 @@ const ogTitle = `${post.data.title} | مدونة | ${SITE.title}`;
         >
           {
             post.data.tags?.map((tag: string) => (
-              <span class="inline-flex items-center gap-x-1.5 rounded-lg bg-neutral-400/30 px-3 py-1.5 text-xs font-medium text-neutral-700 outline-hidden focus:outline-hidden focus-visible:ring-3 focus-visible:outline-hidden dark:bg-neutral-700/60 dark:text-neutral-300">
-                {capitalize(tag)}
-              </span>
+              <a 
+                href={`/ar/blog/tag/${encodeURIComponent(tag)}`}
+                class="inline-flex items-center gap-x-1.5 rounded-lg bg-neutral-400/30 px-3 py-1.5 text-xs font-medium text-neutral-700 outline-hidden focus:outline-hidden focus-visible:ring-3 focus-visible:outline-hidden dark:bg-neutral-700/60 dark:text-neutral-300 transition-colors duration-200 hover:bg-cyan-50 hover:text-cyan-600 dark:hover:bg-cyan-900/20 dark:hover:text-cyan-400"
+                title={`عرض المقالات حول ${tag}`}
+              >
+                #{capitalize(tag)}
+              </a>
             ))
           }
         </div>

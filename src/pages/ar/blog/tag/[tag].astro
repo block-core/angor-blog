@@ -1,0 +1,125 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import MainLayout from "@/layouts/MainLayout.astro";
+import BlogCardProfessional from "@components/ui/cards/BlogCardProfessional.astro";
+import { SITE } from "@data/constants";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const blogPosts = await getCollection("blog", ({ id }) => id.startsWith("ar/"));
+  
+  // Get all unique tags
+  const allTags = new Set<string>();
+  blogPosts.forEach(post => {
+    if (post.data.tags) {
+      post.data.tags.forEach((tag: string) => allTags.add(tag));
+    }
+  });
+
+  return Array.from(allTags).map(tag => ({
+    params: { tag },
+    props: { 
+      posts: blogPosts.filter(post => 
+        post.data.tags && post.data.tags.includes(tag)
+      ),
+      tag
+    }
+  }));
+};
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+  tag: string;
+}
+
+const { posts, tag } = Astro.props as Props;
+
+const pageTitle = `المقالات الموسومة "${tag}" | ${SITE.title}`;
+const metaDescription = `تصفح المقالات حول ${tag}. اكتشف رؤى ودروس حول ${tag} في مدونتنا.`;
+---
+
+<MainLayout
+  title={pageTitle}
+  customDescription={metaDescription}
+  lang="ar"
+  dir="rtl"
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `https://angor.blog/ar/blog/tag/${tag}`,
+    url: `https://angor.blog/ar/blog/tag/${tag}`,
+    name: pageTitle,
+    description: metaDescription,
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://angor.blog",
+      name: "Angor",
+      description: "Angor يقدم أدوات وخدمات التقنيات اللامركزية عالية المستوى لتلبية جميع احتياجات مشاريعك.",
+    },
+    inLanguage: "ar-SA",
+  }}
+>
+  <section class="mx-auto max-w-[85rem] space-y-8 px-4 pt-16 sm:px-6 lg:px-8 2xl:max-w-full">
+    <!-- Page header -->
+    <div class="mx-auto max-w-3xl text-center sm:text-center">
+      <!-- Back to Blog Link -->
+      <div class="mb-6">
+        <a 
+          href="/ar/blog" 
+          class="inline-flex items-center text-sm font-medium text-cyan-600 hover:text-cyan-500 dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors"
+        >
+          <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+          العودة للمدونة
+        </a>
+      </div>
+      
+      <h1 class="block text-4xl font-bold tracking-tight text-balance text-neutral-800 md:text-5xl lg:text-6xl dark:text-neutral-200">
+        المقالات الموسومة <span class="text-cyan-600 dark:text-cyan-400">#{tag}</span>
+      </h1>
+      
+      <p class="mt-4 text-lg text-pretty text-neutral-600 dark:text-neutral-400">
+        {posts.length} {posts.length === 1 ? 'مقالة' : 'مقالات'} حول {tag}
+      </p>
+    </div>
+  </section>
+
+  <!-- Posts Grid -->
+  {posts.length > 0 && (
+    <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <BlogCardProfessional blogEntry={post} locale="ar" />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Empty State -->
+  {posts.length === 0 && (
+    <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
+      <div class="text-center py-12">
+        <div class="mb-6">
+          <div class="mx-auto w-24 h-24 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center">
+            <svg class="w-12 h-12 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+          </div>
+        </div>
+        <h3 class="text-2xl font-semibold text-neutral-800 dark:text-neutral-200 mb-3">
+          لا توجد مقالات للوسم "{tag}"
+        </h3>
+        <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+          لم نعثر على أي مقالات بالوسم "{tag}". جرب تصفح مواضيع أخرى أو عد للمدونة الرئيسية.
+        </p>
+        <a 
+          href="/ar/blog"
+          class="inline-flex items-center justify-center px-6 py-3 bg-cyan-600 text-white font-medium rounded-lg hover:bg-cyan-700 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+        >
+          تصفح جميع المقالات
+        </a>
+      </div>
+    </section>
+  )}
+</MainLayout>
