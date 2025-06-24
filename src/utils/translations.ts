@@ -120,6 +120,54 @@ export function getTranslation(locale: string | undefined, key: string): string 
       "fr": "Aucun article trouvé pour ce tag.",
       "ar": "لم يتم العثور على مقالات لهذا التاغ.",
       "fa": "هیچ نوشته‌ای برای این برچسب یافت نشد."
+    },
+    "search_placeholder": {
+      "en": "Search articles...",
+      "fr": "Rechercher des articles...",
+      "ar": "البحث في المقالات...",
+      "fa": "جستجو در مقالات..."
+    },
+    "search_no_results": {
+      "en": "No articles found",
+      "fr": "Aucun article trouvé",
+      "ar": "لم يتم العثور على مقالات",
+      "fa": "مقاله‌ای یافت نشد"
+    },
+    "search_results": {
+      "en": "Search Results",
+      "fr": "Résultats de recherche",
+      "ar": "نتائج البحث",
+      "fa": "نتایج جستجو"
+    },
+    "showing_results": {
+      "en": "Showing results for",
+      "fr": "Affichage des résultats pour",
+      "ar": "عرض النتائج لـ",
+      "fa": "نمایش نتایج برای"
+    },
+    "clear_search": {
+      "en": "Clear search",
+      "fr": "Effacer la recherche",
+      "ar": "مسح البحث",
+      "fa": "پاک کردن جستجو"
+    },
+    "searching": {
+      "en": "Searching...",
+      "fr": "Recherche en cours...",
+      "ar": "جاري البحث...",
+      "fa": "در حال جستجو..."
+    },
+    "results_count": {
+      "en": "results",
+      "fr": "résultats",
+      "ar": "نتائج",
+      "fa": "نتیجه"
+    },
+    "result_count": {
+      "en": "result",
+      "fr": "résultat",
+      "ar": "نتيجة",
+      "fa": "نتیجه"
     }
   };
 
@@ -155,6 +203,14 @@ export function getTranslations(locale: string) {
     post: getTranslation(locale, "post"),
     allPosts: getTranslation(locale, "allPosts"),
     backToBlog: getTranslation(locale, "backToBlog"),
-    noPostsFound: getTranslation(locale, "noPostsFound")
+    noPostsFound: getTranslation(locale, "noPostsFound"),
+    searchPlaceholder: getTranslation(locale, "search_placeholder"),
+    searchNoResults: getTranslation(locale, "search_no_results"),
+    searchResults: getTranslation(locale, "search_results"),
+    showingResults: getTranslation(locale, "showing_results"),
+    clearSearch: getTranslation(locale, "clear_search"),
+    searching: getTranslation(locale, "searching"),
+    resultsCount: getTranslation(locale, "results_count"),
+    resultCount: getTranslation(locale, "result_count")
   };
 }

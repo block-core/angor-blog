@@ -22,7 +22,7 @@ const blogPostUrl = generateBlogPostUrl(blogEntry, locale as SupportedLocale);
 const readText = getTranslation(locale, "read");
 ---
 
-<article class="group overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-neutral-700 dark:shadow-neutral-900/50 hover:scale-[1.02]">
+<article class="group overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-neutral-700 dark:shadow-neutral-900/50 hover:scale-[1.02]" data-blog-card>
   <a href={blogPostUrl} class="block" data-astro-prefetch>
     <!-- Image Container with 770x450 aspect ratio -->
     <div class="relative aspect-[770/450] overflow-hidden">
@@ -38,7 +38,7 @@ const readText = getTranslation(locale, "read");
         />
       )}      <!-- Date Badge -->
       <div class="absolute right-4 top-4 rtl:left-4 rtl:right-auto ltr:right-4 ltr:left-auto">
-        <span class="inline-block rounded-lg bg-black/70 px-3 py-1 text-sm font-medium text-white backdrop-blur-sm">
+        <span class="inline-block rounded-lg bg-black/70 px-3 py-1 text-sm font-medium text-white backdrop-blur-sm blog-date">
           {formatDate(blogEntry.data.pubDate)}
         </span>
       </div>
@@ -51,7 +51,7 @@ const readText = getTranslation(locale, "read");
       </h3>
       
       <!-- Description as summary -->
-      <p class="mb-3 sm:mb-4 line-clamp-3 text-sm text-neutral-600 dark:text-neutral-400">
+      <p class="mb-3 sm:mb-4 line-clamp-3 text-sm text-neutral-600 dark:text-neutral-400 blog-description">
         {blogEntry.data.description}
       </p>      
       
@@ -78,7 +78,7 @@ const readText = getTranslation(locale, "read");
               return (
                 <a 
                   href={tagUrl}
-                  class="inline-block rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600 transition-colors duration-200 hover:bg-cyan-50 hover:text-cyan-600 dark:bg-neutral-600 dark:text-neutral-300 dark:hover:bg-cyan-900/20 dark:hover:text-cyan-400"
+                  class="inline-block rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600 transition-colors duration-200 hover:bg-cyan-50 hover:text-cyan-600 dark:bg-neutral-600 dark:text-neutral-300 dark:hover:bg-cyan-900/20 dark:hover:text-cyan-400 blog-tag"
                   title={`View articles about ${tag}`}
                 >
                   #{tag}

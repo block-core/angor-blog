@@ -2,6 +2,7 @@
 // Import necessary components, modules and types
 import MainLayout from "@/layouts/MainLayout.astro";
 import BlogCardProfessional from "@components/ui/cards/BlogCardProfessional.astro";
+import BlogSearch from "@components/ui/search/BlogSearch.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { SITE } from "@data/constants";
@@ -70,6 +71,11 @@ const discoverPostsText = getTranslation("fr", "discover_posts");
       >
         {subTitle}
       </p>
+    </div>
+    
+    {/* Search Component */}
+    <div class="mx-auto max-w-3xl">
+      <BlogSearch locale="fr" />
     </div>
   </section>
   {/* All Posts Grid */}

@@ -1,0 +1,723 @@
+---
+import { getTranslation } from "@utils/translations";
+
+export interface Props {
+  locale: string;
+  className?: string;
+}
+
+const { locale, className = "" } = Astro.props;
+
+// Get search-specific translations
+const placeholderText = getTranslation(locale, "search_placeholder");
+const noResultsText = getTranslation(locale, "search_no_results");
+const clearSearchText = getTranslation(locale, "clear_search");
+const searchingText = getTranslation(locale, "searching");
+const showingResultsText = getTranslation(locale, "showing_results");
+const resultsText = getTranslation(locale, "results_count");
+const resultText = getTranslation(locale, "result_count");
+
+// Direction for RTL languages
+const isRTL = locale === 'ar' || locale === 'fa';
+const direction = isRTL ? 'rtl' : 'ltr';
+---
+
+<div 
+  class={`blog-search-widget relative w-full ${className}`} 
+  data-locale={locale}
+  dir={direction}
+>
+  <!-- Search Input Container -->
+  <div class="relative group">
+    <!-- Search Icon -->
+    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none rtl:right-0 rtl:left-auto rtl:pr-4 rtl:pl-0">
+      <svg 
+        class="h-5 w-5 text-neutral-400 dark:text-neutral-500 transition-colors group-focus-within:text-[#086c81] dark:group-focus-within:text-[#cbdde1]" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
+    </div>
+    
+    <!-- Search Input -->
+    <input
+      type="search"
+      id="blog-search-input"
+      class="block w-full pl-12 pr-12 py-4 text-lg border-2 border-neutral-200 dark:border-neutral-600 rounded-2xl 
+             bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100
+             placeholder-neutral-500 dark:placeholder-neutral-400
+             focus:ring-4 focus:ring-[#086c81]/20 focus:border-[#086c81] dark:focus:ring-[#cbdde1]/20 dark:focus:border-[#cbdde1]
+             transition-all duration-300 shadow-sm hover:shadow-md focus:shadow-xl
+             rtl:pr-12 rtl:pl-12 rtl:text-right"
+      placeholder={placeholderText}
+      autocomplete="off"
+      autocapitalize="off"
+      autocorrect="off"
+      spellcheck="false"
+      role="searchbox"
+      aria-label={placeholderText}
+      aria-describedby="search-instructions"
+    />
+    
+    <!-- Clear Button -->
+    <button
+      type="button"
+      id="clear-search"
+      class="absolute inset-y-0 right-0 pr-4 flex items-center opacity-0 transition-all duration-200
+             text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300
+             focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-[#086c81] focus:ring-offset-2 rounded-lg
+             rtl:left-0 rtl:right-auto rtl:pl-4 rtl:pr-0"
+      aria-label={clearSearchText}
+      tabindex="-1"
+    >
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Search Instructions (hidden, for screen readers) -->
+  <div id="search-instructions" class="sr-only">
+    {placeholderText}. Use at least 3 characters to search. Press Escape to close results.
+  </div>
+
+  <!-- Search Results Container -->
+  <div
+    id="search-results-container"
+    class="absolute top-full left-0 right-0 mt-3 hidden z-50"
+    role="listbox"
+    aria-label="Search results"
+  >
+    <div class="bg-white dark:bg-neutral-800 border-2 border-neutral-200 dark:border-neutral-700
+                rounded-2xl shadow-2xl max-h-[70vh] overflow-hidden backdrop-blur-sm
+                animate-in slide-in-from-top-2 duration-300">
+      
+      <!-- Loading State -->
+      <div id="search-loading" class="hidden p-8 text-center">
+        <div class="inline-flex items-center justify-center">
+          <div class="animate-spin rounded-full h-6 w-6 border-2 border-[#086c81] border-t-transparent dark:border-[#cbdde1]"></div>
+          <span class="ml-3 text-neutral-600 dark:text-neutral-400 font-medium">{searchingText}</span>
+        </div>
+      </div>
+
+      <!-- Search Results Header -->
+      <div id="search-header" class="hidden border-b border-neutral-200 dark:border-neutral-700 px-6 py-4 bg-neutral-50 dark:bg-neutral-700/50">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
+            <span id="results-count" class="font-semibold"></span>
+            <span id="results-text"></span>
+            <span id="search-query" class="font-medium text-neutral-800 dark:text-neutral-200"></span>
+          </p>
+          <button
+            id="close-search"
+            class="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors"
+            aria-label="Close search results"
+          >
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Results List -->
+      <div 
+        id="search-results-list" 
+        class="max-h-96 overflow-y-auto scroll-smooth"
+        role="group"
+        aria-label="Search results list"
+      >
+        <!-- Results will be populated by JavaScript -->
+      </div>
+
+      <!-- No Results -->
+      <div id="no-results" class="hidden p-8 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 text-neutral-300 dark:text-neutral-600">
+          <svg fill="currentColor" viewBox="0 0 24 24" class="w-full h-full">
+            <path d="M15.5 14h-.79l-.28-.27A6.5 6.5 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            <path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z" opacity="0.3"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-200 mb-2">
+          {noResultsText}
+        </h3>
+        <p class="text-neutral-600 dark:text-neutral-400 text-sm">
+          Try adjusting your search terms or browse our categories
+        </p>
+      </div>
+
+      <!-- Quick Search Tips (shown when no query) -->
+      <div id="search-tips" class="hidden p-6 border-t border-neutral-200 dark:border-neutral-700">
+        <h4 class="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mb-3">
+          Search Tips:
+        </h4>
+        <ul class="text-sm text-neutral-600 dark:text-neutral-400 space-y-1">
+          <li>• Use specific keywords for better results</li>
+          <li>• Try searching by topic or technology</li>
+          <li>• Search works in multiple languages</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Overlay -->
+  <div 
+    id="search-overlay" 
+    class="hidden fixed inset-0 bg-black/25 backdrop-blur-sm z-40"
+    aria-hidden="true"
+  ></div>
+</div>
+
+<style>
+  .blog-search-widget {
+    /* Ensure proper z-index stacking */
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Custom scrollbar */
+  #search-results-list::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  #search-results-list::-webkit-scrollbar-track {
+    @apply bg-neutral-100 dark:bg-neutral-700 rounded-lg;
+  }
+
+  #search-results-list::-webkit-scrollbar-thumb {
+    @apply bg-neutral-300 dark:bg-neutral-600 rounded-lg;
+  }
+
+  #search-results-list::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-400 dark:bg-neutral-500;
+  }
+
+  /* Search result animations */
+  .search-result-item {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  .search-result-item:hover {
+    @apply bg-neutral-50 dark:bg-neutral-700/70 transform translate-x-1;
+  }
+
+  .search-result-item:focus {
+    @apply bg-[#086c81]/5 dark:bg-[#cbdde1]/5 outline-none ring-2 ring-[#086c81]/20 dark:ring-[#cbdde1]/20;
+  }
+
+  /* Highlight matching text */
+  .search-highlight, mark.search-highlight {
+    @apply bg-yellow-200 dark:bg-yellow-900/60 text-neutral-900 dark:text-neutral-100 px-1 rounded font-medium;
+  }
+
+  /* Animation utilities */
+  @keyframes slide-in-from-top {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .animate-in {
+    animation-fill-mode: both;
+  }
+
+  .slide-in-from-top-2 {
+    animation-name: slide-in-from-top;
+  }
+
+  /* Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Focus visible styles */
+  .blog-search-widget input:focus-visible {
+    @apply outline-none;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 640px) {
+    #search-results-container {
+      @apply left-4 right-4 mx-auto;
+    }
+    
+    .search-result-item {
+      @apply px-4 py-3;
+    }
+  }
+</style>
+
+<script define:vars={{ 
+  locale, 
+  placeholderText,
+  noResultsText,
+  clearSearchText,
+  searchingText,
+  showingResultsText,
+  resultsText,
+  resultText
+}}>
+  // Enhanced Blog Search with improved performance and accessibility
+  class EnhancedBlogSearch {
+    constructor() {
+      this.locale = locale;
+      this.translations = {
+        placeholderText,
+        noResultsText,
+        clearSearchText,
+        searchingText,
+        showingResultsText,
+        resultsText,
+        resultText
+      };
+      
+      this.searchInput = document.getElementById('blog-search-input');
+      this.searchContainer = document.getElementById('search-results-container');
+      this.searchResultsList = document.getElementById('search-results-list');
+      this.clearButton = document.getElementById('clear-search');
+      this.closeButton = document.getElementById('close-search');
+      this.searchOverlay = document.getElementById('search-overlay');
+      this.searchLoading = document.getElementById('search-loading');
+      this.searchHeader = document.getElementById('search-header');
+      this.noResults = document.getElementById('no-results');
+      this.searchTips = document.getElementById('search-tips');
+      
+      this.searchData = [];
+      this.currentResults = [];
+      this.selectedIndex = -1;
+      this.debounceTimer = null;
+      this.searchCache = new Map();
+      
+      this.init();
+    }
+
+    async init() {
+      await this.loadSearchData();
+      this.bindEvents();
+    }
+
+    async loadSearchData() {
+      try {
+        const response = await fetch(`/api/search-data.json?locale=${this.locale}`, {
+          headers: { 'Accept': 'application/json' }
+        });
+        
+        if (response.ok) {
+          this.searchData = await response.json();
+        } else {
+          this.extractSearchDataFromPage();
+        }
+      } catch (error) {
+        console.warn('Could not load search data, extracting from page:', error);
+        this.extractSearchDataFromPage();
+      }
+    }
+
+    extractSearchDataFromPage() {
+      const blogCards = document.querySelectorAll('[data-blog-card]');
+      this.searchData = Array.from(blogCards).map(card => {
+        const titleEl = card.querySelector('h3');
+        const descEl = card.querySelector('.blog-description');
+        const linkEl = card.querySelector('a');
+        const dateEl = card.querySelector('.blog-date');
+        const tagEls = card.querySelectorAll('.blog-tag');
+        
+        const title = titleEl?.textContent?.trim() || '';
+        const description = descEl?.textContent?.trim() || '';
+        const url = linkEl?.href || '';
+        const date = dateEl?.textContent?.trim() || '';
+        const tags = Array.from(tagEls).map(tag => tag.textContent?.trim().replace('#', '') || '').filter(Boolean);
+        
+        return {
+          title,
+          description,
+          url,
+          tags,
+          date,
+          content: `${title} ${description} ${tags.join(' ')}`
+        };
+      }).filter(item => item.title && item.url);
+    }
+
+    bindEvents() {
+      // Search input events
+      this.searchInput.addEventListener('input', this.handleInput.bind(this));
+      this.searchInput.addEventListener('focus', this.handleFocus.bind(this));
+      this.searchInput.addEventListener('keydown', this.handleKeydown.bind(this));
+      
+      // Clear and close buttons
+      this.clearButton.addEventListener('click', this.clearSearch.bind(this));
+      this.closeButton?.addEventListener('click', this.hideResults.bind(this));
+      
+      // Overlay and escape key
+      this.searchOverlay.addEventListener('click', this.hideResults.bind(this));
+      document.addEventListener('keydown', this.handleGlobalKeydown.bind(this));
+      
+      // Click outside to close
+      document.addEventListener('click', this.handleClickOutside.bind(this));
+      
+      // Prevent form submission
+      this.searchInput.closest('form')?.addEventListener('submit', (e) => e.preventDefault());
+    }
+
+    handleInput(e) {
+      const query = e.target.value.trim();
+      this.updateClearButton(query);
+      
+      clearTimeout(this.debounceTimer);
+      this.debounceTimer = setTimeout(() => {
+        this.performSearch(query);
+      }, 300);
+    }
+
+    handleFocus() {
+      const query = this.searchInput.value.trim();
+      if (query.length >= 3) {
+        this.showResults();
+      } else if (query.length === 0) {
+        this.showSearchTips();
+      }
+    }
+
+    handleKeydown(e) {
+      if (!this.isResultsVisible()) return;
+      
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          this.navigateResults(1);
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          this.navigateResults(-1);
+          break;
+        case 'Enter':
+          e.preventDefault();
+          this.selectResult();
+          break;
+        case 'Escape':
+          e.preventDefault();
+          this.hideResults();
+          break;
+      }
+    }
+
+    handleGlobalKeydown(e) {
+      if (e.key === 'Escape' && this.isResultsVisible()) {
+        this.hideResults();
+      }
+      
+      // Quick search shortcut (Ctrl/Cmd + K)
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        this.searchInput.focus();
+      }
+    }
+
+    handleClickOutside(e) {
+      if (!e.target.closest('.blog-search-widget')) {
+        this.hideResults();
+      }
+    }
+
+    async performSearch(query) {
+      if (query.length < 3) {
+        this.hideResults();
+        return;
+      }
+
+      // Check cache first
+      const cacheKey = query.toLowerCase();
+      if (this.searchCache.has(cacheKey)) {
+        const cachedResults = this.searchCache.get(cacheKey);
+        this.displayResults(query, cachedResults);
+        return;
+      }
+
+      this.showLoading();
+      
+      // Simulate API delay for better UX
+      await new Promise(resolve => setTimeout(resolve, 150));
+
+      const results = this.searchInData(query);
+      
+      // Cache results
+      this.searchCache.set(cacheKey, results);
+      
+      this.displayResults(query, results);
+    }
+
+    searchInData(query) {
+      const searchTerms = query.toLowerCase()
+        .split(/\s+/)
+        .filter(term => term.length > 0);
+      
+      return this.searchData
+        .map(item => this.scoreItem(item, searchTerms))
+        .filter(item => item.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10); // Limit to top 10 results for performance
+    }
+
+    scoreItem(item, searchTerms) {
+      let score = 0;
+      const content = item.content.toLowerCase();
+      const title = item.title.toLowerCase();
+      const description = item.description.toLowerCase();
+      
+      searchTerms.forEach(term => {
+        // Title matches (highest weight)
+        if (title.includes(term)) {
+          score += title.startsWith(term) ? 10 : 5;
+        }
+        
+        // Description matches
+        if (description.includes(term)) {
+          score += 3;
+        }
+        
+        // Tag matches
+        item.tags.forEach(tag => {
+          if (tag.toLowerCase().includes(term)) {
+            score += tag.toLowerCase() === term ? 8 : 4;
+          }
+        });
+        
+        // General content matches
+        if (content.includes(term)) {
+          score += 1;
+        }
+      });
+      
+      return { ...item, score };
+    }
+
+    displayResults(query, results) {
+      this.hideLoading();
+      this.currentResults = results;
+      this.selectedIndex = -1;
+      
+      if (results.length === 0) {
+        this.showNoResults();
+        return;
+      }
+
+      this.showResultsHeader(query, results.length);
+      this.renderResults(results, query);
+      this.showResults();
+    }
+
+    renderResults(results, query) {
+      const searchTerms = query.toLowerCase().split(/\s+/).filter(term => term.length > 0);
+      
+      this.searchResultsList.innerHTML = results.map((result, index) => 
+        this.createResultHTML(result, searchTerms, index)
+      ).join('');
+      
+      // Add click handlers
+      this.searchResultsList.querySelectorAll('.search-result-item').forEach((item, index) => {
+        item.addEventListener('click', () => this.selectResult(index));
+        item.addEventListener('mouseenter', () => this.setSelectedIndex(index));
+      });
+    }
+
+    createResultHTML(result, searchTerms, index) {
+      const highlightedTitle = this.highlightText(result.title, searchTerms);
+      const highlightedDescription = this.highlightText(result.description.substring(0, 120) + '...', searchTerms);
+      
+      const tagsHTML = result.tags.slice(0, 3).map(tag => 
+        `<span class="inline-block px-2 py-1 text-xs bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 rounded-full">#${tag}</span>`
+      ).join(' ');
+
+      return `
+        <div 
+          class="search-result-item block px-6 py-4 cursor-pointer border-b border-neutral-100 dark:border-neutral-700 last:border-b-0" 
+          role="option"
+          aria-selected="${index === this.selectedIndex}"
+          data-index="${index}"
+          data-url="${result.url}"
+        >
+          <div class="flex flex-col space-y-2">
+            <h4 class="text-base font-semibold text-neutral-900 dark:text-neutral-100 leading-tight">
+              ${highlightedTitle}
+            </h4>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              ${highlightedDescription}
+            </p>
+            ${result.tags.length > 0 ? `
+              <div class="flex flex-wrap gap-1 pt-1">
+                ${tagsHTML}
+              </div>
+            ` : ''}
+            ${result.date ? `
+              <div class="text-xs text-neutral-500 dark:text-neutral-500">
+                ${result.date}
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    highlightText(text, searchTerms) {
+      if (!searchTerms || searchTerms.length === 0) return text;
+      
+      let highlighted = text;
+      searchTerms.forEach(term => {
+        if (term.length < 2) return;
+        const regex = new RegExp(`(${this.escapeRegex(term)})`, 'gi');
+        highlighted = highlighted.replace(regex, '<mark class="search-highlight">$1</mark>');
+      });
+      
+      return highlighted;
+    }
+
+    escapeRegex(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    navigateResults(direction) {
+      const newIndex = this.selectedIndex + direction;
+      const maxIndex = this.currentResults.length - 1;
+      
+      if (newIndex >= 0 && newIndex <= maxIndex) {
+        this.setSelectedIndex(newIndex);
+      } else if (newIndex < 0) {
+        this.setSelectedIndex(maxIndex);
+      } else {
+        this.setSelectedIndex(0);
+      }
+    }
+
+    setSelectedIndex(index) {
+      // Remove previous selection
+      this.searchResultsList.querySelectorAll('.search-result-item').forEach((item, i) => {
+        item.setAttribute('aria-selected', 'false');
+        item.classList.toggle('bg-neutral-50', false);
+        item.classList.toggle('dark:bg-neutral-700/70', false);
+      });
+      
+      this.selectedIndex = index;
+      
+      // Add new selection
+      const selectedItem = this.searchResultsList.querySelector(`[data-index="${index}"]`);
+      if (selectedItem) {
+        selectedItem.setAttribute('aria-selected', 'true');
+        selectedItem.classList.add('bg-neutral-50', 'dark:bg-neutral-700/70');
+        selectedItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    selectResult(index = this.selectedIndex) {
+      if (index >= 0 && index < this.currentResults.length) {
+        const result = this.currentResults[index];
+        if (result && result.url) {
+          window.location.href = result.url;
+        }
+      }
+    }
+
+    updateClearButton(query) {
+      this.clearButton.style.opacity = query.length > 0 ? '1' : '0';
+      this.clearButton.style.pointerEvents = query.length > 0 ? 'auto' : 'none';
+      this.clearButton.tabIndex = query.length > 0 ? 0 : -1;
+    }
+
+    showLoading() {
+      this.searchLoading.classList.remove('hidden');
+      this.hideOtherStates();
+      this.showResults();
+    }
+
+    hideLoading() {
+      this.searchLoading.classList.add('hidden');
+    }
+
+    showNoResults() {
+      this.noResults.classList.remove('hidden');
+      this.hideOtherStates();
+      this.showResults();
+    }
+
+    showSearchTips() {
+      this.searchTips?.classList.remove('hidden');
+      this.hideOtherStates();
+      this.showResults();
+    }
+
+    showResultsHeader(query, count) {
+      this.searchHeader.classList.remove('hidden');
+      document.getElementById('results-count').textContent = count;
+      document.getElementById('results-text').textContent = 
+        count === 1 ? this.translations.resultText : this.translations.resultsText;
+      document.getElementById('search-query').textContent = `"${query}"`;
+    }
+
+    hideOtherStates() {
+      this.searchHeader.classList.add('hidden');
+      this.noResults.classList.add('hidden');
+      this.searchTips?.classList.add('hidden');
+      this.searchResultsList.innerHTML = '';
+    }
+
+    showResults() {
+      this.searchContainer.classList.remove('hidden');
+      this.searchOverlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      
+      // Focus management
+      this.searchContainer.setAttribute('aria-hidden', 'false');
+    }
+
+    hideResults() {
+      this.searchContainer.classList.add('hidden');
+      this.searchOverlay.classList.add('hidden');
+      document.body.style.overflow = '';
+      this.selectedIndex = -1;
+      
+      // Focus management
+      this.searchContainer.setAttribute('aria-hidden', 'true');
+    }
+
+    isResultsVisible() {
+      return !this.searchContainer.classList.contains('hidden');
+    }
+
+    clearSearch() {
+      this.searchInput.value = '';
+      this.updateClearButton('');
+      this.hideResults();
+      this.searchInput.focus();
+      
+      // Clear cache if needed
+      if (this.searchCache.size > 50) {
+        this.searchCache.clear();
+      }
+    }
+  }
+
+  // Initialize enhanced search when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      new EnhancedBlogSearch();
+    });
+  } else {
+    new EnhancedBlogSearch();
+  }
+</script>

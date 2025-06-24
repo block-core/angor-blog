@@ -18,6 +18,7 @@
     "dist",
     "src/components/ui/cards/CardInsight.astro",
     "src/components/ui/cards/CardSmall.astro",
-    "src/components/ui/cards/CardWide.astro"
+    "src/components/ui/cards/CardWide.astro",
+    "src/components/ui/search/BlogSearch.astro"
   ]
 }

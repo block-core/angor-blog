@@ -1,0 +1,478 @@
+---
+import { getTranslation } from "@utils/translations";
+
+export interface Props {
+  locale: string;
+}
+
+const { locale } = Astro.props;
+
+// Get search-specific translations
+const placeholderText = getTranslation(locale, "search_placeholder");
+const noResultsText = getTranslation(locale, "search_no_results");
+const clearSearchText = getTranslation(locale, "clear_search");
+const searchingText = getTranslation(locale, "searching");
+const showingResultsText = getTranslation(locale, "showing_results");
+const resultsText = getTranslation(locale, "results_count");
+const resultText = getTranslation(locale, "result_count");
+---
+
+<div class="blog-search-container relative w-full max-w-2xl mx-auto mb-8" data-locale={locale}>
+  <!-- Search Input -->
+  <div class="relative">
+    <div class="search-icon absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+      <svg class="h-5 w-5 text-neutral-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
+    </div>
+    
+    <input
+      type="text"
+      id="blog-search-input"
+      class="block w-full pl-12 pr-12 py-4 text-lg border border-neutral-300 dark:border-neutral-600 rounded-xl 
+             bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100
+             placeholder-neutral-500 dark:placeholder-neutral-400
+             focus:ring-2 focus:ring-[#086c81] focus:border-[#086c81] dark:focus:ring-[#cbdde1]
+             transition-all duration-200 shadow-sm hover:shadow-md focus:shadow-lg"
+      placeholder={placeholderText}
+      autocomplete="off"
+      spellcheck="false"
+    />
+    
+    <!-- Clear Button -->
+    <button
+      type="button"
+      id="clear-search"
+      class="clear-button absolute inset-y-0 right-0 pr-4 flex items-center opacity-0 transition-opacity duration-200
+             text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300"
+      aria-label={clearSearchText}
+    >
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Search Results Dropdown -->
+  <div
+    id="search-results"
+    class="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700
+           rounded-xl shadow-2xl z-50 hidden max-h-96 overflow-y-auto"
+  >
+    <!-- Loading State -->
+    <div id="search-loading" class="hidden p-6 text-center">
+      <div class="inline-flex items-center">
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-[#086c81]" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span class="text-neutral-600 dark:text-neutral-400">Searching...</span>
+      </div>
+    </div>
+
+    <!-- Search Results Header -->
+    <div id="search-header" class="hidden border-b border-neutral-200 dark:border-neutral-700 p-4">
+      <p class="text-sm text-neutral-600 dark:text-neutral-400">
+        <span id="results-count"></span> <span id="results-text"></span> <span id="search-query"></span>
+      </p>
+    </div>
+
+    <!-- Results List -->
+    <div id="search-results-list" class="py-2">
+      <!-- Results will be populated by JavaScript -->
+    </div>
+
+    <!-- No Results -->
+    <div id="no-results" class="hidden p-6 text-center">
+      <svg class="mx-auto h-12 w-12 text-neutral-400 dark:text-neutral-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 515.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 714 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <p class="text-neutral-600 dark:text-neutral-400">{noResultsText}</p>
+    </div>
+  </div>
+
+  <!-- Search Overlay removed for better UX -->
+</div>
+
+<style>
+  .blog-search-container {
+    position: relative;
+    z-index: 10;
+  }
+
+  #search-results::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  #search-results::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+    border-radius: 0.5rem;
+  }
+
+  [data-theme="dark"] #search-results::-webkit-scrollbar-track {
+    background-color: #374151;
+  }
+
+  #search-results::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 0.5rem;
+  }
+
+  #search-results::-webkit-scrollbar-thumb:hover {
+    background-color: #9ca3af;
+  }
+
+  [data-theme="dark"] #search-results::-webkit-scrollbar-thumb {
+    background-color: #4b5563;
+  }
+
+  [data-theme="dark"] #search-results::-webkit-scrollbar-thumb:hover {
+    background-color: #6b7280;
+  }
+
+  /* RTL Support */
+  [dir="rtl"] .blog-search-container input {
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+    text-align: right;
+  }
+
+  [dir="rtl"] .blog-search-container .search-icon {
+    left: auto !important;
+    right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 1rem !important;
+  }
+
+  [dir="rtl"] .blog-search-container .clear-button {
+    right: auto !important;
+    left: 0 !important;
+    padding-right: 0 !important;
+    padding-left: 1rem !important;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .search-result-item {
+    animation: slideDown 0.2s ease-out;
+  }
+
+  .search-result-item:hover {
+    background-color: #fafafa;
+  }
+
+  [data-theme="dark"] .search-result-item:hover {
+    background-color: #374151;
+  }
+
+  .search-highlight {
+    background-color: #fef08a;
+    font-weight: 600;
+  }
+
+  [data-theme="dark"] .search-highlight {
+    background-color: #451a03;
+  }
+</style>
+
+<script define:vars={{ 
+  locale, 
+  placeholderText,
+  noResultsText,
+  clearSearchText,
+  searchingText,
+  showingResultsText,
+  resultsText,
+  resultText
+}}>
+  class BlogSearch {
+    constructor(locale, translations) {
+      this.locale = locale;
+      this.translations = translations;
+      this.searchInput = document.getElementById('blog-search-input');
+      this.searchResults = document.getElementById('search-results');
+      this.searchResultsList = document.getElementById('search-results-list');
+      this.clearButton = document.getElementById('clear-search');
+      this.searchLoading = document.getElementById('search-loading');
+      this.searchHeader = document.getElementById('search-header');
+      this.noResults = document.getElementById('no-results');
+      this.searchData = [];
+      this.debounceTimer = null;
+      
+      this.init();
+    }
+
+    async init() {
+      await this.loadSearchData();
+      this.setupRTL();
+      this.bindEvents();
+    }
+
+    setupRTL() {
+      // Check if the current locale is RTL
+      const isRTL = this.locale === 'ar' || this.locale === 'fa';
+      
+      if (isRTL) {
+        const searchIcon = document.querySelector('.blog-search-container .search-icon');
+        const clearButton = document.querySelector('.blog-search-container .clear-button');
+        const searchInput = document.getElementById('blog-search-input');
+        
+        if (searchIcon) {
+          searchIcon.style.left = 'auto';
+          searchIcon.style.right = '0';
+          searchIcon.style.paddingLeft = '0';
+          searchIcon.style.paddingRight = '1rem';
+        }
+        
+        if (clearButton) {
+          clearButton.style.right = 'auto';
+          clearButton.style.left = '0';
+          clearButton.style.paddingRight = '0';
+          clearButton.style.paddingLeft = '1rem';
+        }
+        
+        if (searchInput) {
+          searchInput.style.paddingLeft = '3rem';
+          searchInput.style.paddingRight = '3rem';
+          searchInput.style.textAlign = 'right';
+          searchInput.style.direction = 'rtl';
+        }
+      }
+    }
+
+    async loadSearchData() {
+      try {
+        const response = await fetch(`/api/search-data/${this.locale}.json`);
+        if (response.ok) {
+          this.searchData = await response.json();
+        } else {
+          console.warn('API failed, extracting from page');
+          this.extractSearchDataFromPage();
+        }
+      } catch (error) {
+        console.warn('Could not load search data, extracting from page', error);
+        this.extractSearchDataFromPage();
+      }
+    }
+
+    extractSearchDataFromPage() {
+      const blogCards = document.querySelectorAll('[data-blog-card]');
+      
+      this.searchData = Array.from(blogCards).map(card => {
+        const title = card.querySelector('h3')?.textContent?.trim() || '';
+        const description = card.querySelector('.blog-description')?.textContent?.trim() || '';
+        const url = card.querySelector('a')?.href || '';
+        const tags = Array.from(card.querySelectorAll('.blog-tag')).map(tag => tag.textContent?.trim() || '');
+        const date = card.querySelector('.blog-date')?.textContent?.trim() || '';
+        
+        return {
+          title,
+          description,
+          url,
+          tags,
+          date,
+          content: `${title} ${description} ${tags.join(' ')}`
+        };
+      }).filter(item => item.title);
+    }
+
+    bindEvents() {
+      this.searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim();
+        this.updateClearButton(query);
+        
+        clearTimeout(this.debounceTimer);
+        this.debounceTimer = setTimeout(() => {
+          this.performSearch(query);
+        }, 300);
+      });
+
+      this.searchInput.addEventListener('focus', () => {
+        const query = this.searchInput.value.trim();
+        if (query.length >= 3) {
+          this.showResults();
+        }
+      });
+
+      this.clearButton.addEventListener('click', () => {
+        this.clearSearch();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          this.hideResults();
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.blog-search-container')) {
+          this.hideResults();
+        }
+      });
+    }
+
+    updateClearButton(query) {
+      if (query.length > 0) {
+        this.clearButton.style.opacity = '1';
+        this.clearButton.style.pointerEvents = 'auto';
+      } else {
+        this.clearButton.style.opacity = '0';
+        this.clearButton.style.pointerEvents = 'none';
+      }
+    }
+
+    async performSearch(query) {
+      if (query.length < 3) {
+        this.hideResults();
+        return;
+      }
+
+      this.showLoading();
+      
+      await new Promise(resolve => setTimeout(resolve, 200));
+
+      const results = this.searchInData(query);
+      this.displayResults(query, results);
+    }
+
+    searchInData(query) {
+      const searchTerms = query.toLowerCase().split(' ').filter(term => term.length > 0);
+      
+      return this.searchData.filter(item => {
+        const searchContent = item.content.toLowerCase();
+        return searchTerms.some(term => searchContent.includes(term));
+      }).map(item => {
+        const searchContent = item.content.toLowerCase();
+        let score = 0;
+        
+        searchTerms.forEach(term => {
+          if (item.title.toLowerCase().includes(term)) score += 3;
+          if (item.description.toLowerCase().includes(term)) score += 2;
+          if (item.tags.some(tag => tag.toLowerCase().includes(term))) score += 2;
+          if (searchContent.includes(term)) score += 1;
+        });
+        
+        return { ...item, score };
+      }).sort((a, b) => b.score - a.score);
+    }
+
+    displayResults(query, results) {
+      this.hideLoading();
+      
+      if (results.length === 0) {
+        this.showNoResults();
+        return;
+      }
+
+      this.showResultsHeader(query, results.length);
+      
+      this.searchResultsList.innerHTML = results.map(result => 
+        this.createResultHTML(result, query)
+      ).join('');
+      
+      this.showResults();
+    }
+
+    createResultHTML(result, query) {
+      const highlightedTitle = this.highlightText(result.title, query);
+      const highlightedDescription = this.highlightText(result.description, query);
+      const tagsHTML = result.tags.map(tag => 
+        `<span class="inline-block px-2 py-1 text-xs bg-white dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 rounded border border-neutral-200 dark:border-neutral-600">${tag}</span>`
+      ).join(' ');
+
+      return `
+        <a href="${result.url}" class="search-result-item block px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors duration-150">
+          <div class="flex flex-col space-y-1">
+            <h4 class="text-sm font-semibold text-neutral-900 dark:text-neutral-100 line-clamp-1">
+              ${highlightedTitle}
+            </h4>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2">
+              ${highlightedDescription}
+            </p>
+            ${result.tags.length > 0 ? `
+              <div class="flex flex-wrap gap-1 mt-2">
+                ${tagsHTML}
+              </div>
+            ` : ''}
+          </div>
+        </a>
+      `;
+    }
+
+    highlightText(text, query) {
+      if (!query || !text) return text;
+      
+      const searchTerms = query.toLowerCase().split(' ').filter(term => term.length > 0);
+      let highlightedText = text;
+      
+      searchTerms.forEach(term => {
+        const regex = new RegExp(`(${term})`, 'gi');
+        highlightedText = highlightedText.replace(regex, '<span class="search-highlight">$1</span>');
+      });
+      
+      return highlightedText;
+    }
+
+    showLoading() {
+      this.searchLoading.classList.remove('hidden');
+      this.searchHeader.classList.add('hidden');
+      this.searchResultsList.innerHTML = '';
+      this.noResults.classList.add('hidden');
+      this.showResults();
+    }
+
+    hideLoading() {
+      this.searchLoading.classList.add('hidden');
+    }
+
+    showNoResults() {
+      this.noResults.classList.remove('hidden');
+      this.searchHeader.classList.add('hidden');
+      this.searchResultsList.innerHTML = '';
+      this.showResults();
+    }
+
+    showResultsHeader(query, count) {
+      this.searchHeader.classList.remove('hidden');
+      document.getElementById('results-count').textContent = count;
+      document.getElementById('results-text').textContent = count === 1 ? resultText : resultsText;
+      document.getElementById('search-query').textContent = `"${query}"`;
+    }
+
+    showResults() {
+      this.searchResults.classList.remove('hidden');
+    }
+
+    hideResults() {
+      this.searchResults.classList.add('hidden');
+    }
+
+    clearSearch() {
+      this.searchInput.value = '';
+      this.updateClearButton('');
+      this.hideResults();
+      this.searchInput.focus();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    new BlogSearch(locale, {
+      placeholderText,
+      noResultsText,
+      clearSearchText,
+      searchingText,
+      showingResultsText,
+      resultsText,
+      resultText
+    });
+  });
+</script>
