@@ -10,7 +10,7 @@ cardImage: "@/images/keeping-promises-without-police.webp"
 cardImageAlt: "الحفاظ على الوعود بدون شرطة"
 readTime: 7
 tags: [بيتكوين]
-nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
+nostrPublicKey: 'npub1v67clmf4jrezn8hsz28434nc0y5fu65e5esws04djnl2kasxl5tskjmjjk'
 ---
 
 ## ضمان المشاركة العادلة في الإيرادات في نظام بلا دولة
