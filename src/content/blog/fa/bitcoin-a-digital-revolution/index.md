@@ -7,7 +7,7 @@ authorImage: ""
 authorImageAlt: "عضو تیم Angor"
 pubDate: 2024-05-12
 cardImage: "@/images/bitcoin-a-digital-revolution.webp"
-cardImageAlt: "تصویر انقلاب دیجیتال بیت‌کوین"
+cardImageAlt: "انقلاب دیجیتال بیت‌کوین"
 readTime: 4
 tags: [بیت-کوین, ارز-دیجیتال]
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'

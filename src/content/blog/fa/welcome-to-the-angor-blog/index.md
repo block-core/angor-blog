@@ -7,7 +7,7 @@ authorImage: ""
 authorImageAlt: "عضو تیم Angor"
 pubDate: 2024-05-09
 cardImage: "@/images/welcome-to-the-angor-blog.webp"
-cardImageAlt: "تصویر خوش‌آمدگویی به بلاگ Angor"
+cardImageAlt: "خوش‌آمدگویی به بلاگ Angor"
 readTime: 3
 tags: [بیت-کوین, تکنولوژی, آموزش]
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'

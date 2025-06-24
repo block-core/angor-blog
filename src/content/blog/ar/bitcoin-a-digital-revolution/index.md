@@ -7,7 +7,7 @@ authorImage: ""
 authorImageAlt: "عضو فريق Angor"
 pubDate: 2024-05-12
 cardImage: "@/images/bitcoin-a-digital-revolution.webp"
-cardImageAlt: "الثورة الرقمية للبيتكوين"
+cardImageAlt: "الرقمية للبيتكوين"
 readTime: 4
 tags: [بيتكوين, عملة مشفرة]
 nostrPublicKey: 'npub1wrzguj625auyeysfuuxzf7ywhzlwfz9gm3fml2lul72gwqxw8n9swtcm02'
