@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
-import compressor from "astro-compressor";
 
 import mdx from "@astrojs/mdx";
 
@@ -33,9 +32,6 @@ export default defineConfig({
         fa: "fa",
       },
     },
-  }), compressor({
-    gzip: false,
-    brotli: false,
   }), mdx()],
   experimental: {
     clientPrerender: true,
