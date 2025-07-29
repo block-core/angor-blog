@@ -35,7 +35,8 @@
     "clean": "rimraf dist",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "type-check": "astro check"
+    "type-check": "astro check",
+    "new-post": "node scripts/new-post.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
