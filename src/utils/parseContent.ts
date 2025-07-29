@@ -30,7 +30,9 @@ export class ParseContentService {
 
     parseContent(text: string): (string | ParsedToken)[] {
         const sanitizedText = this.sanitizeText(text);
-        const tokens = this.tokenizeText(sanitizedText);
+        // Handle markdown images first
+        const textWithMarkdownImages = this.processMarkdownImages(sanitizedText);
+        const tokens = this.tokenizeText(textWithMarkdownImages);
         return this.combinePlainText(tokens.map(token => this.processToken(token)));
     }
 
@@ -38,9 +40,39 @@ export class ParseContentService {
         return text.replaceAll(/\p{Cf}/gu, '');
     }
 
+    private processMarkdownImages(text: string): string {
+        // Replace markdown images with special tokens that will be processed later
+        return text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, url) => {
+            const cleanUrl = this.cleanImageUrl(url);
+            if (this.isValidImageUrl(cleanUrl)) {
+                // Replace with a special token that includes the cleaned URL
+                return `MARKDOWN_IMAGE:${cleanUrl}`;
+            }
+            return match; // Keep original if not a valid image
+        });
+    }
+
+    private cleanImageUrl(url: string): string {
+        // Remove any extra parentheses or special characters that might break the URL
+        return url.trim()
+            .replace(/^\(+/, '')  // Remove leading parentheses
+            .replace(/\)+$/, '')  // Remove trailing parentheses
+            .replace(/\s+/g, '%20'); // Replace spaces with URL encoding
+    }
+
+    private isValidImageUrl(url: string): boolean {
+        const imageExtensions = ['.jpg', '.jpeg', '.gif', '.png', '.webp', '.apng', '.jfif', '.svg'];
+        const lowerUrl = url.toLowerCase();
+        return imageExtensions.some(ext => lowerUrl.includes(ext)) || 
+               url.startsWith('data:image/') || 
+               url.includes('image.nostr.build') ||
+               url.includes('cdn.') ||
+               url.includes('imgur.com');
+    }
+
     private tokenizeText(text: string): string[] {
-        // Split by spaces, newlines, and nostr references while preserving them
-        return text.split(/(\s+|nostr:[a-zA-Z0-9]+|https?:\/\/[^\s]+)/).filter(Boolean);
+        // Split by spaces, newlines, nostr references, and markdown image tokens while preserving them
+        return text.split(/(\s+|nostr:[a-zA-Z0-9]+|https?:\/\/[^\s]+|MARKDOWN_IMAGE:[^\s]+)/).filter(Boolean);
     }
 
     private isMediaType(url: string, extensions: readonly string[]): boolean {
@@ -52,6 +84,10 @@ export class ParseContentService {
     }
 
     private processToken(token: string): string | ParsedToken {
+        if (token.startsWith('MARKDOWN_IMAGE:')) {
+            const imageUrl = token.substring('MARKDOWN_IMAGE:'.length);
+            return this.createMediaToken(imageUrl, 'image');
+        }
         if (token.startsWith('nostr:')) return this.processNostrToken(token);
         if (token.startsWith('@npub') || token.startsWith('@note')) return this.processUsernameToken(token);
         if (this.isUrl(token)) return this.processLinkToken(token);
@@ -192,6 +228,29 @@ export function parseNostrContent(content: string): (string | ParsedToken)[] {
 }
 
 export function extractFirstImage(content: string): string | null {
+    // First check for markdown images
+    const markdownImageRegex = /!\[([^\]]*)\]\(([^)]+)\)/;
+    const markdownMatch = content.match(markdownImageRegex);
+    if (markdownMatch && markdownMatch[2]) {
+        const imageUrl = markdownMatch[2].trim()
+            .replace(/^\(+/, '')  // Remove leading parentheses
+            .replace(/\)+$/, '')  // Remove trailing parentheses
+            .replace(/\s+/g, '%20'); // Replace spaces with URL encoding
+        
+        const imageExtensions = ['.jpg', '.jpeg', '.gif', '.png', '.webp', '.apng', '.jfif', '.svg'];
+        const lowerUrl = imageUrl.toLowerCase();
+        const isValidImage = imageExtensions.some(ext => lowerUrl.includes(ext)) || 
+               imageUrl.startsWith('data:image/') || 
+               imageUrl.includes('image.nostr.build') ||
+               imageUrl.includes('cdn.') ||
+               imageUrl.includes('imgur.com');
+               
+        if (isValidImage) {
+            return imageUrl;
+        }
+    }
+
+    // Then check for direct image URLs
     const tokens = parseContentService.parseContent(content);
     const imageToken = tokens.find((token): token is ParsedToken => 
         typeof token === 'object' && token.token === 'image'
