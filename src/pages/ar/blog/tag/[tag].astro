@@ -88,7 +88,7 @@ const metaDescription = `تصفح المقالات حول ${tag}. اكتشف ر�
   <!-- Posts Grid -->
   {posts.length > 0 && (
     <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <BlogCardProfessional blogEntry={post} locale="ar" />
         ))}
